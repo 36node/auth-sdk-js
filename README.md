@@ -1,20 +1,20 @@
-# @36node/template-sdk
+# @36node/auth-sdk
 
 [![version][0]][1] [![downloads][2]][3]
 
 ## Install
 
 ```bash
-yarn add module
+yarn add @36node/auth-sdk
 ```
 
 ## Usage
 
 ```js
-const module = require("module");
+const SDK = require("@36node/auth-sdk");
 
-module();
-//=> foo
+const sdk = new SDK();
+sdk.namespace.listNamespaces();
 ```
 
 ## Contributing
