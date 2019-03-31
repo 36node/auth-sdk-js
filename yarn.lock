@@ -35,10 +35,10 @@
     humps "^2.0.1"
     lodash "^4.17.11"
 
-"@36node/sketch@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.7.2.tgz#d2774a4566f1a39fb7a7991c4e8b06a3011237ef"
-  integrity sha512-z04EvA1eT0Ob1alaBEMKgD+PbPgCU5Qc6tZIXWyl6DlZUE1yvUUOPpBjG9HM0WbDu8updmAU72gRaZIimsS1Dg==
+"@36node/sketch@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.7.4.tgz#cbf503d914c8fb1b6f425f9aefec137318b951bd"
+  integrity sha512-3xJ1YtqQ03/ZB+ZAMvQN0zWDe+/UZ7YFHK7vJKLfnqaIqxqcVky++c7BHabgHvRISUUGjeFOFJ/A6QHzJ9MmMQ==
   dependencies:
     "@babel/core" "^7.0.0-0"
     "@babel/plugin-proposal-decorators" "^7.3.0"
