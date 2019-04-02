@@ -10,12 +10,29 @@ yarn add @36node/auth-sdk
 
 ## Usage
 
+### SDK
+
 ```js
 const SDK = require("@36node/auth-sdk");
 
 const sdk = new SDK();
 sdk.namespace.listNamespaces();
 ```
+
+### Mock
+```js
+const genMock = require("@36node/auth-sdk/mock");
+
+const { db, router } = genMock(options);
+```
+
+#### Mock Options
+
+| name | required | description | default |
+|-------|-------|-------|-------|
+| placeholder | true | a string represent empty | "PLACEHOLDER" |
+
+
 
 ## Contributing
 
