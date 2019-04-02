@@ -13,7 +13,8 @@
   "template": "sdk",
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "mock"
   ],
   "config-overrides-path": "node_modules/@36node/sketch/config-overrides",
   "main": "dist/index.js",
@@ -36,7 +37,7 @@
     "hooks": {
       "commit-msg": "commitlint -e $GIT_PARAMS",
       "pre-commit": "lint-staged",
-      "pre-push": "npm run lint && npm run test"
+      "pre-push": "npm run lint && CI=true npm run test"
     }
   },
   "lint-staged": {
