@@ -21,18 +21,14 @@ sdk.namespace.listNamespaces();
 
 ### Mock
 ```js
-const genMock = require("@36node/auth-sdk/mock");
+const mock = require("@36node/auth-sdk/mock");
 
-const { db, router } = genMock(options);
+const db = mock.createDB();
+
+mock.bindRouter({
+  router,
+})
 ```
-
-#### Mock Options
-
-| name | required | description | default |
-|-------|-------|-------|-------|
-| placeholder | true | a string represent empty | "PLACEHOLDER" |
-
-
 
 ## Contributing
 
