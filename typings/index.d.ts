@@ -348,6 +348,10 @@ declare namespace SDK {
       limit?: number;
       offset?: string;
       select?: string;
+
+      filter: {
+        ns?: string;
+      };
     };
   };
 
@@ -395,6 +399,7 @@ declare namespace SDK {
     email: string;
     gender: string;
     language: string;
+    username: string;
     name: string;
     nickname: string;
     phone: string;
@@ -408,13 +413,19 @@ declare namespace SDK {
   type Session = {
     createdAt: string;
     updatedAt: string;
+    expiredAt: string;
     id: string;
     client: string;
     device: string;
-    ns: string;
+    login: string;
+    ns: Array<string>;
     provider: string;
-    expireAt: string;
+    method: string;
     token: string;
+    roles: Array<{
+      ns: string;
+      name: string;
+    }>;
     user: {
       createdAt: string;
       updatedAt: string;
@@ -431,6 +442,7 @@ declare namespace SDK {
       email: string;
       gender: string;
       language: string;
+      username: string;
       name: string;
       nickname: string;
       phone: string;
@@ -440,6 +452,7 @@ declare namespace SDK {
         name: string;
       }>;
     };
+    profile: {};
   };
 
   type CreateSessionBody = {
@@ -447,8 +460,11 @@ declare namespace SDK {
     device: string;
     provider: string;
     username: string;
+    login: string;
     password: string;
     code: string;
+    encryptedData: string;
+    iv: string;
   };
 
   type Invitation = {
