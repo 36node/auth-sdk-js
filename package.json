@@ -26,6 +26,7 @@
     "gen": "swagen sdk https://stargate.36node.com/api/auth/v0/openapi.yml && npm run format",
     "lint": "sketch lint src",
     "release": "standard-version",
+    "start": "bin/json-server.js",
     "test": "NODE_ENV=test sketch test --env=node"
   },
   "commitlint": {
