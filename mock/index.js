@@ -14,7 +14,7 @@ const createSession = (req, res, next) => {
   next();
 };
 
-module.exports = {
+const mock = () => ({
   /**
    * mock data
    */
@@ -34,4 +34,6 @@ module.exports = {
    * routers
    */
   routers: [createSession],
-};
+});
+
+module.exports = mock;
