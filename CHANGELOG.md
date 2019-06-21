@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.6](https://github.com/36node/auth-sdk/compare/v0.2.5...v0.2.6) (2019-06-21)
+
+
+### Bug Fixes
+
+* eslint ([16c8215](https://github.com/36node/auth-sdk/commit/16c8215))
+
+
+
 ## [0.2.5](https://github.com/36node/auth-sdk/compare/v0.2.3...v0.2.5) (2019-06-17)
 
 
