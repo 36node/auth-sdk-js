@@ -154,6 +154,13 @@ declare namespace SDK {
       limit?: number;
       offset?: string;
       select?: string;
+
+      filter: {
+        _id: {
+          $regex?: string;
+        };
+        q?: string;
+      };
     };
   };
 
@@ -220,7 +227,9 @@ declare namespace SDK {
       select?: string;
 
       filter: {
-        ns?: string;
+        ns: {
+          $regex?: string;
+        };
         q?: string;
       };
     };
