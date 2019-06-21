@@ -77,7 +77,8 @@ export default class SDK {
     getNamespace: (req = {}) => {
       const { namespaceId, headers } = req;
 
-      if (!namespaceId) throw new Error("namespaceId is required for getNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for getNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
         method: "get",
@@ -93,7 +94,8 @@ export default class SDK {
     updateNamespace: (req = {}) => {
       const { namespaceId, headers, body } = req;
 
-      if (!namespaceId) throw new Error("namespaceId is required for updateNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNamespace");
       if (!body) throw new Error("requetBody is required for updateNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
@@ -111,7 +113,8 @@ export default class SDK {
     deleteNamespace: (req = {}) => {
       const { namespaceId, headers } = req;
 
-      if (!namespaceId) throw new Error("namespaceId is required for deleteNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for deleteNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
         method: "delete",
@@ -165,7 +168,8 @@ export default class SDK {
     deleteSession: (req = {}) => {
       const { sessionId, headers } = req;
 
-      if (!sessionId) throw new Error("sessionId is required for deleteSession");
+      if (!sessionId)
+        throw new Error("sessionId is required for deleteSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
         method: "delete",
@@ -305,7 +309,8 @@ export default class SDK {
     updateInvitations: (req = {}) => {
       const { headers, body } = req;
 
-      if (!body) throw new Error("requetBody is required for updateInvitations");
+      if (!body)
+        throw new Error("requetBody is required for updateInvitations");
 
       return fetch(`${this.base}/invitations`, {
         method: "put",
@@ -322,7 +327,8 @@ export default class SDK {
     getInvitation: (req = {}) => {
       const { invitationId, headers } = req;
 
-      if (!invitationId) throw new Error("invitationId is required for getInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for getInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
         method: "get",
@@ -338,7 +344,8 @@ export default class SDK {
     updateInvitation: (req = {}) => {
       const { invitationId, headers, body } = req;
 
-      if (!invitationId) throw new Error("invitationId is required for updateInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for updateInvitation");
       if (!body) throw new Error("requetBody is required for updateInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
@@ -356,7 +363,8 @@ export default class SDK {
     deleteInvitation: (req = {}) => {
       const { invitationId, headers } = req;
 
-      if (!invitationId) throw new Error("invitationId is required for deleteInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for deleteInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
         method: "delete",
@@ -453,7 +461,8 @@ export default class SDK {
     getProvider: (req = {}) => {
       const { providerId, headers } = req;
 
-      if (!providerId) throw new Error("providerId is required for getProvider");
+      if (!providerId)
+        throw new Error("providerId is required for getProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "get",
@@ -469,7 +478,8 @@ export default class SDK {
     updateProvider: (req = {}) => {
       const { providerId, headers, body } = req;
 
-      if (!providerId) throw new Error("providerId is required for updateProvider");
+      if (!providerId)
+        throw new Error("providerId is required for updateProvider");
       if (!body) throw new Error("requetBody is required for updateProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
@@ -487,7 +497,8 @@ export default class SDK {
     deleteProvider: (req = {}) => {
       const { providerId, headers } = req;
 
-      if (!providerId) throw new Error("providerId is required for deleteProvider");
+      if (!providerId)
+        throw new Error("providerId is required for deleteProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "delete",
