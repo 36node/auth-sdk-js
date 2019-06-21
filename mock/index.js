@@ -2,6 +2,8 @@ const users = require("./users");
 const namespaces = require("./namespaces");
 const providers = require("./providers");
 const sessions = require("./session");
+const qiniu = require("./qiniu");
+const invitations = require("./invitations");
 
 const TOKEN =
   process.env["TOKEN"] ||
@@ -23,6 +25,8 @@ const mock = () => ({
     namespaces,
     providers,
     sessions,
+    qiniu,
+    invitations,
   },
 
   /**
