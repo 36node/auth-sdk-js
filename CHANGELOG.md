@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.7](https://github.com/36node/auth-sdk/compare/v0.2.6...v0.2.7) (2019-06-23)
+
+
+### Bug Fixes
+
+* session mock ([41dd1b6](https://github.com/36node/auth-sdk/commit/41dd1b6))
+
+
+
 ## [0.2.6](https://github.com/36node/auth-sdk/compare/v0.2.5...v0.2.6) (2019-06-21)
 
 
