@@ -14,6 +14,7 @@ module.exports = (userId = "12314234234534534") => ({
     name: "张三",
     nickname: "robin",
     phone: "12345678901",
+    avator: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
   },
   provider: "5cb9a4edc48ad400120d28a7",
   roles: [{ name: "ADMIN", ns: "/36node" }],
