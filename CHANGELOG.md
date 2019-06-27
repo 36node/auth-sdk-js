@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.9](https://github.com/36node/auth-sdk/compare/v0.2.8...v0.2.9) (2019-06-27)
+
+
+### Bug Fixes
+
+* auth create session middleware ([aa322be](https://github.com/36node/auth-sdk/commit/aa322be))
+
+
+
 ## [0.2.8](https://github.com/36node/auth-sdk/compare/v0.2.7...v0.2.8) (2019-06-27)
 
 
