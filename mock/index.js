@@ -1,5 +1,5 @@
 const users = require("./users");
-const namespaces = require("./namespaces");
+const defaultNamespace = require("./namespaces");
 const providers = require("./providers");
 const sessions = require("./session");
 
@@ -14,7 +14,7 @@ const createSession = (req, res, next) => {
   next();
 };
 
-const mock = () => ({
+const mock = ({ namespaces = defaultNamespace }) => ({
   /**
    * mock data
    */
