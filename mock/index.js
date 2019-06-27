@@ -1,8 +1,9 @@
 const users = require("./users");
 const defaultNamespace = require("./namespaces");
 const providers = require("./providers");
-const session = require("./session");
+const genSession = require("./session");
 
+const session = genSession(users[0].id);
 const createSession = (req, res, next) => {
   if (req.path === "/sessions" && req.method === "POST") {
     req.body = { ...session };

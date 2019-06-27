@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = (userId = "12314234234534534") => ({
   active: true,
   client: "app",
   createdAt: "2019-05-02T05:59:00.729Z",
@@ -19,5 +19,5 @@ module.exports = {
   roles: [{ name: "ADMIN", ns: "/36node" }],
   token: "xxxxxxx",
   updatedAt: "2019-05-02T05:59:00.729Z",
-  user: "5cb9a4edc48ad400120d28a7",
-};
+  user: userId,
+});
