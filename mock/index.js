@@ -1,15 +1,12 @@
 const users = require("./users");
 const defaultNamespace = require("./namespaces");
 const providers = require("./providers");
-const sessions = require("./session");
-
-const TOKEN =
-  process.env["TOKEN"] ||
-  "something-u-can-never-guessed-secret-password-or-key";
+const session = require("./session");
 
 const createSession = (req, res, next) => {
   if (req.path === "/sessions" && req.method === "POST") {
-    req.body.token = TOKEN;
+    req.body = { ...session };
+    delete req.body.id;
   }
   next();
 };
@@ -22,7 +19,7 @@ const mock = ({ namespaces = defaultNamespace }) => ({
     users,
     namespaces,
     providers,
-    sessions,
+    sessions: [session],
   },
 
   /**
