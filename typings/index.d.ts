@@ -26,9 +26,7 @@ declare namespace SDK {
     /**
      * Create namespace
      */
-    createNamespace(
-      req: CreateNamespaceRequest
-    ): Promise<CreateNamespaceResponse>;
+    createNamespace(req: CreateNamespaceRequest): Promise<CreateNamespaceResponse>;
     /**
      * List namespaces
      */
@@ -40,15 +38,11 @@ declare namespace SDK {
     /**
      * Update namespace
      */
-    updateNamespace(
-      req: UpdateNamespaceRequest
-    ): Promise<UpdateNamespaceResponse>;
+    updateNamespace(req: UpdateNamespaceRequest): Promise<UpdateNamespaceResponse>;
     /**
      * delete namespace
      */
-    deleteNamespace(
-      req: DeleteNamespaceRequest
-    ): Promise<DeleteNamespaceResponse>;
+    deleteNamespace(req: DeleteNamespaceRequest): Promise<DeleteNamespaceResponse>;
   }
   export interface SessionAPI {
     /**
@@ -90,21 +84,15 @@ declare namespace SDK {
     /**
      * Create invitation 可以用于发送邀请码
      */
-    createInvitation(
-      req: CreateInvitationRequest
-    ): Promise<CreateInvitationResponse>;
+    createInvitation(req: CreateInvitationRequest): Promise<CreateInvitationResponse>;
     /**
      * List invitations
      */
-    listInvitations(
-      req: ListInvitationsRequest
-    ): Promise<ListInvitationsResponse>;
+    listInvitations(req: ListInvitationsRequest): Promise<ListInvitationsResponse>;
     /**
      * bulk upsert invitations
      */
-    updateInvitations(
-      req: UpdateInvitationsRequest
-    ): Promise<UpdateInvitationsResponse>;
+    updateInvitations(req: UpdateInvitationsRequest): Promise<UpdateInvitationsResponse>;
     /**
      * Get invitation by id
      */
@@ -112,23 +100,17 @@ declare namespace SDK {
     /**
      * Update invitation
      */
-    updateInvitation(
-      req: UpdateInvitationRequest
-    ): Promise<UpdateInvitationResponse>;
+    updateInvitation(req: UpdateInvitationRequest): Promise<UpdateInvitationResponse>;
     /**
      * delete invitation
      */
-    deleteInvitation(
-      req: DeleteInvitationRequest
-    ): Promise<DeleteInvitationResponse>;
+    deleteInvitation(req: DeleteInvitationRequest): Promise<DeleteInvitationResponse>;
   }
   export interface ValidationAPI {
     /**
      * Create validation 发送验证码
      */
-    createValidation(
-      req: CreateValidationRequest
-    ): Promise<CreateValidationResponse>;
+    createValidation(req: CreateValidationRequest): Promise<CreateValidationResponse>;
   }
   export interface QiniuAPI {
     /**
@@ -174,7 +156,7 @@ declare namespace SDK {
       select?: string;
 
       filter: {
-        id: {
+        _id: {
           $regex?: string;
         };
         q?: string;
@@ -242,12 +224,11 @@ declare namespace SDK {
     query: {
       limit?: number;
       offset?: string;
+      sort?: string;
       select?: string;
 
       filter: {
-        ns: {
-          $regex?: string;
-        };
+        ns?: string;
         q?: string;
       };
     };
@@ -542,8 +523,22 @@ declare namespace SDK {
   };
 
   type CreateValidationBody = {
+    ns: string;
     phone: string;
     email: string;
+  };
+
+  type SmsConfig = {
+    expire: number;
+    tplId: string;
+    sign: string;
+  };
+
+  type EmailConfig = {
+    from: string;
+    subject: string;
+    text: string;
+    html: string;
   };
 
   type Namespace = {
@@ -553,6 +548,17 @@ declare namespace SDK {
     parent: string;
     public: boolean;
     userActive: boolean;
+    sms: {
+      expire: number;
+      tplId: string;
+      sign: string;
+    };
+    email: {
+      from: string;
+      subject: string;
+      text: string;
+      html: string;
+    };
   };
 
   type Provider = {
