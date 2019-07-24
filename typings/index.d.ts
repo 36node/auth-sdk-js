@@ -156,9 +156,11 @@ declare namespace SDK {
       select?: string;
 
       filter: {
-        id: {
-          $regex?: string;
-        };
+        id?:
+          | {
+              $regex: string;
+            }
+          | [string];
         q?: string;
       };
     };
@@ -233,7 +235,7 @@ declare namespace SDK {
               $regex: string;
             }
           | string;
-        id?: string;
+        id?: [string];
         q?: string;
       };
     };
@@ -290,6 +292,7 @@ declare namespace SDK {
           | string;
         phone?: string;
         used?: string;
+        id?: string;
       };
     };
   };
@@ -368,6 +371,7 @@ declare namespace SDK {
 
       filter: {
         ns?: string;
+        id?: string;
       };
     };
   };

@@ -1,0 +1,1353 @@
+openapi: "3.0.1"
+info:
+  version: v0
+  title: Auth
+servers:
+  - url: "{{baseUrl}}{{basePath}}"
+    description: The production API server
+    variables:
+      basePath:
+        default: /auth/v0
+      baseUrl:
+        default: https://api.36node.com
+paths:
+  /namespaces:
+    post:
+      summary: Create namespace
+      operationId: createNamespace
+      tags:
+        - namespace
+      requestBody:
+        description: Body for creating namespace
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Namespace"
+      responses:
+        "201":
+          description: The namespace created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Namespace"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    get:
+      summary: List namespaces
+      operationId: listNamespaces
+      tags:
+        - namespace
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: _offset
+          in: query
+          description: How many items will be skip
+          required: false
+          schema:
+            type: string
+        - name: _select
+          in: query
+          description: Specifies which document fields to include or exclude
+          required: false
+          schema:
+            type: string
+        - name: id_like
+          in: query
+          description: Which namespace blong to, regix
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 根据id 列表查询
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: q
+          in: query
+          description: 关键字搜索
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of namespaces
+          headers:
+            X-Total-Count:
+              description: Total count of all documents match the query
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Namespace"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /namespaces/{namespaceId}:
+    get:
+      summary: Get namespace by id
+      operationId: getNamespace
+      tags:
+        - namespace
+      parameters:
+        - name: namespaceId
+          in: path
+          required: true
+          description: The id of namespace
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The namespace with given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Namespace"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update namespace
+      operationId: updateNamespace
+      tags:
+        - namespace
+      parameters:
+        - name: namespaceId
+          in: path
+          required: true
+          description: The id of namespace
+          schema:
+            type: string
+      requestBody:
+        description: Namespace to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Namespace"
+      responses:
+        "200":
+          description: The namespace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Namespace"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      summary: delete namespace
+      operationId: deleteNamespace
+      tags:
+        - namespace
+      parameters:
+        - name: namespaceId
+          in: path
+          required: true
+          description: The id of namespace
+          schema:
+            type: string
+      responses:
+        "204":
+          description: namespace deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /sessions:
+    post:
+      summary: Create session
+      operationId: createSession
+      tags:
+        - session
+      requestBody:
+        description: Body for creating session
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSessionBody"
+      responses:
+        "201":
+          description: The session created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /sessions/{sessionId}:
+    get:
+      summary: Get session and auto refresh it if need
+      description: 删除 session，这个操作不需要提供 `token` 即可完成
+      operationId: getSession
+      tags:
+        - session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          description: The id of session, same as refresh token, don't tell any one
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+    delete:
+      summary: Deletes a session
+      description: 删除 session，这个操作不需要提供 `token` 即可完成
+      operationId: deleteSession
+      tags:
+        - session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          description: The id of session, same as refresh token, don't tell any one
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Session deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /users:
+    post:
+      summary: Create user
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        description: Body for creating user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: The user created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    get:
+      summary: List users
+      operationId: listUsers
+      tags:
+        - user
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: _offset
+          in: query
+          description: How many items will be skip
+          required: false
+          schema:
+            type: string
+        - name: _select
+          in: query
+          description: Specifies which document fields to include or exclude
+          required: false
+          schema:
+            type: string
+        - name: _sort
+          in: query
+          description: Specifies which document fields to sort
+          required: false
+          schema:
+            type: string
+        - name: ns
+          in: query
+          description: Which namespace users blong to
+          required: false
+          schema:
+            type: string
+        - name: ns_like
+          in: query
+          description: Which namespace users blong to, regix
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 根据id 列表查询
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: q
+          in: query
+          description: 关键字搜索
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of users
+          headers:
+            X-Total-Count:
+              description: Total count of all documents match the query
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /users/{userId}:
+    get:
+      summary: Get user by id
+      operationId: getUser
+      tags:
+        - user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The id of user
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The user with given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update user
+      operationId: updateUser
+      tags:
+        - user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The id of user
+          schema:
+            type: string
+      requestBody:
+        description: User to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: The user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      summary: delete user
+      operationId: deleteUser
+      tags:
+        - user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The id of user
+          schema:
+            type: string
+      responses:
+        "204":
+          description: user deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /invitations:
+    post:
+      summary: Create invitation 可以用于发送邀请码
+      operationId: createInvitation
+      tags:
+        - invitation
+      requestBody:
+        description: Body for creating invitation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInvitationBody"
+      responses:
+        "201":
+          description: The invitaion created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invitation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    get:
+      summary: List invitations
+      operationId: listInvitations
+      tags:
+        - invitation
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: _offset
+          in: query
+          description: How many items will be skip
+          required: false
+          schema:
+            type: string
+        - name: ns
+          in: query
+          description: Which namespace invitations blong to
+          required: false
+          schema:
+            type: string
+        - name: sub
+          in: query
+          description: eg. ACTIVE
+          required: false
+          schema:
+            type: string
+        - name: code
+          in: query
+          description: Code
+          required: false
+          schema:
+            type: string
+        - name: code_like
+          in: query
+          description: Code 正则查询
+          required: false
+          schema:
+            type: string
+        - name: phone
+          in: query
+          description: 手机号
+          required: false
+          schema:
+            type: string
+        - name: used
+          in: query
+          description: 是否已经使用
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Query users by id or ids
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of invitations
+          headers:
+            X-Total-Count:
+              description: Total count of all documents match the query
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invitation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: bulk upsert invitations
+      operationId: updateInvitations
+      tags:
+        - invitation
+      requestBody:
+        description: Invitations to be upserted
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UpdateInvitationsBody"
+      responses:
+        "200":
+          description: The invitations be uperted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invitation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /invitations/{invitationId}:
+    get:
+      summary: Get invitation by id
+      operationId: getInvitation
+      tags:
+        - invitation
+      parameters:
+        - name: invitationId
+          in: path
+          required: true
+          description: The id of invitation
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The invitation with given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invitation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update invitation
+      operationId: updateInvitation
+      tags:
+        - invitation
+      parameters:
+        - name: invitationId
+          in: path
+          required: true
+          description: The id of invitation
+          schema:
+            type: string
+      requestBody:
+        description: Invitation to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInvitationBody"
+      responses:
+        "200":
+          description: The invitation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invitation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      summary: delete invitation
+      operationId: deleteInvitation
+      tags:
+        - invitation
+      parameters:
+        - name: invitationId
+          in: path
+          required: true
+          description: The id of invitation
+          schema:
+            type: string
+      responses:
+        "204":
+          description: invitation deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /validations:
+    post:
+      summary: Create validation 发送验证码
+      operationId: createValidation
+      tags:
+        - validation
+      requestBody:
+        description: Body for creating validation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateValidationBody"
+      responses:
+        "201":
+          description: The validation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Validation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /qiniu/{bucket}:
+    get:
+      summary: get qiniu token for a specific bucket
+      operationId: getQiniuToken
+      tags:
+        - qiniu
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          description: The name of qiniu storage bucket
+          schema:
+            type: string
+        - name: expires
+          in: query
+          description: expire time in seconds
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QiniuToken"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /providers:
+    post:
+      summary: Create provider
+      operationId: createProvider
+      tags:
+        - provider
+      requestBody:
+        description: Body for creating provider
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Provider"
+      responses:
+        "201":
+          description: The provider created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Provider"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    get:
+      summary: List providers
+      operationId: listProviders
+      tags:
+        - provider
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: _offset
+          in: query
+          description: How many items will be skip
+          required: false
+          schema:
+            type: string
+        - name: _select
+          in: query
+          description: Specifies which document fields to include or exclude
+          required: false
+          schema:
+            type: string
+        - name: ns
+          in: query
+          description: the namespace of the provider
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Query users by id or ids
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of providers
+          headers:
+            X-Total-Count:
+              description: Total count of all documents match the query
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Provider"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /providers/{providerId}:
+    get:
+      summary: Get provider by id
+      operationId: getProvider
+      tags:
+        - provider
+      parameters:
+        - name: providerId
+          in: path
+          required: true
+          description: The id of provider
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The provider with given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Provider"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update provider
+      operationId: updateProvider
+      tags:
+        - provider
+      parameters:
+        - name: providerId
+          in: path
+          required: true
+          description: The id of provider
+          schema:
+            type: string
+      requestBody:
+        description: Provider to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Provider"
+      responses:
+        "200":
+          description: The provider
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Provider"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      summary: delete provider
+      operationId: deleteProvider
+      tags:
+        - provider
+      parameters:
+        - name: providerId
+          in: path
+          required: true
+          description: The id of provider
+          schema:
+            type: string
+      responses:
+        "204":
+          description: provider deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+security:
+  - bearerAuth: []
+
+components:
+  responses:
+    NoContent:
+      description: The resource was deleted successfully.
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+    InternalError:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+  schemas:
+    User:
+      type: object
+      description: "用户信息"
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        active:
+          type: boolean
+          description: 是否激活的用户
+        expireAt:
+          type: string
+          format: date-time
+          description: 过期时间
+        ns:
+          description: 代表 `namespace` 即所属部门或者命名空间
+          type: array
+          items:
+            type: string
+            example: /36node
+        source:
+          description: 用户来源
+          type: string
+
+        avatar:
+          type: string
+          description: 用户头像
+        birthdate:
+          type: string
+          format: date-time
+          description: 用户生日
+        city:
+          description: 所在城市
+          type: string
+        data:
+          type: object
+          description: 第三方赋值的数据
+        country:
+          description: 所在国家
+          type: string
+        email:
+          type: string
+          description: 邮箱
+        gender:
+          type: string
+          enum: ["UNKOWN", "MALE", "FEMALE", "OTHER"]
+          description: 性别
+        language:
+          type: string
+          description: 用户所用语言
+        username:
+          type: string
+          description: 用户名
+        name:
+          type: string
+          description: 用户姓名
+        nickname:
+          type: string
+          description: 昵称
+        phone:
+          type: string
+          description: 电话
+        province:
+          description: 所在省
+          type: string
+        roles:
+          description: 角色
+          type: array
+          items:
+            type: object
+            properties:
+              ns:
+                type: string
+                description: 所属命名空间
+              name:
+                type: string
+                description: 角色名称
+
+    Session:
+      type: object
+      description: "会话信息"
+      required:
+        - id
+        - token
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        expiredAt:
+          type: string
+          format: date-time
+          description: 会话过期时间
+        id:
+          type: string
+          description: it also is a refresh token
+        client:
+          type: string
+          description: 客户端，例如 dushuli-weixin-h5
+        device:
+          type: string
+          description: 设备
+        login:
+          type: string
+          description: user login by username/phone/email
+        ns:
+          type: array
+          description: session belongs to namespaces
+          items:
+            type: string
+            example: /36node
+        provider:
+          type: string
+          description: provider id
+        method:
+          type: string
+          enum: [PASSWORD, PHONE, WX, WXAPP, WXQY, GITHUB]
+          description: |
+            验证方式的名称
+            密码验证：PASSWORD
+            手机验证：PHONE
+            微信公众号： WX
+            微信小程序：WXAPP
+            微信企业号：WXQY
+            github：GITHUB
+        token:
+          type: string
+          description: JWT
+        roles:
+          description: 角色
+          type: array
+          items:
+            type: object
+            properties:
+              ns:
+                type: string
+                description: 所属命名空间
+              name:
+                type: string
+                description: 角色名称
+        user:
+          $ref: "#/components/schemas/User"
+        profile:
+          type: object
+          description: an object of login user profile
+
+    CreateSessionBody:
+      type: object
+      description: 创建会话所需的参数
+      properties:
+        client:
+          type: string
+          description: 客户端，例如 dushuli-weixin-h5
+        device:
+          type: string
+          description: 设备
+        provider:
+          type: string
+          description: 验证方式 ( provider id )
+        # username is deprecated from v0.9.3
+        username:
+          type: string
+          description: 用户名/邮箱/手机号
+        login:
+          type: string
+          description: 用户名/邮箱/手机号
+        password:
+          type: string
+          description: 密码
+        code:
+          type: string
+          description: 各种授权code
+        encryptedData:
+          type: string
+          description: 微信小程序登陆时的用户加密数据
+        iv:
+          type: string
+          description: 微信小程序登陆时的解密iv
+
+    Invitation:
+      description: 邀请函，例如用于获得邀请码，邮箱或者手机授权码
+      type: object
+      properties:
+        id:
+          type: string
+        ns:
+          type: string
+          description: 所属的 namespace
+        createdAt:
+          type: string
+          format: date-time
+        code:
+          type: string
+          description: 只有 admin 能看到
+        email:
+          type: string
+        phone:
+          type: string
+        sub:
+          type: string
+          description: 主题, 激活码 ACTIVE / 注册码 REGISTER
+        expireAt:
+          type: string
+          format: date-time
+          description: 邀请码过期时间
+        period:
+          type: integer
+          description: 该邀请码生效后，发生作用的有效期, 例如激活码，代表激活用户的时长
+        until:
+          type: string
+          format: date-time
+          description: 有效期，指截止日期
+        used:
+          type: boolean
+          description: 是否已经使用
+        usedAt:
+          type: string
+          format: date-time
+          description: 邀请码使用时间
+
+    UpdateInvitationBody:
+      description: 创建邀请函所需参数
+      type: object
+      properties:
+        until:
+          type: string
+          format: date-time
+          description: 有效期，指截止日期
+        period:
+          type: integer
+          description: 有效时长，指激活时刻开始一共拥有多少秒
+
+    UpdateInvitationsBody:
+      description: 批量创建或修改邀请码所需参数
+      type: object
+      properties:
+        id:
+          type: string
+          description: 需要修改的邀请码 Id
+        code:
+          type: string
+          description: 需要创建或修改邀请码
+        until:
+          type: string
+          format: date-time
+          description: 有效期，指截止日期
+        period:
+          type: integer
+          description: 有效时长，指激活时刻开始一共拥有多少秒
+
+    CreateInvitationBody:
+      description: 创建邀请函所需参数
+      type: object
+      properties:
+        until:
+          type: string
+          format: date-time
+          description: 有效期，指截止日期
+        period:
+          type: integer
+          description: 有效时长，指激活时刻开始一共拥有多少秒
+        email:
+          type: string
+        phone:
+          type: string
+        sub:
+          type: string
+          description: 主题, 激活码 ACTIVE / 注册码 REGISTER
+          example: ACTIVE
+
+    Validation:
+      description: 验证码，用于发送手机或邮箱验证码
+      type: object
+      properties:
+        id:
+          type: string
+        ns:
+          type: string
+          description: 所属的 namespace
+        createdAt:
+          type: string
+          format: date-time
+        code:
+          type: string
+          description: 验证码
+        email:
+          type: string
+        phone:
+          type: string
+        expireAt:
+          type: string
+          format: date-time
+          description: 验证码过期时间
+        used:
+          type: boolean
+          description: 是否已经使用
+        usedAt:
+          type: string
+          format: date-time
+          description: 验证码使用时间
+
+    CreateValidationBody:
+      description: 创建验证码需要的参数
+      type: object
+      properties:
+        ns:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+
+    SmsConfig:
+      description: 短信验证码配置
+      type: object
+      properties:
+        expire:
+          type: number
+          description: 验证码过期时间
+        tplId:
+          type: string
+          description: 验证码模版 id
+        sign:
+          type: string
+          description: 验证码签名
+
+    EmailConfig:
+      description: 邮箱验证码配置
+      type: object
+      properties:
+        from:
+          type: string
+          description: 发件人
+        subject:
+          type: string
+          description: 标题
+        text:
+          type: string
+        html:
+          type: string
+          description: 邮件内容
+
+    Namespace:
+      description: |
+        命名空间
+        一个命名空间，可以是一个用户所属的部门，一个客户的根空间(租户)等。
+        上一层租户自动涵盖下一层租户。
+
+        example | 说明
+        -----|-----------
+        /bestnovo | 代表百世诺的根空间，属于这个空间的用户，同样可以 access `/bestnovo/market` 和 `/bestnovo/develop`
+        /bestnovo/market  | 百世诺市场部
+        /bestnovo/develop | 百世诺研发部
+      type: object
+      properties:
+        data:
+          type: object
+          description: 第三方赋值的数据
+        id:
+          type: string
+          description: 唯一的英文名，不能重复，用 / 开头
+        name:
+          type: string
+          description: 命名空间的名称，例如`百世诺`
+        parent:
+          type: string
+          description: 父空间
+        public:
+          type: boolean
+          description: 是否公开的空间，如果是公开的话，允许用户自行注册
+        userActive:
+          type: boolean
+          description: 新增用户是否自动激活，缺省是 true
+        sms:
+          $ref: "#/components/schemas/SmsConfig"
+          description: 发送短信验证码的配置
+        email:
+          $ref: "#/components/schemas/EmailConfig"
+          description: 发送邮箱验证码的配置
+
+    Provider:
+      description: |
+        验证方式
+        例如 微信 验证
+      type: object
+      properties:
+        name:
+          type: string
+          enum: [PASSWORD, PHONE, WX, WXAPP, WXQY, GITHUB]
+          description: |
+            验证方式的名称
+            密码验证：PASSWORD
+            手机验证：PHONE
+            微信公众号： WX
+            微信小程序：WXAPP
+            微信企业号：WXQY
+            github：GITHUB
+        ns:
+          type: string
+          description: 命名空间
+        appId:
+          type: string
+          description: app id
+        appSecret:
+          type: string
+          description: app secret
+        update:
+          type: boolean
+          description: 是否自动更新用户数据
+
+    QiniuToken:
+      description: 七牛token
+      type: object
+      properties:
+        token:
+          type: string
+          description: 七牛token
+          example: vzTFBfjYKoBqF5fn3zo6rtFcU93wNFdKCXtBiOAu:bVrBTdUqSauS2djdBvYrwdj0yoE=:eyJkZWFkbGluZSI6MTU0NjA3NTIyN30=
+        expires:
+          type: integer
+          description: 过期时间以秒为单位
+          example: 7200
+        expiredAt:
+          type: string
+          description: 过期日期
+          format: date
+          example: 2018-12-29T10:20:27.225Z
+
+    Err:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
