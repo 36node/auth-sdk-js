@@ -156,7 +156,7 @@ declare namespace SDK {
       select?: string;
 
       filter: {
-        _id: {
+        id: {
           $regex?: string;
         };
         q?: string;
@@ -165,7 +165,7 @@ declare namespace SDK {
   };
 
   type ListNamespacesResponse = {
-    body: Array<Namespace>;
+    body: [Namespace];
     headers: {
       xTotalCount: string;
     };
@@ -228,14 +228,19 @@ declare namespace SDK {
       select?: string;
 
       filter: {
-        ns?: string;
+        ns?:
+          | {
+              $regex: string;
+            }
+          | string;
+        id?: string;
         q?: string;
       };
     };
   };
 
   type ListUsersResponse = {
-    body: Array<User>;
+    body: [User];
     headers: {
       xTotalCount: string;
     };
@@ -278,7 +283,11 @@ declare namespace SDK {
       filter: {
         ns?: string;
         sub?: string;
-        code?: string;
+        code?:
+          | {
+              $regex: string;
+            }
+          | string;
         phone?: string;
         used?: string;
       };
@@ -286,18 +295,18 @@ declare namespace SDK {
   };
 
   type ListInvitationsResponse = {
-    body: Array<Invitation>;
+    body: [Invitation];
     headers: {
       xTotalCount: string;
     };
   };
 
   type UpdateInvitationsRequest = {
-    body: Array<UpdateInvitationsBody>;
+    body: [UpdateInvitationsBody];
   };
 
   type UpdateInvitationsResponse = {
-    body: Array<Invitation>;
+    body: [Invitation];
   };
 
   type GetInvitationRequest = {
@@ -364,7 +373,7 @@ declare namespace SDK {
   };
 
   type ListProvidersResponse = {
-    body: Array<Provider>;
+    body: [Provider];
     headers: {
       xTotalCount: string;
     };
@@ -397,7 +406,7 @@ declare namespace SDK {
     id: string;
     active: boolean;
     expireAt: string;
-    ns: Array<string>;
+    ns: [string];
     source: string;
     avatar: string;
     birthdate: string;
@@ -405,19 +414,20 @@ declare namespace SDK {
     data: {};
     country: string;
     email: string;
-    gender: string;
+    gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
     language: string;
     username: string;
     name: string;
     nickname: string;
     phone: string;
     province: string;
-    roles: Array<{
-      ns: string;
-      name: string;
-    }>;
+    roles: [
+      {
+        ns: string;
+        name: string;
+      }
+    ];
   };
-
   type Session = {
     createdAt: string;
     updatedAt: string;
@@ -426,21 +436,23 @@ declare namespace SDK {
     client: string;
     device: string;
     login: string;
-    ns: Array<string>;
+    ns: [string];
     provider: string;
-    method: string;
+    method: "PASSWORD" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
     token: string;
-    roles: Array<{
-      ns: string;
-      name: string;
-    }>;
+    roles: [
+      {
+        ns: string;
+        name: string;
+      }
+    ];
     user: {
       createdAt: string;
       updatedAt: string;
       id: string;
       active: boolean;
       expireAt: string;
-      ns: Array<string>;
+      ns: [string];
       source: string;
       avatar: string;
       birthdate: string;
@@ -448,21 +460,22 @@ declare namespace SDK {
       data: {};
       country: string;
       email: string;
-      gender: string;
+      gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       language: string;
       username: string;
       name: string;
       nickname: string;
       phone: string;
       province: string;
-      roles: Array<{
-        ns: string;
-        name: string;
-      }>;
+      roles: [
+        {
+          ns: string;
+          name: string;
+        }
+      ];
     };
     profile: {};
   };
-
   type CreateSessionBody = {
     client: string;
     device: string;
@@ -474,7 +487,6 @@ declare namespace SDK {
     encryptedData: string;
     iv: string;
   };
-
   type Invitation = {
     id: string;
     ns: string;
@@ -489,19 +501,16 @@ declare namespace SDK {
     used: boolean;
     usedAt: string;
   };
-
   type UpdateInvitationBody = {
     until: string;
     period: number;
   };
-
   type UpdateInvitationsBody = {
     id: string;
     code: string;
     until: string;
     period: number;
   };
-
   type CreateInvitationBody = {
     until: string;
     period: number;
@@ -509,7 +518,6 @@ declare namespace SDK {
     phone: string;
     sub: string;
   };
-
   type Validation = {
     id: string;
     ns: string;
@@ -521,26 +529,22 @@ declare namespace SDK {
     used: boolean;
     usedAt: string;
   };
-
   type CreateValidationBody = {
     ns: string;
     phone: string;
     email: string;
   };
-
   type SmsConfig = {
     expire: number;
     tplId: string;
     sign: string;
   };
-
   type EmailConfig = {
     from: string;
     subject: string;
     text: string;
     html: string;
   };
-
   type Namespace = {
     data: {};
     id: string;
@@ -560,21 +564,18 @@ declare namespace SDK {
       html: string;
     };
   };
-
   type Provider = {
-    name: string;
+    name: "PASSWORD" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
     ns: string;
     appId: string;
     appSecret: string;
     update: boolean;
   };
-
   type QiniuToken = {
     token: string;
     expires: number;
     expiredAt: string;
   };
-
   type Err = {
     code: string;
     message: string;
