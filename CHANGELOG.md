@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.15](https://github.com/36node/auth-sdk/compare/v0.2.14...v0.2.15) (2019-07-27)
+
+
+
 ## [0.2.14](https://github.com/36node/auth-sdk/compare/v0.2.13...v0.2.14) (2019-07-27)
 
 
