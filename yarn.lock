@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@36node/eslint-config@^0.6.0":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@36node/eslint-config/-/eslint-config-0.6.1.tgz#60787b61b74605fbd3db1084d45c497e8e3498f9"
-  integrity sha512-WEy6m98l3F90eaovwos4Fyc1DUrzyC48sDf0nNKzNkuCsLigT/14YhabDrrPxYbG58ApOKyfDPI8fzQfMQS4Bg==
+"@36node/eslint-config@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@36node/eslint-config/-/eslint-config-0.6.2.tgz#e22826840561d01bdabe99b7c4d7b7180971d05b"
+  integrity sha512-3snMgXhXBk4w7DoXHWCetpfAnhGlWDmSgXiG28q26epslsnjEp2BMX9weFtIbVB0b54633WSTRlOHIgG49xVLA==
   dependencies:
     babel-eslint "10.0.1"
     eslint "^5.16.0"
@@ -29,35 +29,16 @@
     node-fetch "^2.2.0"
     wxapp-http "^3.1.0"
 
-"@36node/mock-server@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@36node/mock-server/-/mock-server-0.0.1.tgz#01e6c8bfb4d25cfa039dff1ba70cf0755c7563a1"
-  integrity sha512-tdP/7TUVRzTe2Hu42CyN2MRKemSIVS1Rmt0yFnes+3niHUW3izk6HNJivXGlaqDdOdPxS48WvNu3OVfHshRnpQ==
-  dependencies:
-    "@36node/query-normalizr" "^0.4.4"
-    express "^4.17.0"
-    humps "^2.0.1"
-    json-server "^0.15.0"
-    lodash "^4.17.11"
-
-"@36node/mock-server@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@36node/mock-server/-/mock-server-0.0.7.tgz#e7e0b3c1e6ecc532b776a7c7ecb76caad458ed23"
-  integrity sha512-0/Hbfg9esuAoqpkYwaKLawp8Ny3HKauboJSvjesukQ/diAunLthy6qEytkCI5OsfO62YNrSCqr88NACg0RYDqA==
+"@36node/mock-server@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@36node/mock-server/-/mock-server-0.0.9.tgz#8caeee07cf459f6a35ae448e1f88e9d2c5c3a380"
+  integrity sha512-jA1wZGtnumXR0DyoWB9+aXDytVi/nEwr2tCr+F4krqFU81WhATqTi0xad4W7T5FQ16tjeNxCvGXhjGYUnpGWIw==
   dependencies:
     express "^4.17.0"
     humps "^2.0.1"
     json-server "^0.15.0"
     lodash "^4.17.11"
     moment "^2.24.0"
-
-"@36node/query-normalizr@^0.4.0", "@36node/query-normalizr@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@36node/query-normalizr/-/query-normalizr-0.4.4.tgz#051c58d3bdd551850467ce49210934f8a6e7015f"
-  integrity sha512-oftEFn+GLgdnzG3lnMsRLNO/a5fpcPlrwGzr7jOBfSzXB1l0S0JeUH3KHezP76AhWcFYkQgzdBFElyl4de57zw==
-  dependencies:
-    humps "^2.0.1"
-    lodash "^4.17.11"
 
 "@36node/query-normalizr@^0.4.6":
   version "0.4.6"
@@ -67,13 +48,13 @@
     humps "^2.0.1"
     lodash "^4.17.11"
 
-"@36node/sketch@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.12.0.tgz#a9edaddc457b664f3da902ce4fcb939266371c94"
-  integrity sha512-xQqGaFGJ0jqB4XTlh7tDjt7xweKlPd+cgSlc9/7KsdGdb2NtO+5H7TRAOI9DEvaeQo2Bh3mDG+p5o4+SpH0c/w==
+"@36node/sketch@^0.13.11":
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.13.11.tgz#6628ebfca9bd0b8449162962475cd70e93a97e07"
+  integrity sha512-wbbm5fYQZCn39ARyEYXZ0H6c565qcoZFpQvc0fWmZo2oB4PKWw0CA45OCS1UQ3ctZ62Zr3usFZ3U+xaZmzHXFg==
   dependencies:
-    "@36node/mock-server" "^0.0.1"
-    "@36node/query-normalizr" "^0.4.4"
+    "@36node/mock-server" "^0.0.9"
+    "@36node/query-normalizr" "^0.4.6"
     "@babel/plugin-proposal-decorators" "7.4.4"
     babel-loader "8.0.5"
     babel-plugin-import "1.11.0"
@@ -91,6 +72,7 @@
     jest-styled-components "6.3.1"
     json-server "^0.15.0"
     jsonfile "^4.0.0"
+    lerna-alias "^3.0.2"
     less "^3.9.0"
     less-loader "^4.1.0"
     microbundle "0.11.0"
@@ -101,14 +83,16 @@
     react-app-rewired "2.1.3"
     react-scripts "3.0.1"
     react-test-renderer "16.8.6"
+    rollup-plugin-babel "^4.3.3"
+    rollup-plugin-replace "^1.1.1"
     tar "^4.4.4"
     tmp "^0.0.33"
     webpack-filter-warnings-plugin "^1.2.1"
 
-"@36node/swagen@^0.13.2":
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.13.2.tgz#cb45b272638289d1f2cdf7f8b27ea5a0ec7014b4"
-  integrity sha512-MoMP7umEH587Wx7wUAXep3rx/LERhiQlMb9SoLQ74932iSlzq/TbZHy/cc6oW5DrJj1ZpliPtLAwnag2fSdwvg==
+"@36node/swagen@^0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.13.4.tgz#494fc414e4aa7c77082e24d275b79feef57a1766"
+  integrity sha512-uToyei0UUu+gP2HP6Ac2PMIbb+Mqi9QG5W0qzp53WQdL1Ggetzuejb5+zcFcrPCeRASp0oeZ4Vdu7sZJMTsv6A==
   dependencies:
     "@36node/query-normalizr" "^0.4.6"
     handlebars "^4.0.12"
@@ -5844,6 +5828,13 @@ get-caller-file@^2.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
+get-lerna-packages@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/get-lerna-packages/-/get-lerna-packages-0.1.1.tgz#37aaaac36fd14f00082f17b1096dd6c69290cef9"
+  integrity sha512-venxkvga57gOUZoTmXZlJ0zHc8cmvsx7Y0GTMcoEK/7OCEK3PLpG5gVTbUUMJaLxbzK13AWQdKPf1LSkuEfWqA==
+  dependencies:
+    glob "^7.1.2"
+
 get-object@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/get-object/-/get-object-0.2.0.tgz#d92ff7d5190c64530cda0543dac63a3d47fe8c0c"
@@ -8113,6 +8104,13 @@ left-pad@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
   integrity sha512-XI5MPzVNApjAyhQzphX8BkmKsKUxD4LdyK24iZeQGinBN9yTQT3bFlCBy/aVx2HrNcqQGsdot8ghrjyrvMCoEA==
+
+lerna-alias@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/lerna-alias/-/lerna-alias-3.0.2.tgz#61d7d79b182849e98ee4cdca0127f714f8712d4d"
+  integrity sha512-3Ly21S1gn+j+yt2zMN0mB5ull1U46HYHb1ksjCznuuac/YWI4gf3EYNwxHNz7W4MdezTF4SClHRbJsmfu/8wyQ==
+  dependencies:
+    get-lerna-packages "^0.1.0"
 
 less-loader@^4.1.0:
   version "4.1.0"
@@ -12040,7 +12038,7 @@ rollup-plugin-alias@^1.5.1:
   dependencies:
     slash "^3.0.0"
 
-rollup-plugin-babel@^4.1.0-0:
+rollup-plugin-babel@^4.1.0-0, rollup-plugin-babel@^4.3.3:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.3.3.tgz#7eb5ac16d9b5831c3fd5d97e8df77ba25c72a2aa"
   integrity sha512-tKzWOCmIJD/6aKNz0H1GMM+lW1q9KyFubbWzGiOG540zxPPifnEAHTZwjo0g991Y+DyOZcLqBgqOdqazYE5fkw==
@@ -12133,6 +12131,15 @@ rollup-plugin-preserve-shebang@^0.1.6:
   integrity sha512-b+psdlXZOjmlnKmL6/YAkR8PR15VPcUNXdT35urBRJ8jE6UxHyb4HXeeN3qRZJbMJJaX1eRP72XwH6IvGFh5Jw==
   dependencies:
     magic-string "^0.22.4"
+
+rollup-plugin-replace@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-replace/-/rollup-plugin-replace-1.2.1.tgz#6307ee15f223aa1fd3207cd3c08052468f180daf"
+  integrity sha512-l9Pgb7bh5Wx18+qM9iOWZ/CKcwyKJETLAwCh6bjKwTOgTzNH3KmKDWI/X/ToNA7fA/68chhFyvISvreRxWFVtw==
+  dependencies:
+    magic-string "^0.22.4"
+    minimatch "^3.0.2"
+    rollup-pluginutils "^2.0.1"
 
 rollup-plugin-sizes@^0.4.2:
   version "0.4.2"

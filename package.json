@@ -23,7 +23,7 @@
   "scripts": {
     "build": "NODE_ENV=production sketch build",
     "format": "prettier --trailing-comma es5 --write 'src/**/*.js'",
-    "gen": "swagen sdk ../auth/openapi.yml && npm run format",
+    "gen": "swagen sdk ./openapi.yml && npm run format",
     "lint": "sketch lint src",
     "release": "standard-version",
     "start": "bin/mock-server.js",
@@ -49,14 +49,14 @@
   },
   "dependencies": {
     "@36node/fetch": "^0.6.0",
-    "@36node/query-normalizr": "^0.4.0",
+    "@36node/query-normalizr": "^0.4.6",
     "commander": "^2.20.0"
   },
   "devDependencies": {
-    "@36node/mock-server": "^0.0.7",
-    "@36node/eslint-config": "^0.6.0",
-    "@36node/sketch": "^0.12.0",
-    "@36node/swagen": "^0.13.2",
+    "@36node/eslint-config": "^0.6.2",
+    "@36node/mock-server": "^0.0.9",
+    "@36node/sketch": "^0.13.11",
+    "@36node/swagen": "^0.13.4",
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",
     "faker": "^4.1.0",

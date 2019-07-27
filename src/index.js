@@ -48,7 +48,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createNamespace");
 
       return fetch(`${this.base}/namespaces`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -63,7 +63,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/namespaces`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -81,7 +81,7 @@ export default class SDK {
         throw new Error("namespaceId is required for getNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -99,7 +99,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for updateNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
-        method: "put",
+        method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -117,7 +117,7 @@ export default class SDK {
         throw new Error("namespaceId is required for deleteNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
-        method: "delete",
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -138,7 +138,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createSession");
 
       return fetch(`${this.base}/sessions`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -155,7 +155,7 @@ export default class SDK {
       if (!sessionId) throw new Error("sessionId is required for getSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -172,7 +172,7 @@ export default class SDK {
         throw new Error("sessionId is required for deleteSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
-        method: "delete",
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -193,7 +193,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createUser");
 
       return fetch(`${this.base}/users`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -208,7 +208,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/users`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -225,7 +225,7 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for getUser");
 
       return fetch(`${this.base}/users/${userId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -242,7 +242,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for updateUser");
 
       return fetch(`${this.base}/users/${userId}`, {
-        method: "put",
+        method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -259,7 +259,7 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for deleteUser");
 
       return fetch(`${this.base}/users/${userId}`, {
-        method: "delete",
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -280,7 +280,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createInvitation");
 
       return fetch(`${this.base}/invitations`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -295,7 +295,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/invitations`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -313,7 +313,7 @@ export default class SDK {
         throw new Error("requetBody is required for updateInvitations");
 
       return fetch(`${this.base}/invitations`, {
-        method: "put",
+        method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -331,7 +331,7 @@ export default class SDK {
         throw new Error("invitationId is required for getInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -349,7 +349,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for updateInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "put",
+        method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -367,7 +367,7 @@ export default class SDK {
         throw new Error("invitationId is required for deleteInvitation");
 
       return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "delete",
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -388,7 +388,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createValidation");
 
       return fetch(`${this.base}/validations`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -410,7 +410,7 @@ export default class SDK {
       if (!bucket) throw new Error("bucket is required for getQiniuToken");
 
       return fetch(`${this.base}/qiniu/${bucket}`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -432,7 +432,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createProvider");
 
       return fetch(`${this.base}/providers`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -447,7 +447,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/providers`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -465,7 +465,7 @@ export default class SDK {
         throw new Error("providerId is required for getProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -483,7 +483,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for updateProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
-        method: "put",
+        method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -501,7 +501,7 @@ export default class SDK {
         throw new Error("providerId is required for deleteProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
-        method: "delete",
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
