@@ -24,7 +24,7 @@
   "scripts": {
     "build": "NODE_ENV=production sketch build",
     "format": "prettier --trailing-comma es5 --write 'src/**/*.js'",
-    "gen": "swagen sdk ./openapi.yml && npm run format",
+    "gen": "swagen sdk https://api.stargate.36node.com/auth/v0/openapi.yml && npm run format",
     "lint": "sketch lint src",
     "release": "standard-version",
     "start": "bin/mock-server.js",

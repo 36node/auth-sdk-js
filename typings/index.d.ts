@@ -153,14 +153,13 @@ declare namespace SDK {
     query: {
       limit?: number;
       offset?: string;
+      sort?: string;
       select?: string;
 
       filter: {
-        id?:
-          | {
-              $regex: string;
-            }
-          | [string];
+        id: {
+          $regex?: string;
+        };
         q?: string;
       };
     };
@@ -235,7 +234,6 @@ declare namespace SDK {
               $regex: string;
             }
           | string;
-        id?: [string];
         q?: string;
       };
     };
@@ -292,7 +290,6 @@ declare namespace SDK {
           | string;
         phone?: string;
         used?: string;
-        id?: string;
       };
     };
   };
@@ -371,7 +368,6 @@ declare namespace SDK {
 
       filter: {
         ns?: string;
-        id?: string;
       };
     };
   };
@@ -552,6 +548,7 @@ declare namespace SDK {
   type Namespace = {
     data: {};
     id: string;
+    key: string;
     name: string;
     parent: string;
     public: boolean;
