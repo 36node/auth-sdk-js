@@ -49,15 +49,15 @@
     ]
   },
   "dependencies": {
-    "@36node/fetch": "^0.6.0",
-    "@36node/query-normalizr": "^0.4.6",
+    "@36node/fetch": "^0.6.4",
+    "@36node/query-normalizr": "^0.4.8",
     "commander": "^2.20.0"
   },
   "devDependencies": {
-    "@36node/eslint-config": "^0.6.2",
+    "@36node/eslint-config": "^0.6.4",
     "@36node/mock-server": "^0.0.9",
-    "@36node/sketch": "^0.13.11",
-    "@36node/swagen": "^0.13.4",
+    "@36node/sketch": "^0.13.27",
+    "@36node/swagen": "^0.13.8",
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",
     "faker": "^4.1.0",
