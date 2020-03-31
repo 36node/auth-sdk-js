@@ -144,6 +144,21 @@ export default class SDK {
       });
     },
     /**
+     * List sessions
+     *
+     * @param {ListSessionsRequest} req listSessions request
+     * @returns {Promise<ListSessionsResponse>} A paged array of session
+     */
+    listSessions: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/sessions`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
      * Get session and auto refresh it if need
      *
      * @param {GetSessionRequest} req getSession request

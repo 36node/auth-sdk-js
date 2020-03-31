@@ -50,6 +50,10 @@ declare namespace SDK {
      */
     createSession(req: CreateSessionRequest): Promise<CreateSessionResponse>;
     /**
+     * List sessions
+     */
+    listSessions(req: ListSessionsRequest): Promise<ListSessionsResponse>;
+    /**
      * Get session and auto refresh it if need
      */
     getSession(req: GetSessionRequest): Promise<GetSessionResponse>;
@@ -199,6 +203,27 @@ declare namespace SDK {
 
   type CreateSessionResponse = {
     body: Session;
+  };
+
+  type ListSessionsRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      sort?: string;
+      populate?: string;
+      select?: string;
+
+      filter: {
+        user?: string;
+      };
+    };
+  };
+
+  type ListSessionsResponse = {
+    body: [Session];
+    headers: {
+      xTotalCount: string;
+    };
   };
 
   type GetSessionRequest = {
