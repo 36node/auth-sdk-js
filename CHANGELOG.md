@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.3.0](https://github.com/36node/auth-sdk/compare/v0.2.19...v0.3.0) (2020-03-31)
+
+
+### Features
+
+* auth with list session api ([3ba9d80](https://github.com/36node/auth-sdk/commit/3ba9d80))
+
+
+
 ## [0.2.19](https://github.com/36node/auth-sdk/compare/v0.2.18...v0.2.19) (2020-03-14)
 
 
