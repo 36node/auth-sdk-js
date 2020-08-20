@@ -348,8 +348,10 @@ export default class SDK {
      * @returns {Promise<CreateNsRoleResponse>} The namespace role created
      */
     createNsRole: req => {
-      const { body } = req || {};
+      const { namespaceId, body } = req || {};
 
+      if (!namespaceId)
+        throw new Error("namespaceId is required for createNsRole");
       if (!body) throw new Error("requetBody is required for createNsRole");
 
       return fetch(`${this.base}/namespaces/${namespaceId}/roles`, {

@@ -1333,6 +1333,7 @@ declare global {
     };
   }
   export interface CreateNsRoleRequest {
+    namespaceId: string;
     body: {
       /**
        * 角色名称
