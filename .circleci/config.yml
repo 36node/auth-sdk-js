@@ -6,7 +6,6 @@ defaults: &defaults
     - image: circleci/node:10
 
 jobs:
-
   build:
     <<: *defaults
     steps:
@@ -36,12 +35,6 @@ jobs:
       - run:
           name: Eslint
           command: yarn lint
-      - run:
-          name: Unit Test
-          command: yarn test --coverage
-      - run:
-          name: Upload Coverage
-          command: bash <(curl -s https://codecov.io/bash)
 
   release:
     <<: *defaults
@@ -81,13 +74,13 @@ workflows:
   main:
     jobs:
       - build:
-          filters:  # required since `release` has tag filters AND requires `build`
+          filters: # required since `release` has tag filters AND requires `build`
             tags:
               only: /.*/
       - test:
           requires:
             - build
-          filters:  # required since `release` has tag filters AND requires `test`
+          filters: # required since `release` has tag filters AND requires `test`
             tags:
               only: /.*/
       - release:

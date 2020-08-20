@@ -1,5 +1,5 @@
+//@ts-check
 import fetch from "@36node/fetch";
-import { denormalize } from "@36node/query-normalizr";
 
 export default class SDK {
   /**@type {string} **/
@@ -14,6 +14,7 @@ export default class SDK {
    * */
   get auth() {
     let token = this.token;
+    // @ts-ignore
     if (typeof token === "function") token = token();
     if (token) return `Bearer ${token}`;
 
@@ -27,9 +28,9 @@ export default class SDK {
    * @param {string} opt.base  base url
    * @param {string} opt.token token for authorization
    */
-  constructor(opt = {}) {
-    this.base = opt.base || "";
-    this.token = opt.token || "";
+  constructor(opt = { base: "", token: "" }) {
+    this.base = opt.base;
+    this.token = opt.token;
   }
 
   /**
@@ -42,15 +43,15 @@ export default class SDK {
      * @param {CreateNamespaceRequest} req createNamespace request
      * @returns {Promise<CreateNamespaceResponse>} The namespace created
      */
-    createNamespace: (req = {}) => {
-      const { headers, body } = req;
+    createNamespace: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createNamespace");
 
       return fetch(`${this.base}/namespaces`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -59,13 +60,13 @@ export default class SDK {
      * @param {ListNamespacesRequest} req listNamespaces request
      * @returns {Promise<ListNamespacesResponse>} A paged array of namespaces
      */
-    listNamespaces: (req = {}) => {
-      const { query, headers } = req;
+    listNamespaces: req => {
+      const { query } = req || {};
 
       return fetch(`${this.base}/namespaces`, {
         method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
+        query,
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -74,15 +75,15 @@ export default class SDK {
      * @param {GetNamespaceRequest} req getNamespace request
      * @returns {Promise<GetNamespaceResponse>} The namespace with given id
      */
-    getNamespace: (req = {}) => {
-      const { namespaceId, headers } = req;
+    getNamespace: req => {
+      const { namespaceId } = req || {};
 
       if (!namespaceId)
         throw new Error("namespaceId is required for getNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -91,8 +92,8 @@ export default class SDK {
      * @param {UpdateNamespaceRequest} req updateNamespace request
      * @returns {Promise<UpdateNamespaceResponse>} The namespace
      */
-    updateNamespace: (req = {}) => {
-      const { namespaceId, headers, body } = req;
+    updateNamespace: req => {
+      const { namespaceId, body } = req || {};
 
       if (!namespaceId)
         throw new Error("namespaceId is required for updateNamespace");
@@ -101,24 +102,23 @@ export default class SDK {
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
         method: "PUT",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
      * delete namespace
      *
      * @param {DeleteNamespaceRequest} req deleteNamespace request
-     * @returns {Promise<DeleteNamespaceResponse>} namespace deleted
      */
-    deleteNamespace: (req = {}) => {
-      const { namespaceId, headers } = req;
+    deleteNamespace: req => {
+      const { namespaceId } = req || {};
 
       if (!namespaceId)
         throw new Error("namespaceId is required for deleteNamespace");
 
       return fetch(`${this.base}/namespaces/${namespaceId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -127,15 +127,15 @@ export default class SDK {
      * @param {GetConfigRequest} req getConfig request
      * @returns {Promise<GetConfigResponse>} The register config with given ns id
      */
-    getConfig: (req = {}) => {
-      const { namespaceId, headers } = req;
+    getConfig: req => {
+      const { namespaceId } = req || {};
 
       if (!namespaceId)
         throw new Error("namespaceId is required for getConfig");
 
       return fetch(`${this.base}/config/${namespaceId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -149,15 +149,15 @@ export default class SDK {
      * @param {CreateSessionRequest} req createSession request
      * @returns {Promise<CreateSessionResponse>} The session created
      */
-    createSession: (req = {}) => {
-      const { headers, body } = req;
+    createSession: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createSession");
 
       return fetch(`${this.base}/sessions`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -166,13 +166,13 @@ export default class SDK {
      * @param {ListSessionsRequest} req listSessions request
      * @returns {Promise<ListSessionsResponse>} A paged array of session
      */
-    listSessions: (req = {}) => {
-      const { query, headers } = req;
+    listSessions: req => {
+      const { query } = req || {};
 
       return fetch(`${this.base}/sessions`, {
         method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
+        query,
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -181,31 +181,30 @@ export default class SDK {
      * @param {GetSessionRequest} req getSession request
      * @returns {Promise<GetSessionResponse>} The session
      */
-    getSession: (req = {}) => {
-      const { sessionId, headers } = req;
+    getSession: req => {
+      const { sessionId } = req || {};
 
       if (!sessionId) throw new Error("sessionId is required for getSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
      * Deletes a session
      *
      * @param {DeleteSessionRequest} req deleteSession request
-     * @returns {Promise<DeleteSessionResponse>} Session deleted
      */
-    deleteSession: (req = {}) => {
-      const { sessionId, headers } = req;
+    deleteSession: req => {
+      const { sessionId } = req || {};
 
       if (!sessionId)
         throw new Error("sessionId is required for deleteSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -214,15 +213,15 @@ export default class SDK {
      * @param {CreateTokenRequest} req createToken request
      * @returns {Promise<CreateTokenResponse>} The code created
      */
-    createToken: (req = {}) => {
-      const { headers, body } = req;
+    createToken: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createToken");
 
       return fetch(`${this.base}/test`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -231,15 +230,15 @@ export default class SDK {
      * @param {BindUserRequest} req bindUser request
      * @returns {Promise<BindUserResponse>} The session created
      */
-    bindUser: (req = {}) => {
-      const { headers, body } = req;
+    bindUser: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for bindUser");
 
       return fetch(`${this.base}/bind`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -253,15 +252,15 @@ export default class SDK {
      * @param {CreateValidationRequest} req createValidation request
      * @returns {Promise<CreateValidationResponse>} The validation created
      */
-    createValidation: (req = {}) => {
-      const { headers, body } = req;
+    createValidation: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createValidation");
 
       return fetch(`${this.base}/validation`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -275,15 +274,15 @@ export default class SDK {
      * @param {CreateProviderRequest} req createProvider request
      * @returns {Promise<CreateProviderResponse>} The provider created
      */
-    createProvider: (req = {}) => {
-      const { headers, body } = req;
+    createProvider: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createProvider");
 
       return fetch(`${this.base}/providers`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -292,13 +291,13 @@ export default class SDK {
      * @param {ListProvidersRequest} req listProviders request
      * @returns {Promise<ListProvidersResponse>} A paged array of providers
      */
-    listProviders: (req = {}) => {
-      const { query, headers } = req;
+    listProviders: req => {
+      const { query } = req || {};
 
       return fetch(`${this.base}/providers`, {
         method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
+        query,
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -307,15 +306,15 @@ export default class SDK {
      * @param {GetProviderRequest} req getProvider request
      * @returns {Promise<GetProviderResponse>} The provider with given id
      */
-    getProvider: (req = {}) => {
-      const { providerId, headers } = req;
+    getProvider: req => {
+      const { providerId } = req || {};
 
       if (!providerId)
         throw new Error("providerId is required for getProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -324,8 +323,8 @@ export default class SDK {
      * @param {UpdateProviderRequest} req updateProvider request
      * @returns {Promise<UpdateProviderResponse>} The provider
      */
-    updateProvider: (req = {}) => {
-      const { providerId, headers, body } = req;
+    updateProvider: req => {
+      const { providerId, body } = req || {};
 
       if (!providerId)
         throw new Error("providerId is required for updateProvider");
@@ -334,24 +333,23 @@ export default class SDK {
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "PUT",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
      * delete provider
      *
      * @param {DeleteProviderRequest} req deleteProvider request
-     * @returns {Promise<DeleteProviderResponse>} provider deleted
      */
-    deleteProvider: (req = {}) => {
-      const { providerId, headers } = req;
+    deleteProvider: req => {
+      const { providerId } = req || {};
 
       if (!providerId)
         throw new Error("providerId is required for deleteProvider");
 
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -365,15 +363,15 @@ export default class SDK {
      * @param {CreateUserRequest} req createUser request
      * @returns {Promise<CreateUserResponse>} The user created
      */
-    createUser: (req = {}) => {
-      const { headers, body } = req;
+    createUser: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createUser");
 
       return fetch(`${this.base}/users`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -382,13 +380,13 @@ export default class SDK {
      * @param {ListUsersRequest} req listUsers request
      * @returns {Promise<ListUsersResponse>} A paged array of users
      */
-    listUsers: (req = {}) => {
-      const { query, headers } = req;
+    listUsers: req => {
+      const { query } = req || {};
 
       return fetch(`${this.base}/users`, {
         method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
+        query,
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -397,14 +395,14 @@ export default class SDK {
      * @param {GetUserRequest} req getUser request
      * @returns {Promise<GetUserResponse>} The user with given id
      */
-    getUser: (req = {}) => {
-      const { userId, headers } = req;
+    getUser: req => {
+      const { userId } = req || {};
 
       if (!userId) throw new Error("userId is required for getUser");
 
       return fetch(`${this.base}/users/${userId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -413,8 +411,8 @@ export default class SDK {
      * @param {UpdateUserRequest} req updateUser request
      * @returns {Promise<UpdateUserResponse>} The user
      */
-    updateUser: (req = {}) => {
-      const { userId, headers, body } = req;
+    updateUser: req => {
+      const { userId, body } = req || {};
 
       if (!userId) throw new Error("userId is required for updateUser");
       if (!body) throw new Error("requetBody is required for updateUser");
@@ -422,23 +420,22 @@ export default class SDK {
       return fetch(`${this.base}/users/${userId}`, {
         method: "PUT",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
      * delete user
      *
      * @param {DeleteUserRequest} req deleteUser request
-     * @returns {Promise<DeleteUserResponse>} user deleted
      */
-    deleteUser: (req = {}) => {
-      const { userId, headers } = req;
+    deleteUser: req => {
+      const { userId } = req || {};
 
       if (!userId) throw new Error("userId is required for deleteUser");
 
       return fetch(`${this.base}/users/${userId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -447,15 +444,15 @@ export default class SDK {
      * @param {RegisterUserRequest} req registerUser request
      * @returns {Promise<RegisterUserResponse>} The user register
      */
-    registerUser: (req = {}) => {
-      const { headers, body } = req;
+    registerUser: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for registerUser");
 
       return fetch(`${this.base}/register`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -469,15 +466,15 @@ export default class SDK {
      * @param {CreateCodeRequest} req createCode request
      * @returns {Promise<CreateCodeResponse>} The code created
      */
-    createCode: (req = {}) => {
-      const { headers, body } = req;
+    createCode: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createCode");
 
       return fetch(`${this.base}/code`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
@@ -491,15 +488,15 @@ export default class SDK {
      * @param {CreateAppRequest} req createApp request
      * @returns {Promise<CreateAppResponse>} The provider created
      */
-    createApp: (req = {}) => {
-      const { headers, body } = req;
+    createApp: req => {
+      const { body } = req || {};
 
       if (!body) throw new Error("requetBody is required for createApp");
 
       return fetch(`${this.base}/apps`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -508,13 +505,13 @@ export default class SDK {
      * @param {ListAppsRequest} req listApps request
      * @returns {Promise<ListAppsResponse>} A paged array of apps
      */
-    listApps: (req = {}) => {
-      const { query, headers } = req;
+    listApps: req => {
+      const { query } = req || {};
 
       return fetch(`${this.base}/apps`, {
         method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
+        query,
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -523,14 +520,14 @@ export default class SDK {
      * @param {GetAppRequest} req getApp request
      * @returns {Promise<GetAppResponse>} The app with given id
      */
-    getApp: (req = {}) => {
-      const { appId, headers } = req;
+    getApp: req => {
+      const { appId } = req || {};
 
       if (!appId) throw new Error("appId is required for getApp");
 
       return fetch(`${this.base}/apps/${appId}`, {
         method: "GET",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
@@ -539,8 +536,8 @@ export default class SDK {
      * @param {UpdateAppRequest} req updateApp request
      * @returns {Promise<UpdateAppResponse>} The provider
      */
-    updateApp: (req = {}) => {
-      const { appId, headers, body } = req;
+    updateApp: req => {
+      const { appId, body } = req || {};
 
       if (!appId) throw new Error("appId is required for updateApp");
       if (!body) throw new Error("requetBody is required for updateApp");
@@ -548,23 +545,22 @@ export default class SDK {
       return fetch(`${this.base}/apps/${appId}`, {
         method: "PUT",
         body,
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
     /**
      * delete app
      *
      * @param {DeleteAppRequest} req deleteApp request
-     * @returns {Promise<DeleteAppResponse>} app deleted
      */
-    deleteApp: (req = {}) => {
-      const { appId, headers } = req;
+    deleteApp: req => {
+      const { appId } = req || {};
 
       if (!appId) throw new Error("appId is required for deleteApp");
 
       return fetch(`${this.base}/apps/${appId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
+        headers: { Authorization: this.auth },
       });
     },
   };
