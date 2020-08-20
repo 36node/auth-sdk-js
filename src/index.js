@@ -121,6 +121,23 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * Get register onfig by ns id
+     *
+     * @param {GetConfigRequest} req getConfig request
+     * @returns {Promise<GetConfigResponse>} The register config with given ns id
+     */
+    getConfig: (req = {}) => {
+      const { namespaceId, headers } = req;
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for getConfig");
+
+      return fetch(`${this.base}/config/${namespaceId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
   /**
    * session's methods
@@ -187,6 +204,152 @@ export default class SDK {
         throw new Error("sessionId is required for deleteSession");
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Create temp token
+     *
+     * @param {CreateTokenRequest} req createToken request
+     * @returns {Promise<CreateTokenResponse>} The code created
+     */
+    createToken: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createToken");
+
+      return fetch(`${this.base}/test`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * bind user
+     *
+     * @param {BindUserRequest} req bindUser request
+     * @returns {Promise<BindUserResponse>} The session created
+     */
+    bindUser: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for bindUser");
+
+      return fetch(`${this.base}/bind`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * validation's methods
+   */
+  validation = {
+    /**
+     * Create validation 发送验证码
+     *
+     * @param {CreateValidationRequest} req createValidation request
+     * @returns {Promise<CreateValidationResponse>} The validation created
+     */
+    createValidation: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createValidation");
+
+      return fetch(`${this.base}/validation`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * provider's methods
+   */
+  provider = {
+    /**
+     * Create provider
+     *
+     * @param {CreateProviderRequest} req createProvider request
+     * @returns {Promise<CreateProviderResponse>} The provider created
+     */
+    createProvider: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createProvider");
+
+      return fetch(`${this.base}/providers`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * List providers
+     *
+     * @param {ListProvidersRequest} req listProviders request
+     * @returns {Promise<ListProvidersResponse>} A paged array of providers
+     */
+    listProviders: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/providers`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get provider by id
+     *
+     * @param {GetProviderRequest} req getProvider request
+     * @returns {Promise<GetProviderResponse>} The provider with given id
+     */
+    getProvider: (req = {}) => {
+      const { providerId, headers } = req;
+
+      if (!providerId)
+        throw new Error("providerId is required for getProvider");
+
+      return fetch(`${this.base}/providers/${providerId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Update provider
+     *
+     * @param {UpdateProviderRequest} req updateProvider request
+     * @returns {Promise<UpdateProviderResponse>} The provider
+     */
+    updateProvider: (req = {}) => {
+      const { providerId, headers, body } = req;
+
+      if (!providerId)
+        throw new Error("providerId is required for updateProvider");
+      if (!body) throw new Error("requetBody is required for updateProvider");
+
+      return fetch(`${this.base}/providers/${providerId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * delete provider
+     *
+     * @param {DeleteProviderRequest} req deleteProvider request
+     * @returns {Promise<DeleteProviderResponse>} provider deleted
+     */
+    deleteProvider: (req = {}) => {
+      const { providerId, headers } = req;
+
+      if (!providerId)
+        throw new Error("providerId is required for deleteProvider");
+
+      return fetch(`${this.base}/providers/${providerId}`, {
         method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
@@ -278,244 +441,128 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
-  };
-  /**
-   * invitation's methods
-   */
-  invitation = {
     /**
-     * Create invitation 可以用于发送邀请码
+     * register user
      *
-     * @param {CreateInvitationRequest} req createInvitation request
-     * @returns {Promise<CreateInvitationResponse>} The invitaion created
+     * @param {RegisterUserRequest} req registerUser request
+     * @returns {Promise<RegisterUserResponse>} The user register
      */
-    createInvitation: (req = {}) => {
+    registerUser: (req = {}) => {
       const { headers, body } = req;
 
-      if (!body) throw new Error("requetBody is required for createInvitation");
+      if (!body) throw new Error("requetBody is required for registerUser");
 
-      return fetch(`${this.base}/invitations`, {
+      return fetch(`${this.base}/register`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * code's methods
+   */
+  code = {
+    /**
+     * Create code
+     *
+     * @param {CreateCodeRequest} req createCode request
+     * @returns {Promise<CreateCodeResponse>} The code created
+     */
+    createCode: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createCode");
+
+      return fetch(`${this.base}/code`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * app's methods
+   */
+  app = {
+    /**
+     * Create app
+     *
+     * @param {CreateAppRequest} req createApp request
+     * @returns {Promise<CreateAppResponse>} The provider created
+     */
+    createApp: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createApp");
+
+      return fetch(`${this.base}/apps`, {
         method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
     },
     /**
-     * List invitations
+     * List apps
      *
-     * @param {ListInvitationsRequest} req listInvitations request
-     * @returns {Promise<ListInvitationsResponse>} A paged array of invitations
+     * @param {ListAppsRequest} req listApps request
+     * @returns {Promise<ListAppsResponse>} A paged array of apps
      */
-    listInvitations: (req = {}) => {
+    listApps: (req = {}) => {
       const { query, headers } = req;
 
-      return fetch(`${this.base}/invitations`, {
+      return fetch(`${this.base}/apps`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },
     /**
-     * bulk upsert invitations
+     * Get app by id
      *
-     * @param {UpdateInvitationsRequest} req updateInvitations request
-     * @returns {Promise<UpdateInvitationsResponse>} The invitations be uperted
+     * @param {GetAppRequest} req getApp request
+     * @returns {Promise<GetAppResponse>} The app with given id
      */
-    updateInvitations: (req = {}) => {
-      const { headers, body } = req;
+    getApp: (req = {}) => {
+      const { appId, headers } = req;
 
-      if (!body)
-        throw new Error("requetBody is required for updateInvitations");
+      if (!appId) throw new Error("appId is required for getApp");
 
-      return fetch(`${this.base}/invitations`, {
+      return fetch(`${this.base}/apps/${appId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Update app
+     *
+     * @param {UpdateAppRequest} req updateApp request
+     * @returns {Promise<UpdateAppResponse>} The provider
+     */
+    updateApp: (req = {}) => {
+      const { appId, headers, body } = req;
+
+      if (!appId) throw new Error("appId is required for updateApp");
+      if (!body) throw new Error("requetBody is required for updateApp");
+
+      return fetch(`${this.base}/apps/${appId}`, {
         method: "PUT",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
     },
     /**
-     * Get invitation by id
+     * delete app
      *
-     * @param {GetInvitationRequest} req getInvitation request
-     * @returns {Promise<GetInvitationResponse>} The invitation with given id
+     * @param {DeleteAppRequest} req deleteApp request
+     * @returns {Promise<DeleteAppResponse>} app deleted
      */
-    getInvitation: (req = {}) => {
-      const { invitationId, headers } = req;
+    deleteApp: (req = {}) => {
+      const { appId, headers } = req;
 
-      if (!invitationId)
-        throw new Error("invitationId is required for getInvitation");
+      if (!appId) throw new Error("appId is required for deleteApp");
 
-      return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * Update invitation
-     *
-     * @param {UpdateInvitationRequest} req updateInvitation request
-     * @returns {Promise<UpdateInvitationResponse>} The invitation
-     */
-    updateInvitation: (req = {}) => {
-      const { invitationId, headers, body } = req;
-
-      if (!invitationId)
-        throw new Error("invitationId is required for updateInvitation");
-      if (!body) throw new Error("requetBody is required for updateInvitation");
-
-      return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * delete invitation
-     *
-     * @param {DeleteInvitationRequest} req deleteInvitation request
-     * @returns {Promise<DeleteInvitationResponse>} invitation deleted
-     */
-    deleteInvitation: (req = {}) => {
-      const { invitationId, headers } = req;
-
-      if (!invitationId)
-        throw new Error("invitationId is required for deleteInvitation");
-
-      return fetch(`${this.base}/invitations/${invitationId}`, {
-        method: "DELETE",
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-  };
-  /**
-   * validation's methods
-   */
-  validation = {
-    /**
-     * Create validation 发送验证码
-     *
-     * @param {CreateValidationRequest} req createValidation request
-     * @returns {Promise<CreateValidationResponse>} The validation created
-     */
-    createValidation: (req = {}) => {
-      const { headers, body } = req;
-
-      if (!body) throw new Error("requetBody is required for createValidation");
-
-      return fetch(`${this.base}/validations`, {
-        method: "POST",
-        body,
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-  };
-  /**
-   * qiniu's methods
-   */
-  qiniu = {
-    /**
-     * get qiniu token for a specific bucket
-     *
-     * @param {GetQiniuTokenRequest} req getQiniuToken request
-     * @returns {Promise<GetQiniuTokenResponse>} The token
-     */
-    getQiniuToken: (req = {}) => {
-      const { bucket, query, headers } = req;
-
-      if (!bucket) throw new Error("bucket is required for getQiniuToken");
-
-      return fetch(`${this.base}/qiniu/${bucket}`, {
-        method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-  };
-  /**
-   * provider's methods
-   */
-  provider = {
-    /**
-     * Create provider
-     *
-     * @param {CreateProviderRequest} req createProvider request
-     * @returns {Promise<CreateProviderResponse>} The provider created
-     */
-    createProvider: (req = {}) => {
-      const { headers, body } = req;
-
-      if (!body) throw new Error("requetBody is required for createProvider");
-
-      return fetch(`${this.base}/providers`, {
-        method: "POST",
-        body,
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * List providers
-     *
-     * @param {ListProvidersRequest} req listProviders request
-     * @returns {Promise<ListProvidersResponse>} A paged array of providers
-     */
-    listProviders: (req = {}) => {
-      const { query, headers } = req;
-
-      return fetch(`${this.base}/providers`, {
-        method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * Get provider by id
-     *
-     * @param {GetProviderRequest} req getProvider request
-     * @returns {Promise<GetProviderResponse>} The provider with given id
-     */
-    getProvider: (req = {}) => {
-      const { providerId, headers } = req;
-
-      if (!providerId)
-        throw new Error("providerId is required for getProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * Update provider
-     *
-     * @param {UpdateProviderRequest} req updateProvider request
-     * @returns {Promise<UpdateProviderResponse>} The provider
-     */
-    updateProvider: (req = {}) => {
-      const { providerId, headers, body } = req;
-
-      if (!providerId)
-        throw new Error("providerId is required for updateProvider");
-      if (!body) throw new Error("requetBody is required for updateProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * delete provider
-     *
-     * @param {DeleteProviderRequest} req deleteProvider request
-     * @returns {Promise<DeleteProviderResponse>} provider deleted
-     */
-    deleteProvider: (req = {}) => {
-      const { providerId, headers } = req;
-
-      if (!providerId)
-        throw new Error("providerId is required for deleteProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
+      return fetch(`${this.base}/apps/${appId}`, {
         method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });

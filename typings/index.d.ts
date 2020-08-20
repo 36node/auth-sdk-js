@@ -9,11 +9,11 @@ declare class SDK {
 
   namespace: SDK.NamespaceAPI;
   session: SDK.SessionAPI;
-  user: SDK.UserAPI;
-  invitation: SDK.InvitationAPI;
   validation: SDK.ValidationAPI;
-  qiniu: SDK.QiniuAPI;
   provider: SDK.ProviderAPI;
+  user: SDK.UserAPI;
+  code: SDK.CodeAPI;
+  app: SDK.AppAPI;
 }
 
 declare namespace SDK {
@@ -43,6 +43,10 @@ declare namespace SDK {
      * delete namespace
      */
     deleteNamespace(req: DeleteNamespaceRequest): Promise<DeleteNamespaceResponse>;
+    /**
+     * Get register onfig by ns id
+     */
+    getConfig(req: GetConfigRequest): Promise<GetConfigResponse>;
   }
   export interface SessionAPI {
     /**
@@ -61,66 +65,20 @@ declare namespace SDK {
      * Deletes a session
      */
     deleteSession(req: DeleteSessionRequest): Promise<DeleteSessionResponse>;
-  }
-  export interface UserAPI {
     /**
-     * Create user
+     * Create temp token
      */
-    createUser(req: CreateUserRequest): Promise<CreateUserResponse>;
+    createToken(req: CreateTokenRequest): Promise<CreateTokenResponse>;
     /**
-     * List users
+     * bind user
      */
-    listUsers(req: ListUsersRequest): Promise<ListUsersResponse>;
-    /**
-     * Get user by id
-     */
-    getUser(req: GetUserRequest): Promise<GetUserResponse>;
-    /**
-     * Update user
-     */
-    updateUser(req: UpdateUserRequest): Promise<UpdateUserResponse>;
-    /**
-     * delete user
-     */
-    deleteUser(req: DeleteUserRequest): Promise<DeleteUserResponse>;
-  }
-  export interface InvitationAPI {
-    /**
-     * Create invitation 可以用于发送邀请码
-     */
-    createInvitation(req: CreateInvitationRequest): Promise<CreateInvitationResponse>;
-    /**
-     * List invitations
-     */
-    listInvitations(req: ListInvitationsRequest): Promise<ListInvitationsResponse>;
-    /**
-     * bulk upsert invitations
-     */
-    updateInvitations(req: UpdateInvitationsRequest): Promise<UpdateInvitationsResponse>;
-    /**
-     * Get invitation by id
-     */
-    getInvitation(req: GetInvitationRequest): Promise<GetInvitationResponse>;
-    /**
-     * Update invitation
-     */
-    updateInvitation(req: UpdateInvitationRequest): Promise<UpdateInvitationResponse>;
-    /**
-     * delete invitation
-     */
-    deleteInvitation(req: DeleteInvitationRequest): Promise<DeleteInvitationResponse>;
+    bindUser(req: BindUserRequest): Promise<BindUserResponse>;
   }
   export interface ValidationAPI {
     /**
      * Create validation 发送验证码
      */
     createValidation(req: CreateValidationRequest): Promise<CreateValidationResponse>;
-  }
-  export interface QiniuAPI {
-    /**
-     * get qiniu token for a specific bucket
-     */
-    getQiniuToken(req: GetQiniuTokenRequest): Promise<GetQiniuTokenResponse>;
   }
   export interface ProviderAPI {
     /**
@@ -144,6 +102,60 @@ declare namespace SDK {
      */
     deleteProvider(req: DeleteProviderRequest): Promise<DeleteProviderResponse>;
   }
+  export interface UserAPI {
+    /**
+     * Create user
+     */
+    createUser(req: CreateUserRequest): Promise<CreateUserResponse>;
+    /**
+     * List users
+     */
+    listUsers(req: ListUsersRequest): Promise<ListUsersResponse>;
+    /**
+     * Get user by id
+     */
+    getUser(req: GetUserRequest): Promise<GetUserResponse>;
+    /**
+     * Update user
+     */
+    updateUser(req: UpdateUserRequest): Promise<UpdateUserResponse>;
+    /**
+     * delete user
+     */
+    deleteUser(req: DeleteUserRequest): Promise<DeleteUserResponse>;
+    /**
+     * register user
+     */
+    registerUser(req: RegisterUserRequest): Promise<RegisterUserResponse>;
+  }
+  export interface CodeAPI {
+    /**
+     * Create code
+     */
+    createCode(req: CreateCodeRequest): Promise<CreateCodeResponse>;
+  }
+  export interface AppAPI {
+    /**
+     * Create app
+     */
+    createApp(req: CreateAppRequest): Promise<CreateAppResponse>;
+    /**
+     * List apps
+     */
+    listApps(req: ListAppsRequest): Promise<ListAppsResponse>;
+    /**
+     * Get app by id
+     */
+    getApp(req: GetAppRequest): Promise<GetAppResponse>;
+    /**
+     * Update app
+     */
+    updateApp(req: UpdateAppRequest): Promise<UpdateAppResponse>;
+    /**
+     * delete app
+     */
+    deleteApp(req: DeleteAppRequest): Promise<DeleteAppResponse>;
+  }
 
   type CreateNamespaceRequest = {
     body: Namespace;
@@ -164,7 +176,6 @@ declare namespace SDK {
         id: {
           $regex?: string;
         };
-        q?: string;
       };
     };
   };
@@ -172,7 +183,7 @@ declare namespace SDK {
   type ListNamespacesResponse = {
     body: [Namespace];
     headers: {
-      xTotalCount: string;
+      xTotalCount: number;
     };
   };
 
@@ -186,7 +197,7 @@ declare namespace SDK {
 
   type UpdateNamespaceRequest = {
     namespaceId: string;
-    body: Namespace;
+    body: NamespaceDoc;
   };
 
   type UpdateNamespaceResponse = {
@@ -195,6 +206,14 @@ declare namespace SDK {
 
   type DeleteNamespaceRequest = {
     namespaceId: string;
+  };
+
+  type GetConfigRequest = {
+    namespaceId: string;
+  };
+
+  type GetConfigResponse = {
+    body: RegisterConfig;
   };
 
   type CreateSessionRequest = {
@@ -238,8 +257,81 @@ declare namespace SDK {
     sessionId: string;
   };
 
+  type CreateTokenRequest = {
+    body: CreateTokenBody;
+  };
+
+  type CreateTokenResponse = {
+    body: Token;
+  };
+
+  type BindUserRequest = {
+    body: CreateBindUserBody;
+  };
+
+  type BindUserResponse = {
+    body: Session;
+  };
+
+  type CreateValidationRequest = {
+    body: CreateValidationBody;
+  };
+
+  type CreateValidationResponse = {
+    body: Validation;
+  };
+
+  type CreateProviderRequest = {
+    body: CreateProviderBody;
+  };
+
+  type CreateProviderResponse = {
+    body: Provider;
+  };
+
+  type ListProvidersRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      sort?: string;
+      select?: string;
+
+      filter: {
+        ns?: string;
+      };
+    };
+  };
+
+  type ListProvidersResponse = {
+    body: [Provider];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type GetProviderRequest = {
+    providerId: string;
+  };
+
+  type GetProviderResponse = {
+    body: Provider;
+  };
+
+  type UpdateProviderRequest = {
+    providerId: string;
+    body: ProviderDoc;
+  };
+
+  type UpdateProviderResponse = {
+    body: Provider;
+  };
+
+  type DeleteProviderRequest = {
+    providerId: string;
+  };
+
   type CreateUserRequest = {
-    body: User;
+    body: CreateUserBody;
   };
 
   type CreateUserResponse = {
@@ -259,7 +351,6 @@ declare namespace SDK {
               $regex: string;
             }
           | string;
-        q?: string;
       };
     };
   };
@@ -267,7 +358,7 @@ declare namespace SDK {
   type ListUsersResponse = {
     body: [User];
     headers: {
-      xTotalCount: string;
+      xTotalCount: number;
     };
   };
 
@@ -281,7 +372,7 @@ declare namespace SDK {
 
   type UpdateUserRequest = {
     userId: string;
-    body: User;
+    body: UpdateUserBody;
   };
 
   type UpdateUserResponse = {
@@ -292,103 +383,35 @@ declare namespace SDK {
     userId: string;
   };
 
-  type CreateInvitationRequest = {
-    body: CreateInvitationBody;
+  type RegisterUserRequest = {
+    body: RegisterUserBody;
   };
 
-  type CreateInvitationResponse = {
-    body: Invitation;
+  type RegisterUserResponse = {
+    body: User;
   };
 
-  type ListInvitationsRequest = {
+  type CreateCodeRequest = {
+    body: CreateCodeBody;
+  };
+
+  type CreateCodeResponse = {
+    body: Code;
+  };
+
+  type CreateAppRequest = {
+    body: CreateAppBody;
+  };
+
+  type CreateAppResponse = {
+    body: App;
+  };
+
+  type ListAppsRequest = {
     query: {
       limit?: number;
       offset?: string;
-
-      filter: {
-        ns?: string;
-        sub?: string;
-        code?:
-          | {
-              $regex: string;
-            }
-          | string;
-        phone?: string;
-        used?: string;
-      };
-    };
-  };
-
-  type ListInvitationsResponse = {
-    body: [Invitation];
-    headers: {
-      xTotalCount: string;
-    };
-  };
-
-  type UpdateInvitationsRequest = {
-    body: [UpdateInvitationsBody];
-  };
-
-  type UpdateInvitationsResponse = {
-    body: [Invitation];
-  };
-
-  type GetInvitationRequest = {
-    invitationId: string;
-  };
-
-  type GetInvitationResponse = {
-    body: Invitation;
-  };
-
-  type UpdateInvitationRequest = {
-    invitationId: string;
-    body: UpdateInvitationBody;
-  };
-
-  type UpdateInvitationResponse = {
-    body: Invitation;
-  };
-
-  type DeleteInvitationRequest = {
-    invitationId: string;
-  };
-
-  type CreateValidationRequest = {
-    body: CreateValidationBody;
-  };
-
-  type CreateValidationResponse = {
-    body: Validation;
-  };
-
-  type GetQiniuTokenRequest = {
-    bucket: string;
-
-    query: {
-      filter: {
-        expires?: number;
-      };
-    };
-  };
-
-  type GetQiniuTokenResponse = {
-    body: QiniuToken;
-  };
-
-  type CreateProviderRequest = {
-    body: Provider;
-  };
-
-  type CreateProviderResponse = {
-    body: Provider;
-  };
-
-  type ListProvidersRequest = {
-    query: {
-      limit?: number;
-      offset?: string;
+      sort?: string;
       select?: string;
 
       filter: {
@@ -397,167 +420,250 @@ declare namespace SDK {
     };
   };
 
-  type ListProvidersResponse = {
-    body: [Provider];
+  type ListAppsResponse = {
+    body: [App];
     headers: {
-      xTotalCount: string;
+      xTotalCount: number;
     };
   };
 
-  type GetProviderRequest = {
-    providerId: string;
+  type GetAppRequest = {
+    appId: string;
   };
 
-  type GetProviderResponse = {
-    body: Provider;
+  type GetAppResponse = {
+    body: App;
   };
 
-  type UpdateProviderRequest = {
-    providerId: string;
-    body: Provider;
+  type UpdateAppRequest = {
+    appId: string;
+    body: AppDoc;
   };
 
-  type UpdateProviderResponse = {
-    body: Provider;
+  type UpdateAppResponse = {
+    body: App;
   };
 
-  type DeleteProviderRequest = {
-    providerId: string;
+  type DeleteAppRequest = {
+    appId: string;
   };
 
-  type User = {
-    createdAt: string;
-    updatedAt: string;
-    id: string;
-    active: boolean;
+  type UserDoc = {
+    rootNs: string;
+    ns: string;
+    username: string;
+    phone: string;
+    email: string;
+    roles: [string];
     expireAt: string;
-    ns: [string];
+    active: boolean;
     source: string;
     avatar: string;
-    birthdate: string;
-    city: string;
-    data: {};
-    country: string;
-    email: string;
+    name: string;
+    birthday: string;
     gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
     language: string;
-    username: string;
-    name: string;
-    nickname: string;
-    phone: string;
+    country: string;
     province: string;
-    roles: [
-      {
-        ns: string;
-        name: string;
-      }
-    ];
+    city: string;
+    data: string;
+  };
+  type User = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    rootNs: string;
+    ns: string;
+    username: string;
+    phone: string;
+    email: string;
+    roles: [string];
+    expireAt: string;
+    active: boolean;
+    source: string;
+    avatar: string;
+    name: string;
+    birthday: string;
+    gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+    language: string;
+    country: string;
+    province: string;
+    city: string;
+    data: string;
+  };
+  type CreateUserBody = {
+    password: string;
+    rootNs: string;
+    ns: string;
+    username: string;
+    phone: string;
+    email: string;
+    roles: [string];
+    expireAt: string;
+    active: boolean;
+    source: string;
+    avatar: string;
+    name: string;
+    birthday: string;
+    gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+    language: string;
+    country: string;
+    province: string;
+    city: string;
+    data: string;
+  };
+  type RegisterUserBody = {
+    rootNs: string;
+    ns: string;
+    password: string;
+    code: string;
+    username: string;
+    phone: string;
+    email: string;
+    roles: [string];
+    expireAt: string;
+    active: boolean;
+    source: string;
+    avatar: string;
+    name: string;
+    birthday: string;
+    gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+    language: string;
+    country: string;
+    province: string;
+    city: string;
+    data: string;
+  };
+  type UpdateUserBody = {
+    password: string;
+    code: string;
+    rootNs: string;
+    ns: string;
+    username: string;
+    phone: string;
+    email: string;
+    roles: [string];
+    expireAt: string;
+    active: boolean;
+    source: string;
+    avatar: string;
+    name: string;
+    birthday: string;
+    gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+    language: string;
+    country: string;
+    province: string;
+    city: string;
+    data: string;
+  };
+  type SessionDoc = {
+    expireAt: string;
+    rootNs: string;
+    ns: string;
+    provider: string;
+    method: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    roles: [string];
+    user: undefined;
+    profile: {};
+    type: "DEFAULT" | "LOGIN" | "TEST" | "TEMP";
   };
   type Session = {
-    createdAt: string;
-    updatedAt: string;
-    expiredAt: string;
-    id: string;
-    client: string;
-    device: string;
-    login: string;
-    ns: [string];
-    provider: string;
-    method: "PASSWORD" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
     token: string;
-    roles: [
-      {
-        ns: string;
-        name: string;
-      }
-    ];
-    user: {
-      createdAt: string;
-      updatedAt: string;
-      id: string;
-      active: boolean;
-      expireAt: string;
-      ns: [string];
-      source: string;
-      avatar: string;
-      birthdate: string;
-      city: string;
-      data: {};
-      country: string;
-      email: string;
-      gender: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
-      language: string;
-      username: string;
-      name: string;
-      nickname: string;
-      phone: string;
-      province: string;
-      roles: [
-        {
-          ns: string;
-          name: string;
-        }
-      ];
-    };
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    expireAt: string;
+    rootNs: string;
+    ns: string;
+    provider: string;
+    method: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    roles: [string];
+    user: undefined;
     profile: {};
+    type: "DEFAULT" | "LOGIN" | "TEST" | "TEMP";
   };
   type CreateSessionBody = {
-    client: string;
-    device: string;
     provider: string;
     username: string;
-    login: string;
     password: string;
+    phone: string;
+    email: string;
     code: string;
     encryptedData: string;
     iv: string;
+    type: "DEFAULT" | "LOGIN" | "TEST" | "TEMP";
   };
-  type Invitation = {
-    id: string;
-    ns: string;
-    createdAt: string;
-    code: string;
+  type CreateBindUserBody = {
+    provider: string;
+    username: string;
+    password: string;
+  };
+  type ValidationDoc = {
+    rootNs: string;
     email: string;
     phone: string;
-    sub: string;
     expireAt: string;
-    period: number;
-    until: string;
     used: boolean;
     usedAt: string;
-  };
-  type UpdateInvitationBody = {
-    until: string;
-    period: number;
-  };
-  type UpdateInvitationsBody = {
-    id: string;
-    code: string;
-    until: string;
-    period: number;
-  };
-  type CreateInvitationBody = {
-    until: string;
-    period: number;
-    email: string;
-    phone: string;
-    sub: string;
+    type: "PHONE" | "EMAIL";
+    kind: "LOGIN" | "REGISTER" | "UPDATE";
   };
   type Validation = {
     id: string;
-    ns: string;
-    createdAt: string;
-    code: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    rootNs: string;
     email: string;
     phone: string;
     expireAt: string;
     used: boolean;
     usedAt: string;
+    type: "PHONE" | "EMAIL";
+    kind: "LOGIN" | "REGISTER" | "UPDATE";
   };
   type CreateValidationBody = {
-    ns: string;
+    rootNs: string;
     phone: string;
     email: string;
+    kind: "LOGIN" | "REGISTER" | "UPDATE";
+  };
+  type ProviderDoc = {
+    name: string;
+    type: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    ns: string;
+    appId: string;
+    appSecret: string;
+    clientId: string;
+    update: boolean;
+  };
+  type Provider = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    name: string;
+    type: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    ns: string;
+    appId: string;
+    appSecret: string;
+    clientId: string;
+    update: boolean;
+  };
+  type CreateProviderBody = {
+    ns: string;
+    name: string;
+    type: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    appId: string;
+    appSecret: string;
+    clientId: string;
+    update: boolean;
   };
   type SmsConfig = {
     expire: number;
@@ -565,45 +671,190 @@ declare namespace SDK {
     sign: string;
   };
   type EmailConfig = {
+    expire: number;
     from: string;
     subject: string;
     text: string;
     html: string;
   };
-  type Namespace = {
-    data: {};
+  type RegisterConfig = {
+    username: "MUST" | "NOMUST";
+    phoneOrEmail: "PHONE" | "EMAIL" | "ALL" | "NONE";
+    realName: "MUST" | "NOMUST" | "NONEED";
+    company: "MUST" | "NOMUST" | "NONEED";
+    sign: "MUST" | "NOMUST" | "NONEED";
+    data: string;
+  };
+  type NamespaceDoc = {
     id: string;
     key: string;
     name: string;
     parent: string;
     public: boolean;
+    root: boolean;
     userActive: boolean;
+    data: string;
     sms: {
       expire: number;
       tplId: string;
       sign: string;
     };
     email: {
+      expire: number;
       from: string;
       subject: string;
       text: string;
       html: string;
     };
+    register: {
+      username: "MUST" | "NOMUST";
+      phoneOrEmail: "PHONE" | "EMAIL" | "ALL" | "NONE";
+      realName: "MUST" | "NOMUST" | "NONEED";
+      company: "MUST" | "NOMUST" | "NONEED";
+      sign: "MUST" | "NOMUST" | "NONEED";
+      data: string;
+    };
   };
-  type Provider = {
-    name: "PASSWORD" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+  type Namespace = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    key: string;
+    name: string;
+    parent: string;
+    public: boolean;
+    root: boolean;
+    userActive: boolean;
+    data: string;
+    sms: {
+      expire: number;
+      tplId: string;
+      sign: string;
+    };
+    email: {
+      expire: number;
+      from: string;
+      subject: string;
+      text: string;
+      html: string;
+    };
+    register: {
+      username: "MUST" | "NOMUST";
+      phoneOrEmail: "PHONE" | "EMAIL" | "ALL" | "NONE";
+      realName: "MUST" | "NOMUST" | "NONEED";
+      company: "MUST" | "NOMUST" | "NONEED";
+      sign: "MUST" | "NOMUST" | "NONEED";
+      data: string;
+    };
+  };
+  type CreateNamespaceBody = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    key: string;
+    name: string;
+    parent: string;
+    public: boolean;
+    root: boolean;
+    userActive: boolean;
+    data: string;
+    sms: {
+      expire: number;
+      tplId: string;
+      sign: string;
+    };
+    email: {
+      expire: number;
+      from: string;
+      subject: string;
+      text: string;
+      html: string;
+    };
+    register: {
+      username: "MUST" | "NOMUST";
+      phoneOrEmail: "PHONE" | "EMAIL" | "ALL" | "NONE";
+      realName: "MUST" | "NOMUST" | "NONEED";
+      company: "MUST" | "NOMUST" | "NONEED";
+      sign: "MUST" | "NOMUST" | "NONEED";
+      data: string;
+    };
+  };
+  type CodeDoc = {
+    code: string;
+    expireAt: string;
     ns: string;
-    appId: string;
-    appSecret: string;
-    update: boolean;
+    user: string;
   };
-  type QiniuToken = {
+  type Code = {
+    redirectUri: string;
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    code: string;
+    expireAt: string;
+    ns: string;
+    user: string;
+  };
+  type CreateCodeBody = {
+    session: string;
+    app: string;
+  };
+  type Token = {
     token: string;
-    expires: number;
-    expiredAt: string;
+  };
+  type CreateTokenBody = {
+    rootNs: string;
+    username: string;
+    password: string;
+  };
+  type AppDoc = {
+    ns: string;
+    name: string;
+    type: "WEB" | "ANDROID" | "IOS" | "WXAPP";
+    redirectUri: string;
+  };
+  type App = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
+    ns: string;
+    name: string;
+    type: "WEB" | "ANDROID" | "IOS" | "WXAPP";
+    redirectUri: string;
+  };
+  type CreateAppBody = {
+    ns: string;
+    name: string;
+    redirectUri: string;
+    type: "WEB" | "ANDROID" | "IOS" | "WXAPP";
+  };
+  type MongoDefault = {
+    id: string;
+    updateAt: string;
+    updateBy: string;
+    createAt: string;
+    createBy: string;
   };
   type Err = {
     code: string;
-    message: string;
+    type: string;
+    message: boolean;
+    name: string;
+    details: [
+      {
+        keyword: string;
+        message: string;
+        path: string;
+        value: string;
+      }
+    ];
   };
 }
