@@ -1,6 +1,6 @@
 {
   "name": "@36node/auth-sdk",
-  "version": "0.3.3",
+  "version": "1.0.0",
   "description": "A SDK boilerplate.",
   "repository": {
     "url": "36node/auth-sdk",
@@ -23,7 +23,7 @@
   "scripts": {
     "build": "NODE_ENV=production sketch build",
     "format": "prettier --trailing-comma es5 --write 'src/**/*.js'",
-    "gen": "swagen sdk ../auth/openapi.yml && npm run format",
+    "gen": "swagen sdk https://api.stargate.36node.com/auth/uat/openapi.yml && npm run format",
     "lint": "sketch lint src",
     "release": "standard-version",
     "start": "bin/mock-server.js",

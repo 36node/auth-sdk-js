@@ -42,9 +42,65 @@ declare global {
      */
     deleteNamespace(req: DeleteNamespaceRequest): Promise<DeleteNamespaceResponse>;
     /**
-     * Get register onfig by ns id
+     * List scopes
      */
-    getConfig(req: GetConfigRequest): Promise<GetConfigResponse>;
+    listScopes(req: ListScopesRequest): Promise<ListScopesResponse>;
+    /**
+     * Get ns&#x27;s register config
+     */
+    getNsRegister(req: GetNsRegisterRequest): Promise<GetNsRegisterResponse>;
+    /**
+     * Update ns&#x27;s register config
+     */
+    updateNsRegister(req: UpdateNsRegisterRequest): Promise<UpdateNsRegisterResponse>;
+    /**
+     * Get ns&#x27;s register config must items
+     */
+    getNsRegisterMust(req: GetNsRegisterMustRequest): Promise<GetNsRegisterMustResponse>;
+    /**
+     * Get ns&#x27;s email config
+     */
+    getNsEmail(req: GetNsEmailRequest): Promise<GetNsEmailResponse>;
+    /**
+     * Update ns&#x27;s email config
+     */
+    updateNsEmail(req: UpdateNsEmailRequest): Promise<UpdateNsEmailResponse>;
+    /**
+     * List ns&#x27;s email templates
+     */
+    listNsEmailtpls(req: ListNsEmailtplsRequest): Promise<ListNsEmailtplsResponse>;
+    /**
+     * Update ns&#x27;s emailtpl
+     */
+    updateNsEmailtpl(req: UpdateNsEmailtplRequest): Promise<UpdateNsEmailtplResponse>;
+    /**
+     * Get ns&#x27;s sms config
+     */
+    getNsSms(req: GetNsSmsRequest): Promise<GetNsSmsResponse>;
+    /**
+     * Update ns&#x27;s sms config
+     */
+    updateNsSms(req: UpdateNsSmsRequest): Promise<UpdateNsSmsResponse>;
+    /**
+     * List ns&#x27;s sms templates
+     */
+    listNsSmstpls(req: ListNsSmstplsRequest): Promise<ListNsSmstplsResponse>;
+    /**
+     * Update ns&#x27;s smstpl
+     */
+    updateNsSmstpl(req: UpdateNsSmstplRequest): Promise<UpdateNsSmstplResponse>;
+    /**
+     * Create namespace role
+     */
+    createNsRole(req: CreateNsRoleRequest): Promise<CreateNsRoleResponse>;
+    /**
+     * List ns&#x27;s roles
+     */
+    listNsRoles(req: ListNsRolesRequest): Promise<ListNsRolesResponse>;
+    /**
+     * Update ns&#x27;s role
+     */
+    updateNsRole(req: UpdateNsRoleRequest): Promise<UpdateNsRoleResponse>;
   }
   export interface SessionAPI {
     /**
@@ -170,6 +226,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -189,74 +249,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     } & {
       id: string;
       updateAt?: Date;
@@ -280,6 +272,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -299,74 +295,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     } & {
       id: string;
       updateAt?: Date;
@@ -399,6 +327,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -418,74 +350,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     } & {
       id: string;
       updateAt?: Date;
@@ -515,6 +379,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -534,74 +402,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     } & {
       id: string;
       updateAt?: Date;
@@ -626,6 +426,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -645,74 +449,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     };
   }
   export interface UpdateNamespaceResponse {
@@ -730,6 +466,10 @@ declare global {
        */
       name?: string;
       /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
        * 父空间
        */
       parent?: string;
@@ -749,74 +489,6 @@ declare global {
        * 用户自定义数据
        */
       data?: string;
-      /**
-       * 发送短信验证码的配置
-       */
-      sms?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 验证码模版 id
-         */
-        tplId?: string;
-        /**
-         * 验证码签名
-         */
-        sign?: string;
-      };
-      /**
-       * 发送邮箱验证码的配置
-       */
-      email?: {
-        /**
-         * 验证码过期时间
-         */
-        expire?: number;
-        /**
-         * 发件人
-         */
-        from?: string;
-        /**
-         * 标题
-         */
-        subject?: string;
-        text?: string;
-        /**
-         * 邮件内容
-         */
-        html?: string;
-      };
-      /**
-       * ns 注册配置
-       */
-      register?: {
-        /**
-         * 是否配置 用户名
-         */
-        username?: "MUST" | "NOMUST";
-        /**
-         * 是否配置 邮箱
-         */
-        phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
-        /**
-         * 是否配置 真实姓名
-         */
-        realName?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 公司
-         */
-        company?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 是否配置 个人签名
-         */
-        sign?: "MUST" | "NOMUST" | "NONEED";
-        /**
-         * 自定义配置
-         */
-        data?: string;
-      };
     } & {
       id: string;
       updateAt?: Date;
@@ -828,38 +500,951 @@ declare global {
   export interface DeleteNamespaceRequest {
     namespaceId: string;
   }
-  export interface GetConfigRequest {
+  export interface ListScopesRequest {
+    query?: {
+      _limit?: number;
+      _offset?: string;
+      _select?: string;
+      _sort?: string;
+      name_like?: string;
+    };
+  }
+  export interface ListScopesResponse {
+    content?: ({
+      /**
+       * 唯一的英文名，不能重复，用 / 开头
+       */
+      id?: string;
+      /**
+       * 可以用于排序以及英文名等
+       */
+      key?: string;
+      /**
+       * 命名空间的名称，例如`百世诺`
+       */
+      name?: string;
+      /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
+       * 父空间
+       */
+      parent?: string;
+      /**
+       * 是否公开的空间，如果是公开的话，允许用户自行注册
+       */
+      public?: boolean;
+      /**
+       * 是否为根ns
+       */
+      root?: boolean;
+      /**
+       * 新增用户是否自动激活，缺省是 true
+       */
+      userActive?: boolean;
+      /**
+       * 用户自定义数据
+       */
+      data?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    })[];
+    headers?: {
+      "X-Total-Count"?: number;
+    };
+  }
+  export interface GetNsRegisterRequest {
     namespaceId: string;
   }
-  export interface GetConfigResponse {
+  export interface GetNsRegisterResponse {
     /**
-     * ns 其他配置
+     * ns 注册配置
      */
     content?: {
       /**
        * 是否配置 用户名
        */
-      username?: "MUST" | "NOMUST";
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
       /**
        * 是否配置 邮箱
        */
-      phoneOrEmail?: "PHONE" | "EMAIL" | "ALL" | "NONE";
+      email?: "MUST" | "NOMUST" | "NONEED";
       /**
-       * 是否配置 真实姓名
+       * 是否配置 头像
        */
-      realName?: "MUST" | "NOMUST" | "NONEED";
+      avatar?: "MUST" | "NOMUST" | "NONEED";
       /**
-       * 是否配置 公司
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
        */
       company?: "MUST" | "NOMUST" | "NONEED";
       /**
-       * 是否配置 个人签名
+       * 是否配置 工号
        */
-      sign?: "MUST" | "NOMUST" | "NONEED";
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
       /**
-       * 自定义配置
+       * 是否配置 工龄
        */
-      data?: string;
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateNsRegisterRequest {
+    namespaceId: string;
+    /**
+     * ns 注册配置
+     */
+    body: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 头像
+       */
+      avatar?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
+       */
+      company?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工号
+       */
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工龄
+       */
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    };
+  }
+  export interface UpdateNsRegisterResponse {
+    /**
+     * ns 注册配置
+     */
+    content?: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 头像
+       */
+      avatar?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
+       */
+      company?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工号
+       */
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工龄
+       */
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface GetNsRegisterMustRequest {
+    namespaceId: string;
+  }
+  export interface GetNsRegisterMustResponse {
+    /**
+     * ns 必填项注册配置
+     */
+    content?: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      other?: string[];
+    };
+  }
+  export interface GetNsEmailRequest {
+    namespaceId: string;
+  }
+  export interface GetNsEmailResponse {
+    /**
+     * 邮箱配置
+     */
+    content?: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 邮箱服务器地址
+       */
+      host?: string;
+      /**
+       * 邮箱服务器端口
+       */
+      port?: number;
+      /**
+       * 是否开启tls
+       */
+      tls?: boolean;
+      /**
+       * tls开启后是否验证
+       */
+      authorize?: boolean;
+      /**
+       * 用户名
+       */
+      username?: string;
+      /**
+       * 密码
+       */
+      password?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateNsEmailRequest {
+    namespaceId: string;
+    /**
+     * 邮箱配置
+     */
+    body: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 邮箱服务器地址
+       */
+      host?: string;
+      /**
+       * 邮箱服务器端口
+       */
+      port?: number;
+      /**
+       * 是否开启tls
+       */
+      tls?: boolean;
+      /**
+       * tls开启后是否验证
+       */
+      authorize?: boolean;
+      /**
+       * 用户名
+       */
+      username?: string;
+      /**
+       * 密码
+       */
+      password?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateNsEmailResponse {
+    /**
+     * 邮箱配置
+     */
+    content?: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 邮箱服务器地址
+       */
+      host?: string;
+      /**
+       * 邮箱服务器端口
+       */
+      port?: number;
+      /**
+       * 是否开启tls
+       */
+      tls?: boolean;
+      /**
+       * tls开启后是否验证
+       */
+      authorize?: boolean;
+      /**
+       * 用户名
+       */
+      username?: string;
+      /**
+       * 密码
+       */
+      password?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface ListNsEmailtplsRequest {
+    namespaceId: string;
+  }
+  export interface ListNsEmailtplsResponse {
+    content?: ({
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 发送邮箱地址 from
+       */
+      address?: string;
+      /**
+       * 邮件主题
+       */
+      subject?: string;
+      /**
+       * 邮件正文模板
+       */
+      content?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    })[];
+    headers?: {
+      "X-Total-Count"?: number;
+    };
+  }
+  export interface UpdateNsEmailtplRequest {
+    namespaceId: string;
+    emailtplId: string;
+    /**
+     * 邮件模板配置
+     */
+    body: {
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 发送邮箱地址 from
+       */
+      address?: string;
+      /**
+       * 邮件主题
+       */
+      subject?: string;
+      /**
+       * 邮件正文模板
+       */
+      content?: string;
+    };
+  }
+  export interface UpdateNsEmailtplResponse {
+    /**
+     * 邮件模板配置
+     */
+    content?: {
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 发送邮箱地址 from
+       */
+      address?: string;
+      /**
+       * 邮件主题
+       */
+      subject?: string;
+      /**
+       * 邮件正文模板
+       */
+      content?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface GetNsSmsRequest {
+    namespaceId: string;
+  }
+  export interface GetNsSmsResponse {
+    /**
+     * 手机短信配置
+     */
+    content?: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 属于 阿里云 腾讯云
+       */
+      type?: "ALI" | "TENCENT";
+      /**
+       * id
+       */
+      keyId?: string;
+      /**
+       * secret
+       */
+      keySecret?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateNsSmsRequest {
+    namespaceId: string;
+    /**
+     * 手机短信配置
+     */
+    body: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 属于 阿里云 腾讯云
+       */
+      type?: "ALI" | "TENCENT";
+      /**
+       * id
+       */
+      keyId?: string;
+      /**
+       * secret
+       */
+      keySecret?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateNsSmsResponse {
+    /**
+     * 手机短信配置
+     */
+    content?: {
+      /**
+       * 验证码过期时间 分钟
+       */
+      expire?: number;
+      /**
+       * 属于 阿里云 腾讯云
+       */
+      type?: "ALI" | "TENCENT";
+      /**
+       * id
+       */
+      keyId?: string;
+      /**
+       * secret
+       */
+      keySecret?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface ListNsSmstplsRequest {
+    namespaceId: string;
+  }
+  export interface ListNsSmstplsResponse {
+    content?: ({
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 模板ID
+       */
+      tplId?: string;
+      /**
+       * 模板签名
+       */
+      sign?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    })[];
+    headers?: {
+      "X-Total-Count"?: number;
+    };
+  }
+  export interface UpdateNsSmstplRequest {
+    namespaceId: string;
+    smstplId: string;
+    /**
+     * 手机模板配置
+     */
+    body: {
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 模板ID
+       */
+      tplId?: string;
+      /**
+       * 模板签名
+       */
+      sign?: string;
+    };
+  }
+  export interface UpdateNsSmstplResponse {
+    /**
+     * 手机模板配置
+     */
+    content?: {
+      /**
+       * 模板类型
+       */
+      type?: "WELCOME" | "VALID" | "BIND";
+      /**
+       * 是否启用
+       */
+      use?: boolean;
+      /**
+       * 模板ID
+       */
+      tplId?: string;
+      /**
+       * 模板签名
+       */
+      sign?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface CreateNsRoleRequest {
+    body: {
+      /**
+       * 角色名称
+       */
+      name: string;
+      /**
+       * 角色类型
+       */
+      type: string;
+      /**
+       * 角色描述
+       */
+      desc?: string;
+    };
+  }
+  export interface CreateNsRoleResponse {
+    /**
+     * 角色配置
+     */
+    content?: {
+      /**
+       * 角色名称
+       */
+      name?: string;
+      /**
+       * 角色类型
+       */
+      type?: string;
+      /**
+       * 角色描述
+       */
+      desc?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface ListNsRolesRequest {
+    namespaceId: string;
+  }
+  export interface ListNsRolesResponse {
+    content?: ({
+      /**
+       * 角色名称
+       */
+      name?: string;
+      /**
+       * 角色类型
+       */
+      type?: string;
+      /**
+       * 角色描述
+       */
+      desc?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    })[];
+    headers?: {
+      "X-Total-Count"?: number;
+    };
+  }
+  export interface UpdateNsRoleRequest {
+    namespaceId: string;
+    roleId: string;
+    /**
+     * 角色配置
+     */
+    body: {
+      /**
+       * 角色名称
+       */
+      name?: string;
+      /**
+       * 角色类型
+       */
+      type?: string;
+      /**
+       * 角色描述
+       */
+      desc?: string;
+    };
+  }
+  export interface UpdateNsRoleResponse {
+    /**
+     * 角色配置
+     */
+    content?: {
+      /**
+       * 角色名称
+       */
+      name?: string;
+      /**
+       * 角色类型
+       */
+      type?: string;
+      /**
+       * 角色描述
+       */
+      desc?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
     };
   }
   export interface CreateSessionRequest {
@@ -888,6 +1473,14 @@ declare global {
        * 各种授权code
        */
       code?: string;
+      /**
+       * 手机验证码
+       */
+      phoneCode?: string;
+      /**
+       * 邮箱验证码
+       */
+      emailCode?: string;
       /**
        * 微信小程序登陆时的用户加密数据
        */
@@ -958,47 +1551,103 @@ declare global {
          */
         expireAt?: Date;
         /**
-         * 是否激活的用户
-         */
-        active?: boolean;
-        /**
          * 用户来源
          */
         source?: string;
         /**
-         * 用户头像
+         * 头像
          */
         avatar?: string;
         /**
-         * 用户姓名
+         * 昵称
          */
-        name?: string;
+        nickname?: string;
         /**
-         * 用户生日
+         * 身份证号
          */
-        birthday?: Date;
+        idnumber?: string;
         /**
          * 性别
          */
         gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
         /**
-         * 用户所用语言
+         * QQ号
          */
-        language?: string;
+        qq?: string;
         /**
-         * 所在国家
+         * 微信号
+         */
+        wechat?: string;
+        /**
+         * 个人简介
+         */
+        personalinfo?: string;
+        /**
+         * 用户生日
+         */
+        birthday?: Date;
+        /**
+         * 兴趣
+         */
+        hobby?: string;
+        /**
+         * 地址
+         */
+        address?: string;
+        /**
+         * 国家
          */
         country?: string;
         /**
-         * 所在省
+         * 公司名
          */
-        province?: string;
+        company?: string;
         /**
-         * 所在城市
+         * 工号
          */
-        city?: string;
+        worknumber?: string;
         /**
-         * 第三方赋值的数据
+         * 工龄
+         */
+        wordyear?: string;
+        /**
+         * 资质
+         */
+        credential?: string;
+        /**
+         * 职位
+         */
+        position?: string;
+        /**
+         * 毕业院校
+         */
+        school?: string;
+        /**
+         * 专业
+         */
+        major?: string;
+        /**
+         * 学历
+         */
+        education?: string;
+        /**
+         * 班级
+         */
+        class?: string;
+        /**
+         * 导师
+         */
+        teacher?: string;
+        /**
+         * 开户行
+         */
+        bank?: string;
+        /**
+         * 银行卡号
+         */
+        bankcardnumber?: string;
+        /**
+         * 自定义信息
          */
         data?: string;
       } & {
@@ -1095,47 +1744,103 @@ declare global {
          */
         expireAt?: Date;
         /**
-         * 是否激活的用户
-         */
-        active?: boolean;
-        /**
          * 用户来源
          */
         source?: string;
         /**
-         * 用户头像
+         * 头像
          */
         avatar?: string;
         /**
-         * 用户姓名
+         * 昵称
          */
-        name?: string;
+        nickname?: string;
         /**
-         * 用户生日
+         * 身份证号
          */
-        birthday?: Date;
+        idnumber?: string;
         /**
          * 性别
          */
         gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
         /**
-         * 用户所用语言
+         * QQ号
          */
-        language?: string;
+        qq?: string;
         /**
-         * 所在国家
+         * 微信号
+         */
+        wechat?: string;
+        /**
+         * 个人简介
+         */
+        personalinfo?: string;
+        /**
+         * 用户生日
+         */
+        birthday?: Date;
+        /**
+         * 兴趣
+         */
+        hobby?: string;
+        /**
+         * 地址
+         */
+        address?: string;
+        /**
+         * 国家
          */
         country?: string;
         /**
-         * 所在省
+         * 公司名
          */
-        province?: string;
+        company?: string;
         /**
-         * 所在城市
+         * 工号
          */
-        city?: string;
+        worknumber?: string;
         /**
-         * 第三方赋值的数据
+         * 工龄
+         */
+        wordyear?: string;
+        /**
+         * 资质
+         */
+        credential?: string;
+        /**
+         * 职位
+         */
+        position?: string;
+        /**
+         * 毕业院校
+         */
+        school?: string;
+        /**
+         * 专业
+         */
+        major?: string;
+        /**
+         * 学历
+         */
+        education?: string;
+        /**
+         * 班级
+         */
+        class?: string;
+        /**
+         * 导师
+         */
+        teacher?: string;
+        /**
+         * 开户行
+         */
+        bank?: string;
+        /**
+         * 银行卡号
+         */
+        bankcardnumber?: string;
+        /**
+         * 自定义信息
          */
         data?: string;
       } & {
@@ -1228,47 +1933,103 @@ declare global {
          */
         expireAt?: Date;
         /**
-         * 是否激活的用户
-         */
-        active?: boolean;
-        /**
          * 用户来源
          */
         source?: string;
         /**
-         * 用户头像
+         * 头像
          */
         avatar?: string;
         /**
-         * 用户姓名
+         * 昵称
          */
-        name?: string;
+        nickname?: string;
         /**
-         * 用户生日
+         * 身份证号
          */
-        birthday?: Date;
+        idnumber?: string;
         /**
          * 性别
          */
         gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
         /**
-         * 用户所用语言
+         * QQ号
          */
-        language?: string;
+        qq?: string;
         /**
-         * 所在国家
+         * 微信号
+         */
+        wechat?: string;
+        /**
+         * 个人简介
+         */
+        personalinfo?: string;
+        /**
+         * 用户生日
+         */
+        birthday?: Date;
+        /**
+         * 兴趣
+         */
+        hobby?: string;
+        /**
+         * 地址
+         */
+        address?: string;
+        /**
+         * 国家
          */
         country?: string;
         /**
-         * 所在省
+         * 公司名
          */
-        province?: string;
+        company?: string;
         /**
-         * 所在城市
+         * 工号
          */
-        city?: string;
+        worknumber?: string;
         /**
-         * 第三方赋值的数据
+         * 工龄
+         */
+        wordyear?: string;
+        /**
+         * 资质
+         */
+        credential?: string;
+        /**
+         * 职位
+         */
+        position?: string;
+        /**
+         * 毕业院校
+         */
+        school?: string;
+        /**
+         * 专业
+         */
+        major?: string;
+        /**
+         * 学历
+         */
+        education?: string;
+        /**
+         * 班级
+         */
+        class?: string;
+        /**
+         * 导师
+         */
+        teacher?: string;
+        /**
+         * 开户行
+         */
+        bank?: string;
+        /**
+         * 银行卡号
+         */
+        bankcardnumber?: string;
+        /**
+         * 自定义信息
          */
         data?: string;
       } & {
@@ -1398,47 +2159,103 @@ declare global {
          */
         expireAt?: Date;
         /**
-         * 是否激活的用户
-         */
-        active?: boolean;
-        /**
          * 用户来源
          */
         source?: string;
         /**
-         * 用户头像
+         * 头像
          */
         avatar?: string;
         /**
-         * 用户姓名
+         * 昵称
          */
-        name?: string;
+        nickname?: string;
         /**
-         * 用户生日
+         * 身份证号
          */
-        birthday?: Date;
+        idnumber?: string;
         /**
          * 性别
          */
         gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
         /**
-         * 用户所用语言
+         * QQ号
          */
-        language?: string;
+        qq?: string;
         /**
-         * 所在国家
+         * 微信号
+         */
+        wechat?: string;
+        /**
+         * 个人简介
+         */
+        personalinfo?: string;
+        /**
+         * 用户生日
+         */
+        birthday?: Date;
+        /**
+         * 兴趣
+         */
+        hobby?: string;
+        /**
+         * 地址
+         */
+        address?: string;
+        /**
+         * 国家
          */
         country?: string;
         /**
-         * 所在省
+         * 公司名
          */
-        province?: string;
+        company?: string;
         /**
-         * 所在城市
+         * 工号
          */
-        city?: string;
+        worknumber?: string;
         /**
-         * 第三方赋值的数据
+         * 工龄
+         */
+        wordyear?: string;
+        /**
+         * 资质
+         */
+        credential?: string;
+        /**
+         * 职位
+         */
+        position?: string;
+        /**
+         * 毕业院校
+         */
+        school?: string;
+        /**
+         * 专业
+         */
+        major?: string;
+        /**
+         * 学历
+         */
+        education?: string;
+        /**
+         * 班级
+         */
+        class?: string;
+        /**
+         * 导师
+         */
+        teacher?: string;
+        /**
+         * 开户行
+         */
+        bank?: string;
+        /**
+         * 银行卡号
+         */
+        bankcardnumber?: string;
+        /**
+         * 自定义信息
          */
         data?: string;
       } & {
@@ -1794,47 +2611,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -1883,47 +2756,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -1975,47 +2904,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -2063,47 +3048,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -2146,47 +3187,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -2195,9 +3292,13 @@ declare global {
        */
       password?: string;
       /**
-       * 验证码
+       * 手机验证码
        */
-      code?: string;
+      phoneCode?: string;
+      /**
+       * 邮箱验证码
+       */
+      emailCode?: string;
     };
   }
   export interface UpdateUserResponse {
@@ -2231,47 +3332,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -2316,47 +3473,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {
@@ -2367,15 +3580,19 @@ declare global {
       /**
        * ns
        */
-      ns: string;
+      ns?: string;
       /**
        * 密码
        */
       password?: string;
       /**
-       * 验证码
+       * 手机验证码
        */
-      code?: string;
+      phoneCode?: string;
+      /**
+       * 邮箱验证码
+       */
+      emailCode?: string;
     };
   }
   export interface RegisterUserResponse {
@@ -2409,47 +3626,103 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * 是否激活的用户
-       */
-      active?: boolean;
-      /**
        * 用户来源
        */
       source?: string;
       /**
-       * 用户头像
+       * 头像
        */
       avatar?: string;
       /**
-       * 用户姓名
+       * 昵称
        */
-      name?: string;
+      nickname?: string;
       /**
-       * 用户生日
+       * 身份证号
        */
-      birthday?: Date;
+      idnumber?: string;
       /**
        * 性别
        */
       gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
       /**
-       * 用户所用语言
+       * QQ号
        */
-      language?: string;
+      qq?: string;
       /**
-       * 所在国家
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 用户生日
+       */
+      birthday?: Date;
+      /**
+       * 兴趣
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
        */
       country?: string;
       /**
-       * 所在省
+       * 公司名
        */
-      province?: string;
+      company?: string;
       /**
-       * 所在城市
+       * 工号
        */
-      city?: string;
+      worknumber?: string;
       /**
-       * 第三方赋值的数据
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
        */
       data?: string;
     } & {

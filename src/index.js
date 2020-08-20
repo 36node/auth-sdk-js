@@ -122,19 +122,276 @@ export default class SDK {
       });
     },
     /**
-     * Get register onfig by ns id
+     * List scopes
      *
-     * @param {GetConfigRequest} req getConfig request
-     * @returns {Promise<GetConfigResponse>} The register config with given ns id
+     * @param {ListScopesRequest} req listScopes request
+     * @returns {Promise<ListScopesResponse>} A paged array of namespaces
      */
-    getConfig: req => {
+    listScopes: req => {
+      const { query } = req || {};
+
+      return fetch(`${this.base}/scopes`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get ns&#x27;s register config
+     *
+     * @param {GetNsRegisterRequest} req getNsRegister request
+     * @returns {Promise<GetNsRegisterResponse>} The namespace&#x27;s register config with given id
+     */
+    getNsRegister: req => {
       const { namespaceId } = req || {};
 
       if (!namespaceId)
-        throw new Error("namespaceId is required for getConfig");
+        throw new Error("namespaceId is required for getNsRegister");
 
-      return fetch(`${this.base}/config/${namespaceId}`, {
+      return fetch(`${this.base}/namespaces/${namespaceId}/register`, {
         method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s register config
+     *
+     * @param {UpdateNsRegisterRequest} req updateNsRegister request
+     * @returns {Promise<UpdateNsRegisterResponse>} The namespace&#x27;s register config with given id
+     */
+    updateNsRegister: req => {
+      const { namespaceId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsRegister");
+      if (!body) throw new Error("requetBody is required for updateNsRegister");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/register`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get ns&#x27;s register config must items
+     *
+     * @param {GetNsRegisterMustRequest} req getNsRegisterMust request
+     * @returns {Promise<GetNsRegisterMustResponse>} ns&#x27;s register config must items
+     */
+    getNsRegisterMust: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for getNsRegisterMust");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/register/must`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get ns&#x27;s email config
+     *
+     * @param {GetNsEmailRequest} req getNsEmail request
+     * @returns {Promise<GetNsEmailResponse>} The namespace&#x27;s email config with given id
+     */
+    getNsEmail: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for getNsEmail");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/email`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s email config
+     *
+     * @param {UpdateNsEmailRequest} req updateNsEmail request
+     * @returns {Promise<UpdateNsEmailResponse>} The namespace&#x27;s email config with given id
+     */
+    updateNsEmail: req => {
+      const { namespaceId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsEmail");
+      if (!body) throw new Error("requetBody is required for updateNsEmail");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/email`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List ns&#x27;s email templates
+     *
+     * @param {ListNsEmailtplsRequest} req listNsEmailtpls request
+     * @returns {Promise<ListNsEmailtplsResponse>} A paged array of email templates
+     */
+    listNsEmailtpls: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for listNsEmailtpls");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/emailtpls`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s emailtpl
+     *
+     * @param {UpdateNsEmailtplRequest} req updateNsEmailtpl request
+     * @returns {Promise<UpdateNsEmailtplResponse>} The namespace
+     */
+    updateNsEmailtpl: req => {
+      const { namespaceId, emailtplId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsEmailtpl");
+      if (!emailtplId)
+        throw new Error("emailtplId is required for updateNsEmailtpl");
+      if (!body) throw new Error("requetBody is required for updateNsEmailtpl");
+
+      return fetch(
+        `${this.base}/namespaces/${namespaceId}/emailtpls/${emailtplId}`,
+        {
+          method: "PUT",
+          body,
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+    /**
+     * Get ns&#x27;s sms config
+     *
+     * @param {GetNsSmsRequest} req getNsSms request
+     * @returns {Promise<GetNsSmsResponse>} The namespace&#x27;s sms config with given id
+     */
+    getNsSms: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId) throw new Error("namespaceId is required for getNsSms");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/sms`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s sms config
+     *
+     * @param {UpdateNsSmsRequest} req updateNsSms request
+     * @returns {Promise<UpdateNsSmsResponse>} The namespace&#x27;s sms config with given id
+     */
+    updateNsSms: req => {
+      const { namespaceId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsSms");
+      if (!body) throw new Error("requetBody is required for updateNsSms");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/sms`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List ns&#x27;s sms templates
+     *
+     * @param {ListNsSmstplsRequest} req listNsSmstpls request
+     * @returns {Promise<ListNsSmstplsResponse>} A paged array of sms templates
+     */
+    listNsSmstpls: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for listNsSmstpls");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/smstpls`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s smstpl
+     *
+     * @param {UpdateNsSmstplRequest} req updateNsSmstpl request
+     * @returns {Promise<UpdateNsSmstplResponse>} The namespace
+     */
+    updateNsSmstpl: req => {
+      const { namespaceId, smstplId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsSmstpl");
+      if (!smstplId) throw new Error("smstplId is required for updateNsSmstpl");
+      if (!body) throw new Error("requetBody is required for updateNsSmstpl");
+
+      return fetch(
+        `${this.base}/namespaces/${namespaceId}/smstpls/${smstplId}`,
+        {
+          method: "PUT",
+          body,
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+    /**
+     * Create namespace role
+     *
+     * @param {CreateNsRoleRequest} req createNsRole request
+     * @returns {Promise<CreateNsRoleResponse>} The namespace role created
+     */
+    createNsRole: req => {
+      const { body } = req || {};
+
+      if (!body) throw new Error("requetBody is required for createNsRole");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/roles`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List ns&#x27;s roles
+     *
+     * @param {ListNsRolesRequest} req listNsRoles request
+     * @returns {Promise<ListNsRolesResponse>} A paged array of roles
+     */
+    listNsRoles: req => {
+      const { namespaceId } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for listNsRoles");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/roles`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update ns&#x27;s role
+     *
+     * @param {UpdateNsRoleRequest} req updateNsRole request
+     * @returns {Promise<UpdateNsRoleResponse>} The namespace
+     */
+    updateNsRole: req => {
+      const { namespaceId, roleId, body } = req || {};
+
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateNsRole");
+      if (!roleId) throw new Error("roleId is required for updateNsRole");
+      if (!body) throw new Error("requetBody is required for updateNsRole");
+
+      return fetch(`${this.base}/namespaces/${namespaceId}/roles/${roleId}`, {
+        method: "PUT",
+        body,
         headers: { Authorization: this.auth },
       });
     },
