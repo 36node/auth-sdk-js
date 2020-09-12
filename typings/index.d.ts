@@ -13,7 +13,6 @@ declare class SDK {
   session: SessionAPI;
   validation: ValidationAPI;
   invitation: InvitationAPI;
-  code: CodeAPI;
 }
 
 declare global {
@@ -95,6 +94,14 @@ declare global {
      * Get scope&#x27;s register config must items
      */
     getScopeRegisterMust(req: GetScopeRegisterMustRequest): Promise<GetScopeRegisterMustResponse>;
+    /**
+     * Get scope&#x27;s person info config
+     */
+    getScopePerson(req: GetScopePersonRequest): Promise<GetScopePersonResponse>;
+    /**
+     * Update scope&#x27;s person info config
+     */
+    updateScopePerson(req: UpdateScopePersonRequest): Promise<UpdateScopePersonResponse>;
     /**
      * Create scope role
      */
@@ -189,6 +196,10 @@ declare global {
      * delete provider
      */
     deleteProvider(req: DeleteProviderRequest): Promise<DeleteProviderResponse>;
+    /**
+     * list persons by provider id
+     */
+    listPersons(req: ListPersonsRequest): Promise<ListPersonsResponse>;
   }
   export interface AppAPI {
     /**
@@ -238,9 +249,9 @@ declare global {
      */
     bindUser(req: BindUserRequest): Promise<BindUserResponse>;
     /**
-     * Create temp token
+     * Create test session
      */
-    createToken(req: CreateTokenRequest): Promise<CreateTokenResponse>;
+    createTestSession(req: CreateTestSessionRequest): Promise<CreateTestSessionResponse>;
   }
   export interface ValidationAPI {
     /**
@@ -253,12 +264,10 @@ declare global {
      * Create invitation 生成邀请码
      */
     createInvitation(req: CreateInvitationRequest): Promise<CreateInvitationResponse>;
-  }
-  export interface CodeAPI {
     /**
-     * Create code
+     * Get invitation 验证邀请码是否可用
      */
-    createCode(req: CreateCodeRequest): Promise<CreateCodeResponse>;
+    getInvitation(req: GetInvitationRequest): Promise<GetInvitationResponse>;
   }
 
   export interface CreateScopeRequest {
@@ -873,7 +882,7 @@ declare global {
   }
   export interface GetScopeRegisterResponse {
     /**
-     * ns 注册配置
+     * scope 注册配置
      */
     content?: {
       /**
@@ -991,7 +1000,7 @@ declare global {
   export interface UpdateScopeRegisterRequest {
     scopeId: string;
     /**
-     * ns 注册配置
+     * scope 配置项
      */
     body: {
       /**
@@ -1102,7 +1111,7 @@ declare global {
   }
   export interface UpdateScopeRegisterResponse {
     /**
-     * ns 注册配置
+     * scope 注册配置
      */
     content?: {
       /**
@@ -1238,6 +1247,355 @@ declare global {
        */
       email?: "MUST" | "NOMUST" | "NONEED";
       other?: string[];
+    };
+  }
+  export interface GetScopePersonRequest {
+    scopeId: string;
+  }
+  export interface GetScopePersonResponse {
+    /**
+     * scope 个人中心 配置
+     */
+    content?: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 头像
+       */
+      avatar?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
+       */
+      company?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工号
+       */
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工龄
+       */
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
+  export interface UpdateScopePersonRequest {
+    scopeId: string;
+    /**
+     * scope 配置项
+     */
+    body: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 头像
+       */
+      avatar?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
+       */
+      company?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工号
+       */
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工龄
+       */
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    };
+  }
+  export interface UpdateScopePersonResponse {
+    /**
+     * scope 个人中心 配置
+     */
+    content?: {
+      /**
+       * 是否配置 用户名
+       */
+      username?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 手机号
+       */
+      phone?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 邮箱
+       */
+      email?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 头像
+       */
+      avatar?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 昵称
+       */
+      nickname?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 身份证号
+       */
+      idnumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 性别
+       */
+      gender?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 QQ号
+       */
+      qq?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 微信号
+       */
+      wechat?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 个人简介
+       */
+      personalinfo?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 生日
+       */
+      birthday?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 兴趣
+       */
+      hobby?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 地址
+       */
+      address?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 国家
+       */
+      country?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 公司名
+       */
+      company?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工号
+       */
+      worknumber?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 工龄
+       */
+      wordyear?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 资质
+       */
+      credential?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 职位
+       */
+      position?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 毕业院校
+       */
+      school?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 专业
+       */
+      major?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 学历
+       */
+      education?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 班级
+       */
+      class?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 导师
+       */
+      teacher?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 开户行
+       */
+      bank?: "MUST" | "NOMUST" | "NONEED";
+      /**
+       * 是否配置 银行卡号
+       */
+      bankcardnumber?: "MUST" | "NOMUST" | "NONEED";
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
     };
   }
   export interface CreateScopeRoleRequest {
@@ -1444,10 +1802,24 @@ declare global {
     };
   }
   export interface CreateNamespaceRequest {
-    body: ObjectObject;
-  }
-  export interface ObjectObject {
-    [k: string]: any;
+    body: {
+      /**
+       * 唯一的英文名，不能重复
+       */
+      id: string;
+      /**
+       * 命名空间的名称，例如`百世诺`
+       */
+      name?: string;
+      /**
+       * 空间描述
+       */
+      desc?: string;
+      /**
+       * 用户自定义数据
+       */
+      data?: string;
+    };
   }
   export interface CreateNamespaceResponse {
     content?: {
@@ -1485,8 +1857,7 @@ declare global {
       _offset?: string;
       _select?: string;
       _sort?: string;
-      scope: string;
-      id_like?: string;
+      id_like: string;
     };
   }
   export interface ListNamespacesResponse {
@@ -1730,9 +2101,9 @@ declare global {
       data?: string;
     } & {
       /**
-       * 用户池
+       * 用户ns
        */
-      scope: string;
+      ns: string;
       /**
        * 密码
        */
@@ -1896,7 +2267,6 @@ declare global {
       _sort?: string;
       ns?: string;
       ns_like?: string;
-      scope: string;
     };
   }
   export interface ListUsersResponse {
@@ -2594,9 +2964,9 @@ declare global {
       data?: string;
     } & {
       /**
-       * scope
+       * ns
        */
-      scope: string;
+      ns: string;
       /**
        * 用户名
        */
@@ -2995,6 +3365,50 @@ declare global {
   export interface DeleteProviderRequest {
     providerId: string;
   }
+  export interface ListPersonsRequest {
+    providerId: string;
+    query?: {
+      _limit?: number;
+      _offset?: string;
+      _select?: string;
+      _sort?: string;
+    };
+  }
+  export interface ListPersonsResponse {
+    content?: {
+      /**
+       * 描述
+       */
+      name?: string;
+      /**
+       * app id
+       */
+      appId?: string;
+      /**
+       * app secret
+       */
+      appSecret?: string;
+      /**
+       * client id
+       */
+      clientId?: string;
+      /**
+       * 是否自动更新用户数据
+       */
+      update?: boolean;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    } & {
+      /**
+       * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
+       */
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+    };
+  }
   export interface CreateAppRequest {
     body: {
       /**
@@ -3188,10 +3602,6 @@ declare global {
        * 微信小程序登陆时的解密iv
        */
       iv?: string;
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
     };
   }
   export interface CreateSessionResponse {
@@ -3201,11 +3611,7 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * session belongs to root namespaces
-       */
-      scope?: string;
-      /**
-       * session belongs to namespaces
+       * session belongs to ns
        */
       ns?: string;
       /**
@@ -3397,9 +3803,13 @@ declare global {
          */
         email?: string;
         /**
-         * 所属ns
+         * provider id
          */
-        ns?: string;
+        provider?: string;
+        /**
+         * 绑定 user id
+         */
+        user?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -3408,13 +3818,9 @@ declare global {
         createBy?: string;
       };
       /**
-       * session user 类型
+       * 当前session是否可用
        */
-      uType?: "USER" | "GITHUB" | "WECHAT";
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
+      active?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3434,232 +3840,14 @@ declare global {
       _offset?: string;
       _select?: string;
       _sort?: string;
-      _populate?: string;
+      ns?: string;
+      ns_like?: string;
       user?: string;
+      active?: boolean;
     };
   }
   export interface ListSessionsResponse {
     content?: ({
-      /**
-       * 会话过期时间
-       */
-      expireAt?: Date;
-      /**
-       * session belongs to root namespaces
-       */
-      scope?: string;
-      /**
-       * session belongs to namespaces
-       */
-      ns?: string;
-      /**
-       * provider id
-       */
-      provider?: string;
-      /**
-       * 角色
-       */
-      roles?: string[];
-      user?: {
-        /**
-         * 头像
-         */
-        avatar?: string;
-        /**
-         * 昵称
-         */
-        nickname?: string;
-        /**
-         * 身份证号
-         */
-        idnumber?: string;
-        /**
-         * 性别
-         */
-        gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
-        /**
-         * QQ号
-         */
-        qq?: string;
-        /**
-         * 微信号
-         */
-        wechat?: string;
-        /**
-         * 个人简介
-         */
-        personalinfo?: string;
-        /**
-         * 用户生日
-         */
-        birthday?: Date;
-        /**
-         * 兴趣
-         */
-        hobby?: string;
-        /**
-         * 地址
-         */
-        address?: string;
-        /**
-         * 国家
-         */
-        country?: string;
-        /**
-         * 公司名
-         */
-        company?: string;
-        /**
-         * 工号
-         */
-        worknumber?: string;
-        /**
-         * 工龄
-         */
-        wordyear?: string;
-        /**
-         * 资质
-         */
-        credential?: string;
-        /**
-         * 职位
-         */
-        position?: string;
-        /**
-         * 毕业院校
-         */
-        school?: string;
-        /**
-         * 专业
-         */
-        major?: string;
-        /**
-         * 学历
-         */
-        education?: string;
-        /**
-         * 班级
-         */
-        class?: string;
-        /**
-         * 导师
-         */
-        teacher?: string;
-        /**
-         * 开户行
-         */
-        bank?: string;
-        /**
-         * 银行卡号
-         */
-        bankcardnumber?: string;
-        /**
-         * 自定义信息
-         */
-        data?: string;
-      } & {
-        /**
-         * 所在的ns
-         */
-        ns?: string;
-        /**
-         * 用户名
-         */
-        username?: string;
-        /**
-         * 电话
-         */
-        phone?: string;
-        /**
-         * 邮箱
-         */
-        email?: string;
-        /**
-         * 角色
-         */
-        roles?: string[];
-        /**
-         * 自定义信息
-         */
-        data?: string;
-      } & {
-        /**
-         * 过期时间
-         */
-        expireAt?: Date;
-        /**
-         * 用户来源
-         */
-        source?:
-          | "DEFAULT"
-          | "PHONE"
-          | "EMAIL"
-          | "PASSWORD"
-          | "GITHUB"
-          | "WX"
-          | "WXAPP"
-          | "WXCORP_INSEDE"
-          | "WXCORP_OUTSIDE";
-      } & {
-        id: string;
-        updateAt?: Date;
-        updateBy?: string;
-        createAt?: Date;
-        createBy?: string;
-      };
-      github?: {
-        /**
-         * github 用户名
-         */
-        username?: string;
-        /**
-         * github id
-         */
-        githubId?: string;
-        /**
-         * github 头像
-         */
-        avatar?: string;
-        /**
-         * github 姓名
-         */
-        name?: string;
-        /**
-         * 公司
-         */
-        company?: string;
-        /**
-         * 博客
-         */
-        blog?: string;
-        /**
-         * 所在地
-         */
-        location?: string;
-        /**
-         * 邮箱
-         */
-        email?: string;
-        /**
-         * 所属ns
-         */
-        ns?: string;
-      } & {
-        id: string;
-        updateAt?: Date;
-        updateBy?: string;
-        createAt?: Date;
-        createBy?: string;
-      };
-      /**
-       * session user 类型
-       */
-      uType?: "USER" | "GITHUB" | "WECHAT";
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
-    } & {
       id: string;
       updateAt?: Date;
       updateBy?: string;
@@ -3667,9 +3855,25 @@ declare global {
       createBy?: string;
     } & {
       /**
-       * token
+       * user id
        */
-      token: string;
+      user?: string;
+      /**
+       * 会话过期时间
+       */
+      expireAt?: Date;
+      /**
+       * 是否可用
+       */
+      active?: string;
+      /**
+       * session belongs to ns
+       */
+      ns?: string;
+      /**
+       * 是否可用
+       */
+      provider?: string;
     })[];
     headers?: {
       "X-Total-Count"?: string;
@@ -3685,11 +3889,7 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * session belongs to root namespaces
-       */
-      scope?: string;
-      /**
-       * session belongs to namespaces
+       * session belongs to ns
        */
       ns?: string;
       /**
@@ -3881,9 +4081,13 @@ declare global {
          */
         email?: string;
         /**
-         * 所属ns
+         * provider id
          */
-        ns?: string;
+        provider?: string;
+        /**
+         * 绑定 user id
+         */
+        user?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -3892,13 +4096,9 @@ declare global {
         createBy?: string;
       };
       /**
-       * session user 类型
+       * 当前session是否可用
        */
-      uType?: "USER" | "GITHUB" | "WECHAT";
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
+      active?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -4051,11 +4251,7 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * session belongs to root namespaces
-       */
-      scope?: string;
-      /**
-       * session belongs to namespaces
+       * session belongs to ns
        */
       ns?: string;
       /**
@@ -4247,9 +4443,13 @@ declare global {
          */
         email?: string;
         /**
-         * 所属ns
+         * provider id
          */
-        ns?: string;
+        provider?: string;
+        /**
+         * 绑定 user id
+         */
+        user?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -4258,13 +4458,9 @@ declare global {
         createBy?: string;
       };
       /**
-       * session user 类型
+       * 当前session是否可用
        */
-      uType?: "USER" | "GITHUB" | "WECHAT";
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
+      active?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -4292,10 +4488,6 @@ declare global {
        * 密码
        */
       password: string;
-      /**
-       * 邀请码
-       */
-      inviteCode?: string;
     };
   }
   export interface BindUserResponse {
@@ -4305,11 +4497,7 @@ declare global {
        */
       expireAt?: Date;
       /**
-       * session belongs to root namespaces
-       */
-      scope?: string;
-      /**
-       * session belongs to namespaces
+       * session belongs to ns
        */
       ns?: string;
       /**
@@ -4501,9 +4689,13 @@ declare global {
          */
         email?: string;
         /**
-         * 所属ns
+         * provider id
          */
-        ns?: string;
+        provider?: string;
+        /**
+         * 绑定 user id
+         */
+        user?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -4512,13 +4704,9 @@ declare global {
         createBy?: string;
       };
       /**
-       * session user 类型
+       * 当前session是否可用
        */
-      uType?: "USER" | "GITHUB" | "WECHAT";
-      /**
-       * session 类型
-       */
-      sType?: "DEFAULT" | "LOGIN" | "TEST" | "UNACTIVE" | "UNBIND" | "TEMP";
+      active?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -4532,7 +4720,7 @@ declare global {
       token: string;
     };
   }
-  export interface CreateTokenRequest {
+  export interface CreateTestSessionRequest {
     /**
      * 创建temp token所需参数
      */
@@ -4551,10 +4739,232 @@ declare global {
       password?: string;
     };
   }
-  export interface CreateTokenResponse {
+  export interface CreateTestSessionResponse {
     content?: {
       /**
-       * temp token
+       * 会话过期时间
+       */
+      expireAt?: Date;
+      /**
+       * session belongs to ns
+       */
+      ns?: string;
+      /**
+       * provider id
+       */
+      provider?: string;
+      /**
+       * 角色
+       */
+      roles?: string[];
+      user?: {
+        /**
+         * 头像
+         */
+        avatar?: string;
+        /**
+         * 昵称
+         */
+        nickname?: string;
+        /**
+         * 身份证号
+         */
+        idnumber?: string;
+        /**
+         * 性别
+         */
+        gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+        /**
+         * QQ号
+         */
+        qq?: string;
+        /**
+         * 微信号
+         */
+        wechat?: string;
+        /**
+         * 个人简介
+         */
+        personalinfo?: string;
+        /**
+         * 用户生日
+         */
+        birthday?: Date;
+        /**
+         * 兴趣
+         */
+        hobby?: string;
+        /**
+         * 地址
+         */
+        address?: string;
+        /**
+         * 国家
+         */
+        country?: string;
+        /**
+         * 公司名
+         */
+        company?: string;
+        /**
+         * 工号
+         */
+        worknumber?: string;
+        /**
+         * 工龄
+         */
+        wordyear?: string;
+        /**
+         * 资质
+         */
+        credential?: string;
+        /**
+         * 职位
+         */
+        position?: string;
+        /**
+         * 毕业院校
+         */
+        school?: string;
+        /**
+         * 专业
+         */
+        major?: string;
+        /**
+         * 学历
+         */
+        education?: string;
+        /**
+         * 班级
+         */
+        class?: string;
+        /**
+         * 导师
+         */
+        teacher?: string;
+        /**
+         * 开户行
+         */
+        bank?: string;
+        /**
+         * 银行卡号
+         */
+        bankcardnumber?: string;
+        /**
+         * 自定义信息
+         */
+        data?: string;
+      } & {
+        /**
+         * 所在的ns
+         */
+        ns?: string;
+        /**
+         * 用户名
+         */
+        username?: string;
+        /**
+         * 电话
+         */
+        phone?: string;
+        /**
+         * 邮箱
+         */
+        email?: string;
+        /**
+         * 角色
+         */
+        roles?: string[];
+        /**
+         * 自定义信息
+         */
+        data?: string;
+      } & {
+        /**
+         * 过期时间
+         */
+        expireAt?: Date;
+        /**
+         * 用户来源
+         */
+        source?:
+          | "DEFAULT"
+          | "PHONE"
+          | "EMAIL"
+          | "PASSWORD"
+          | "GITHUB"
+          | "WX"
+          | "WXAPP"
+          | "WXCORP_INSEDE"
+          | "WXCORP_OUTSIDE";
+      } & {
+        id: string;
+        updateAt?: Date;
+        updateBy?: string;
+        createAt?: Date;
+        createBy?: string;
+      };
+      github?: {
+        /**
+         * github 用户名
+         */
+        username?: string;
+        /**
+         * github id
+         */
+        githubId?: string;
+        /**
+         * github 头像
+         */
+        avatar?: string;
+        /**
+         * github 姓名
+         */
+        name?: string;
+        /**
+         * 公司
+         */
+        company?: string;
+        /**
+         * 博客
+         */
+        blog?: string;
+        /**
+         * 所在地
+         */
+        location?: string;
+        /**
+         * 邮箱
+         */
+        email?: string;
+        /**
+         * provider id
+         */
+        provider?: string;
+        /**
+         * 绑定 user id
+         */
+        user?: string;
+      } & {
+        id: string;
+        updateAt?: Date;
+        updateBy?: string;
+        createAt?: Date;
+        createBy?: string;
+      };
+      /**
+       * 当前session是否可用
+       */
+      active?: boolean;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    } & {
+      /**
+       * token
        */
       token: string;
     };
@@ -4644,47 +5054,40 @@ declare global {
       createBy?: string;
     };
   }
-  export interface CreateCodeRequest {
-    body: {
-      /**
-       * login session id
-       */
-      session: string;
-      /**
-       * app id
-       */
-      app: string;
+  export interface GetInvitationRequest {
+    code: string;
+    query?: {
+      scope: string;
     };
   }
-  export interface CreateCodeResponse {
+  export interface GetInvitationResponse {
     content?: {
       /**
-       * code value
+       * 所属的 scope
+       */
+      scope?: string;
+      /**
+       * 邀请码
        */
       code?: string;
       /**
-       * code过期时间
+       * 验证码过期时间
        */
       expireAt?: Date;
       /**
-       * code belongs to namespaces
+       * 是否已经使用
        */
-      ns?: string;
+      used?: boolean;
       /**
-       * code belongs to user
+       * 验证码使用时间
        */
-      user?: string;
+      usedAt?: Date;
     } & {
       id: string;
       updateAt?: Date;
       updateBy?: string;
       createAt?: Date;
       createBy?: string;
-    } & {
-      /**
-       * 回调地址
-       */
-      redirectUri?: string;
     };
   }
 }

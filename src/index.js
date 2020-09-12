@@ -354,6 +354,42 @@ export default class SDK {
       });
     },
     /**
+     * Get scope&#x27;s person info config
+     *
+     * @param {GetScopePersonRequest} req getScopePerson request
+     * @returns {Promise<GetScopePersonResponse>} The scope&#x27;s person info config with given id
+     */
+    getScopePerson: req => {
+      const { scopeId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopePerson");
+
+      return fetch(`${this.base}/scopes/${scopeId}/person`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update scope&#x27;s person info config
+     *
+     * @param {UpdateScopePersonRequest} req updateScopePerson request
+     * @returns {Promise<UpdateScopePersonResponse>} The scope&#x27;s register config with given id
+     */
+    updateScopePerson: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for updateScopePerson");
+      if (!body)
+        throw new Error("requetBody is required for updateScopePerson");
+
+      return fetch(`${this.base}/scopes/${scopeId}/person`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
      * Create scope role
      *
      * @param {CreateScopeRoleRequest} req createScopeRole request
@@ -582,8 +618,6 @@ export default class SDK {
     listUsers: req => {
       const { query } = req || {};
 
-      if (!query) throw new Error("query is required for user");
-
       return fetch(`${this.base}/users`, {
         method: "GET",
         query,
@@ -744,6 +778,24 @@ export default class SDK {
 
       return fetch(`${this.base}/providers/${providerId}`, {
         method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * list persons by provider id
+     *
+     * @param {ListPersonsRequest} req listPersons request
+     * @returns {Promise<ListPersonsResponse>} The provider with given id
+     */
+    listPersons: req => {
+      const { providerId, query } = req || {};
+
+      if (!providerId)
+        throw new Error("providerId is required for listPersons");
+
+      return fetch(`${this.base}/providers/${providerId}/persons`, {
+        method: "GET",
+        query,
         headers: { Authorization: this.auth },
       });
     },
@@ -940,15 +992,16 @@ export default class SDK {
       });
     },
     /**
-     * Create temp token
+     * Create test session
      *
-     * @param {CreateTokenRequest} req createToken request
-     * @returns {Promise<CreateTokenResponse>} The code created
+     * @param {CreateTestSessionRequest} req createTestSession request
+     * @returns {Promise<CreateTestSessionResponse>} The code created
      */
-    createToken: req => {
+    createTestSession: req => {
       const { body } = req || {};
 
-      if (!body) throw new Error("requetBody is required for createToken");
+      if (!body)
+        throw new Error("requetBody is required for createTestSession");
 
       return fetch(`${this.base}/test`, {
         method: "POST",
@@ -1000,25 +1053,21 @@ export default class SDK {
         headers: { Authorization: this.auth },
       });
     },
-  };
-  /**
-   * code's methods
-   */
-  code = {
     /**
-     * Create code
+     * Get invitation 验证邀请码是否可用
      *
-     * @param {CreateCodeRequest} req createCode request
-     * @returns {Promise<CreateCodeResponse>} The code created
+     * @param {GetInvitationRequest} req getInvitation request
+     * @returns {Promise<GetInvitationResponse>} The invitation by code
      */
-    createCode: req => {
-      const { body } = req || {};
+    getInvitation: req => {
+      const { code, query } = req || {};
 
-      if (!body) throw new Error("requetBody is required for createCode");
+      if (!code) throw new Error("code is required for getInvitation");
+      if (!query) throw new Error("query is required for invitation");
 
-      return fetch(`${this.base}/code`, {
-        method: "POST",
-        body,
+      return fetch(`${this.base}/invitation/${code}`, {
+        method: "GET",
+        query,
         headers: { Authorization: this.auth },
       });
     },
