@@ -63,8 +63,6 @@ export default class SDK {
     listScopes: req => {
       const { query } = req || {};
 
-      if (!query) throw new Error("query is required for scope");
-
       return fetch(`${this.base}/scopes`, {
         method: "GET",
         query,

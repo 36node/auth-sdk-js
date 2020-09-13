@@ -323,7 +323,7 @@ declare global {
       _select?: string;
       _sort?: string;
       name_like?: string;
-      type: "OWNER" | "COLLABORATOR" | "ALL";
+      type?: "OWNER" | "COLLABORATOR";
     };
   }
   export interface ListScopesResponse {
@@ -352,9 +352,10 @@ declare global {
       createBy?: string;
     } & {
       /**
-       * 是否为拥有者
+       * owner
        */
-      isOwner?: boolean;
+      owner?: string;
+      collaborators?: string[];
     })[];
     headers?: {
       "X-Total-Count"?: number;
@@ -392,6 +393,7 @@ declare global {
   export interface UpdateScopeRequest {
     scopeId: string;
     body: {
+      collaborators?: string[];
       /**
        * 用户池的名称，例如`百世诺`
        */
@@ -3818,7 +3820,7 @@ declare global {
         createBy?: string;
       };
       /**
-       * 当前session是否可用
+       * 是否可用
        */
       active?: boolean;
     } & {
@@ -3843,7 +3845,7 @@ declare global {
       ns?: string;
       ns_like?: string;
       user?: string;
-      active?: boolean;
+      active?: string;
     };
   }
   export interface ListSessionsResponse {
@@ -3865,7 +3867,7 @@ declare global {
       /**
        * 是否可用
        */
-      active?: string;
+      active?: boolean;
       /**
        * session belongs to ns
        */
@@ -4096,7 +4098,7 @@ declare global {
         createBy?: string;
       };
       /**
-       * 当前session是否可用
+       * 是否可用
        */
       active?: boolean;
     } & {
@@ -4458,7 +4460,7 @@ declare global {
         createBy?: string;
       };
       /**
-       * 当前session是否可用
+       * 是否可用
        */
       active?: boolean;
     } & {
@@ -4704,7 +4706,7 @@ declare global {
         createBy?: string;
       };
       /**
-       * 当前session是否可用
+       * 是否可用
        */
       active?: boolean;
     } & {
@@ -4953,7 +4955,7 @@ declare global {
         createBy?: string;
       };
       /**
-       * 当前session是否可用
+       * 是否可用
        */
       active?: boolean;
     } & {
