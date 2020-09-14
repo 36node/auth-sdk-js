@@ -153,61 +153,6 @@ export default class SDK {
       });
     },
     /**
-     * List scope&#x27;s sms templates
-     *
-     * @param {ListScopeSmstplsRequest} req listScopeSmstpls request
-     * @returns {Promise<ListScopeSmstplsResponse>} A paged array of sms templates
-     */
-    listScopeSmstpls: req => {
-      const { scopeId } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for listScopeSmstpls");
-
-      return fetch(`${this.base}/scopes/${scopeId}/smstpls`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get smstpl by id
-     *
-     * @param {GetScopeSmstplRequest} req getScopeSmstpl request
-     * @returns {Promise<GetScopeSmstplResponse>} The smstpl with given id
-     */
-    getScopeSmstpl: req => {
-      const { scopeId, smstplId } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for getScopeSmstpl");
-      if (!smstplId) throw new Error("smstplId is required for getScopeSmstpl");
-
-      return fetch(`${this.base}/scopes/${scopeId}/smstpls/${smstplId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update scope&#x27;s smstpl
-     *
-     * @param {UpdateScopeSmstplRequest} req updateScopeSmstpl request
-     * @returns {Promise<UpdateScopeSmstplResponse>} The namespace
-     */
-    updateScopeSmstpl: req => {
-      const { scopeId, smstplId, body } = req || {};
-
-      if (!scopeId)
-        throw new Error("scopeId is required for updateScopeSmstpl");
-      if (!smstplId)
-        throw new Error("smstplId is required for updateScopeSmstpl");
-      if (!body)
-        throw new Error("requetBody is required for updateScopeSmstpl");
-
-      return fetch(`${this.base}/scopes/${scopeId}/smstpls/${smstplId}`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
      * Get scope&#x27;s email config
      *
      * @param {GetScopeEmailRequest} req getScopeEmail request

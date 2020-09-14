@@ -51,18 +51,6 @@ declare global {
      */
     updateScopeSms(req: UpdateScopeSmsRequest): Promise<UpdateScopeSmsResponse>;
     /**
-     * List scope&#x27;s sms templates
-     */
-    listScopeSmstpls(req: ListScopeSmstplsRequest): Promise<ListScopeSmstplsResponse>;
-    /**
-     * Get smstpl by id
-     */
-    getScopeSmstpl(req: GetScopeSmstplRequest): Promise<GetScopeSmstplResponse>;
-    /**
-     * Update scope&#x27;s smstpl
-     */
-    updateScopeSmstpl(req: UpdateScopeSmstplRequest): Promise<UpdateScopeSmstplResponse>;
-    /**
      * Get scope&#x27;s email config
      */
     getScopeEmail(req: GetScopeEmailRequest): Promise<GetScopeEmailResponse>;
@@ -447,9 +435,13 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 属于 阿里云 腾讯云
        */
-      type?: "ALI" | "TENCENT";
+      provider?: "ALI" | "TENCENT";
       /**
        * id
        */
@@ -458,6 +450,14 @@ declare global {
        * secret
        */
       keySecret?: string;
+      /**
+       * 验证码 模板ID
+       */
+      tplId?: string;
+      /**
+       * 验证码 模板签名
+       */
+      sign?: string;
     } & {
       id: string;
       updateAt?: Date;
@@ -477,9 +477,13 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 属于 阿里云 腾讯云
        */
-      type?: "ALI" | "TENCENT";
+      provider?: "ALI" | "TENCENT";
       /**
        * id
        */
@@ -488,6 +492,14 @@ declare global {
        * secret
        */
       keySecret?: string;
+      /**
+       * 验证码 模板ID
+       */
+      tplId?: string;
+      /**
+       * 验证码 模板签名
+       */
+      sign?: string;
     };
   }
   export interface UpdateScopeSmsResponse {
@@ -497,9 +509,13 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 属于 阿里云 腾讯云
        */
-      type?: "ALI" | "TENCENT";
+      provider?: "ALI" | "TENCENT";
       /**
        * id
        */
@@ -508,117 +524,12 @@ declare global {
        * secret
        */
       keySecret?: string;
-    } & {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    };
-  }
-  export interface ListScopeSmstplsRequest {
-    scopeId: string;
-  }
-  export interface ListScopeSmstplsResponse {
-    content?: ({
       /**
-       * 模板类型
-       */
-      type?: "WELCOME" | "VALID" | "BIND";
-      /**
-       * 是否启用
-       */
-      use?: boolean;
-      /**
-       * 模板ID
+       * 验证码 模板ID
        */
       tplId?: string;
       /**
-       * 模板签名
-       */
-      sign?: string;
-    } & {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    })[];
-    headers?: {
-      "X-Total-Count"?: number;
-    };
-  }
-  export interface GetScopeSmstplRequest {
-    scopeId: string;
-    smstplId: string;
-  }
-  export interface GetScopeSmstplResponse {
-    content?: {
-      /**
-       * 模板类型
-       */
-      type?: "WELCOME" | "VALID" | "BIND";
-      /**
-       * 是否启用
-       */
-      use?: boolean;
-      /**
-       * 模板ID
-       */
-      tplId?: string;
-      /**
-       * 模板签名
-       */
-      sign?: string;
-    } & {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    };
-  }
-  export interface UpdateScopeSmstplRequest {
-    scopeId: string;
-    smstplId: string;
-    /**
-     * 手机模板配置
-     */
-    body: {
-      /**
-       * 模板类型
-       */
-      type?: "WELCOME" | "VALID" | "BIND";
-      /**
-       * 是否启用
-       */
-      use?: boolean;
-      /**
-       * 模板ID
-       */
-      tplId?: string;
-      /**
-       * 模板签名
-       */
-      sign?: string;
-    };
-  }
-  export interface UpdateScopeSmstplResponse {
-    content?: {
-      /**
-       * 模板类型
-       */
-      type?: "WELCOME" | "VALID" | "BIND";
-      /**
-       * 是否启用
-       */
-      use?: boolean;
-      /**
-       * 模板ID
-       */
-      tplId?: string;
-      /**
-       * 模板签名
+       * 验证码 模板签名
        */
       sign?: string;
     } & {
@@ -3170,6 +3081,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       /**
        * 用户池
@@ -3203,6 +3118,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3247,6 +3166,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3288,6 +3211,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3327,6 +3254,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     };
   }
   export interface UpdateProviderResponse {
@@ -3351,6 +3282,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3398,6 +3333,10 @@ declare global {
        * 是否自动更新用户数据
        */
       update?: boolean;
+      /**
+       * 是否绑定用户
+       */
+      bind?: boolean;
     } & {
       id: string;
       updateAt?: Date;
@@ -3842,6 +3781,7 @@ declare global {
       _offset?: string;
       _select?: string;
       _sort?: string;
+      _populate?: string;
       ns?: string;
       ns_like?: string;
       user?: string;
@@ -3857,9 +3797,157 @@ declare global {
       createBy?: string;
     } & {
       /**
-       * user id
+       * user
        */
-      user?: string;
+      user?:
+        | ({
+            /**
+             * 头像
+             */
+            avatar?: string;
+            /**
+             * 昵称
+             */
+            nickname?: string;
+            /**
+             * 身份证号
+             */
+            idnumber?: string;
+            /**
+             * 性别
+             */
+            gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+            /**
+             * QQ号
+             */
+            qq?: string;
+            /**
+             * 微信号
+             */
+            wechat?: string;
+            /**
+             * 个人简介
+             */
+            personalinfo?: string;
+            /**
+             * 用户生日
+             */
+            birthday?: Date;
+            /**
+             * 兴趣
+             */
+            hobby?: string;
+            /**
+             * 地址
+             */
+            address?: string;
+            /**
+             * 国家
+             */
+            country?: string;
+            /**
+             * 公司名
+             */
+            company?: string;
+            /**
+             * 工号
+             */
+            worknumber?: string;
+            /**
+             * 工龄
+             */
+            wordyear?: string;
+            /**
+             * 资质
+             */
+            credential?: string;
+            /**
+             * 职位
+             */
+            position?: string;
+            /**
+             * 毕业院校
+             */
+            school?: string;
+            /**
+             * 专业
+             */
+            major?: string;
+            /**
+             * 学历
+             */
+            education?: string;
+            /**
+             * 班级
+             */
+            class?: string;
+            /**
+             * 导师
+             */
+            teacher?: string;
+            /**
+             * 开户行
+             */
+            bank?: string;
+            /**
+             * 银行卡号
+             */
+            bankcardnumber?: string;
+            /**
+             * 自定义信息
+             */
+            data?: string;
+          } & {
+            /**
+             * 所在的ns
+             */
+            ns?: string;
+            /**
+             * 用户名
+             */
+            username?: string;
+            /**
+             * 电话
+             */
+            phone?: string;
+            /**
+             * 邮箱
+             */
+            email?: string;
+            /**
+             * 角色
+             */
+            roles?: string[];
+            /**
+             * 自定义信息
+             */
+            data?: string;
+          } & {
+            /**
+             * 过期时间
+             */
+            expireAt?: Date;
+            /**
+             * 用户来源
+             */
+            source?:
+              | "DEFAULT"
+              | "PHONE"
+              | "EMAIL"
+              | "PASSWORD"
+              | "GITHUB"
+              | "WX"
+              | "WXAPP"
+              | "WXCORP_INSEDE"
+              | "WXCORP_OUTSIDE";
+          } & {
+            id: string;
+            updateAt?: Date;
+            updateBy?: string;
+            createAt?: Date;
+            createBy?: string;
+          })
+        | string;
       /**
        * 会话过期时间
        */
