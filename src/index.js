@@ -990,9 +990,26 @@ export default class SDK {
 
       if (!body) throw new Error("requetBody is required for createInvitation");
 
-      return fetch(`${this.base}/invitation`, {
+      return fetch(`${this.base}/invitations`, {
         method: "POST",
         body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List invitations
+     *
+     * @param {ListInvitationsRequest} req listInvitations request
+     * @returns {Promise<ListInvitationsResponse>} A paged array of invitations
+     */
+    listInvitations: req => {
+      const { query } = req || {};
+
+      if (!query) throw new Error("query is required for invitation");
+
+      return fetch(`${this.base}/invitations`, {
+        method: "GET",
+        query,
         headers: { Authorization: this.auth },
       });
     },

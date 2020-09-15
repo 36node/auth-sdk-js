@@ -253,6 +253,10 @@ declare global {
      */
     createInvitation(req: CreateInvitationRequest): Promise<CreateInvitationResponse>;
     /**
+     * List invitations
+     */
+    listInvitations(req: ListInvitationsRequest): Promise<ListInvitationsResponse>;
+    /**
      * Get invitation 验证邀请码是否可用
      */
     getInvitation(req: GetInvitationRequest): Promise<GetInvitationResponse>;
@@ -550,6 +554,10 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 邮箱服务器地址
        */
       host?: string;
@@ -573,6 +581,10 @@ declare global {
        * 密码
        */
       password?: string;
+      /**
+       * 密码
+       */
+      from?: string;
     } & {
       id: string;
       updateAt?: Date;
@@ -592,6 +604,10 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 邮箱服务器地址
        */
       host?: string;
@@ -615,6 +631,10 @@ declare global {
        * 密码
        */
       password?: string;
+      /**
+       * 密码
+       */
+      from?: string;
     };
   }
   export interface UpdateScopeEmailResponse {
@@ -624,6 +644,10 @@ declare global {
        */
       expire?: number;
       /**
+       * 开启自定义
+       */
+      custom?: boolean;
+      /**
        * 邮箱服务器地址
        */
       host?: string;
@@ -647,6 +671,10 @@ declare global {
        * 密码
        */
       password?: string;
+      /**
+       * 密码
+       */
+      from?: string;
     } & {
       id: string;
       updateAt?: Date;
@@ -663,15 +691,11 @@ declare global {
       /**
        * 模板类型
        */
-      type?: "WELCOME" | "VALID" | "BIND";
+      type?: "WELCOME" | "BIND_VALID" | "UNBIND" | "RESETPWD_VALID" | "CHANGEPWD";
       /**
        * 是否启用
        */
-      use?: boolean;
-      /**
-       * 发送邮箱地址 from
-       */
-      address?: string;
+      custom?: boolean;
       /**
        * 邮件主题
        */
@@ -703,15 +727,11 @@ declare global {
       /**
        * 模板类型
        */
-      type?: "WELCOME" | "VALID" | "BIND";
+      type?: "WELCOME" | "BIND_VALID" | "UNBIND" | "RESETPWD_VALID" | "CHANGEPWD";
       /**
        * 是否启用
        */
-      use?: boolean;
-      /**
-       * 发送邮箱地址 from
-       */
-      address?: string;
+      custom?: boolean;
       /**
        * 邮件主题
        */
@@ -738,15 +758,11 @@ declare global {
       /**
        * 模板类型
        */
-      type?: "WELCOME" | "VALID" | "BIND";
+      type?: "WELCOME" | "BIND_VALID" | "UNBIND" | "RESETPWD_VALID" | "CHANGEPWD";
       /**
        * 是否启用
        */
-      use?: boolean;
-      /**
-       * 发送邮箱地址 from
-       */
-      address?: string;
+      custom?: boolean;
       /**
        * 邮件主题
        */
@@ -765,15 +781,11 @@ declare global {
       /**
        * 模板类型
        */
-      type?: "WELCOME" | "VALID" | "BIND";
+      type?: "WELCOME" | "BIND_VALID" | "UNBIND" | "RESETPWD_VALID" | "CHANGEPWD";
       /**
        * 是否启用
        */
-      use?: boolean;
-      /**
-       * 发送邮箱地址 from
-       */
-      address?: string;
+      custom?: boolean;
       /**
        * 邮件主题
        */
@@ -1662,13 +1674,45 @@ declare global {
      */
     content?: {
       /**
-       * 是否开放注册
+       * jwt过期时间/秒
        */
-      public?: "PUBLIC" | "INVITE" | "CLOSE";
+      jwtExpire?: number;
       /**
-       * 三方登录后是否需要绑定账户
+       * session过期时间/秒
        */
-      bind?: boolean;
+      sessionExpire?: number;
+      /**
+       * 是否支持账号注册
+       */
+      account?: boolean;
+      /**
+       * 是否支持三方登录
+       */
+      thirdParty?: boolean;
+      /**
+       * 是否开启频繁注册限制
+       */
+      frequentRegister?: boolean;
+      /**
+       * 频繁注册限制时长/秒
+       */
+      frDuration?: number;
+      /**
+       * 频繁注册限制次数
+       */
+      frTimes?: number;
+      /**
+       * 是否开启登录失败限制
+       */
+      loginFail?: boolean;
+      /**
+       * 登录失败限制时长/秒
+       */
+      lfDuration?: number;
+      /**
+       * 登录失败限制次数
+       */
+      lfTimes?: number;
     } & {
       id: string;
       updateAt?: Date;
@@ -1684,13 +1728,45 @@ declare global {
      */
     body: {
       /**
-       * 是否开放注册
+       * jwt过期时间/秒
        */
-      public?: "PUBLIC" | "INVITE" | "CLOSE";
+      jwtExpire?: number;
       /**
-       * 三方登录后是否需要绑定账户
+       * session过期时间/秒
        */
-      bind?: boolean;
+      sessionExpire?: number;
+      /**
+       * 是否支持账号注册
+       */
+      account?: boolean;
+      /**
+       * 是否支持三方登录
+       */
+      thirdParty?: boolean;
+      /**
+       * 是否开启频繁注册限制
+       */
+      frequentRegister?: boolean;
+      /**
+       * 频繁注册限制时长/秒
+       */
+      frDuration?: number;
+      /**
+       * 频繁注册限制次数
+       */
+      frTimes?: number;
+      /**
+       * 是否开启登录失败限制
+       */
+      loginFail?: boolean;
+      /**
+       * 登录失败限制时长/秒
+       */
+      lfDuration?: number;
+      /**
+       * 登录失败限制次数
+       */
+      lfTimes?: number;
     };
   }
   export interface UpdateScopeSecurityResponse {
@@ -1699,13 +1775,45 @@ declare global {
      */
     content?: {
       /**
-       * 是否开放注册
+       * jwt过期时间/秒
        */
-      public?: "PUBLIC" | "INVITE" | "CLOSE";
+      jwtExpire?: number;
       /**
-       * 三方登录后是否需要绑定账户
+       * session过期时间/秒
        */
-      bind?: boolean;
+      sessionExpire?: number;
+      /**
+       * 是否支持账号注册
+       */
+      account?: boolean;
+      /**
+       * 是否支持三方登录
+       */
+      thirdParty?: boolean;
+      /**
+       * 是否开启频繁注册限制
+       */
+      frequentRegister?: boolean;
+      /**
+       * 频繁注册限制时长/秒
+       */
+      frDuration?: number;
+      /**
+       * 频繁注册限制次数
+       */
+      frTimes?: number;
+      /**
+       * 是否开启登录失败限制
+       */
+      loginFail?: boolean;
+      /**
+       * 登录失败限制时长/秒
+       */
+      lfDuration?: number;
+      /**
+       * 登录失败限制次数
+       */
+      lfTimes?: number;
     } & {
       id: string;
       updateAt?: Date;
@@ -5125,9 +5233,17 @@ declare global {
        */
       code?: string;
       /**
-       * 验证码过期时间
+       * 过期时间
        */
       expireAt?: Date;
+      /**
+       * 是否激活
+       */
+      active?: boolean;
+      /**
+       * 是否重复使用
+       */
+      reuse?: boolean;
       /**
        * 是否已经使用
        */
@@ -5142,6 +5258,59 @@ declare global {
       updateBy?: string;
       createAt?: Date;
       createBy?: string;
+    };
+  }
+  export interface ListInvitationsRequest {
+    query?: {
+      _limit?: number;
+      _offset?: string;
+      _select?: string;
+      _sort?: string;
+      scope: string;
+      code?: string;
+      active?: boolean;
+      reuse?: boolean;
+    };
+  }
+  export interface ListInvitationsResponse {
+    content?: ({
+      /**
+       * 所属的 scope
+       */
+      scope?: string;
+      /**
+       * 邀请码
+       */
+      code?: string;
+      /**
+       * 过期时间
+       */
+      expireAt?: Date;
+      /**
+       * 是否激活
+       */
+      active?: boolean;
+      /**
+       * 是否重复使用
+       */
+      reuse?: boolean;
+      /**
+       * 是否已经使用
+       */
+      used?: boolean;
+      /**
+       * 验证码使用时间
+       */
+      usedAt?: Date;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    })[];
+    headers?: {
+      "X-Total-Count"?: number;
     };
   }
   export interface GetInvitationRequest {
@@ -5161,9 +5330,17 @@ declare global {
        */
       code?: string;
       /**
-       * 验证码过期时间
+       * 过期时间
        */
       expireAt?: Date;
+      /**
+       * 是否激活
+       */
+      active?: boolean;
+      /**
+       * 是否重复使用
+       */
+      reuse?: boolean;
       /**
        * 是否已经使用
        */
