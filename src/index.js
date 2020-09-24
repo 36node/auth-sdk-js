@@ -119,6 +119,77 @@ export default class SDK {
       });
     },
     /**
+     * Create scope role
+     *
+     * @param {CreateScopeRoleRequest} req createScopeRole request
+     * @returns {Promise<CreateScopeRoleResponse>} The scope role created
+     */
+    createScopeRole: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for createScopeRole");
+      if (!body) throw new Error("requetBody is required for createScopeRole");
+
+      return fetch(`${this.base}/scopes/${scopeId}/roles`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List scope&#x27;s roles
+     *
+     * @param {ListScopeRolesRequest} req listScopeRoles request
+     * @returns {Promise<ListScopeRolesResponse>} A paged array of roles
+     */
+    listScopeRoles: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for listScopeRoles");
+
+      return fetch(`${this.base}/scopes/${scopeId}/roles`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get role by scopeId &amp; roleId
+     *
+     * @param {GetScopeRoleRequest} req getScopeRole request
+     * @returns {Promise<GetScopeRoleResponse>} The scope with given id
+     */
+    getScopeRole: req => {
+      const { scopeId, roleId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopeRole");
+      if (!roleId) throw new Error("roleId is required for getScopeRole");
+
+      return fetch(`${this.base}/scopes/${scopeId}/roles/${roleId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update scope&#x27;s role
+     *
+     * @param {UpdateScopeRoleRequest} req updateScopeRole request
+     * @returns {Promise<UpdateScopeRoleResponse>} The namespace
+     */
+    updateScopeRole: req => {
+      const { scopeId, roleId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for updateScopeRole");
+      if (!roleId) throw new Error("roleId is required for updateScopeRole");
+      if (!body) throw new Error("requetBody is required for updateScopeRole");
+
+      return fetch(`${this.base}/scopes/${scopeId}/roles/${roleId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
      * Get scope&#x27;s sms config
      *
      * @param {GetScopeSmsRequest} req getScopeSms request
@@ -244,166 +315,6 @@ export default class SDK {
       });
     },
     /**
-     * Get scope&#x27;s register config
-     *
-     * @param {GetScopeRegisterRequest} req getScopeRegister request
-     * @returns {Promise<GetScopeRegisterResponse>} The scope&#x27;s register config with given id
-     */
-    getScopeRegister: req => {
-      const { scopeId } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for getScopeRegister");
-
-      return fetch(`${this.base}/scopes/${scopeId}/register`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update scope&#x27;s register config
-     *
-     * @param {UpdateScopeRegisterRequest} req updateScopeRegister request
-     * @returns {Promise<UpdateScopeRegisterResponse>} The scope&#x27;s register config with given id
-     */
-    updateScopeRegister: req => {
-      const { scopeId, body } = req || {};
-
-      if (!scopeId)
-        throw new Error("scopeId is required for updateScopeRegister");
-      if (!body)
-        throw new Error("requetBody is required for updateScopeRegister");
-
-      return fetch(`${this.base}/scopes/${scopeId}/register`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get scope&#x27;s register config must items
-     *
-     * @param {GetScopeRegisterMustRequest} req getScopeRegisterMust request
-     * @returns {Promise<GetScopeRegisterMustResponse>} scope&#x27;s register config must items
-     */
-    getScopeRegisterMust: req => {
-      const { scopeId } = req || {};
-
-      if (!scopeId)
-        throw new Error("scopeId is required for getScopeRegisterMust");
-
-      return fetch(`${this.base}/scopes/${scopeId}/register/must`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get scope&#x27;s person info config
-     *
-     * @param {GetScopePersonRequest} req getScopePerson request
-     * @returns {Promise<GetScopePersonResponse>} The scope&#x27;s person info config with given id
-     */
-    getScopePerson: req => {
-      const { scopeId } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for getScopePerson");
-
-      return fetch(`${this.base}/scopes/${scopeId}/person`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update scope&#x27;s person info config
-     *
-     * @param {UpdateScopePersonRequest} req updateScopePerson request
-     * @returns {Promise<UpdateScopePersonResponse>} The scope&#x27;s register config with given id
-     */
-    updateScopePerson: req => {
-      const { scopeId, body } = req || {};
-
-      if (!scopeId)
-        throw new Error("scopeId is required for updateScopePerson");
-      if (!body)
-        throw new Error("requetBody is required for updateScopePerson");
-
-      return fetch(`${this.base}/scopes/${scopeId}/person`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Create scope role
-     *
-     * @param {CreateScopeRoleRequest} req createScopeRole request
-     * @returns {Promise<CreateScopeRoleResponse>} The scope role created
-     */
-    createScopeRole: req => {
-      const { scopeId, body } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for createScopeRole");
-      if (!body) throw new Error("requetBody is required for createScopeRole");
-
-      return fetch(`${this.base}/scopes/${scopeId}/roles`, {
-        method: "POST",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * List scope&#x27;s roles
-     *
-     * @param {ListScopeRolesRequest} req listScopeRoles request
-     * @returns {Promise<ListScopeRolesResponse>} A paged array of roles
-     */
-    listScopeRoles: req => {
-      const { scopeId, query } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for listScopeRoles");
-
-      return fetch(`${this.base}/scopes/${scopeId}/roles`, {
-        method: "GET",
-        query,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get role by scopeId &amp; roleId
-     *
-     * @param {GetScopeRoleRequest} req getScopeRole request
-     * @returns {Promise<GetScopeRoleResponse>} The scope with given id
-     */
-    getScopeRole: req => {
-      const { scopeId, roleId } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for getScopeRole");
-      if (!roleId) throw new Error("roleId is required for getScopeRole");
-
-      return fetch(`${this.base}/scopes/${scopeId}/roles/${roleId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update scope&#x27;s role
-     *
-     * @param {UpdateScopeRoleRequest} req updateScopeRole request
-     * @returns {Promise<UpdateScopeRoleResponse>} The namespace
-     */
-    updateScopeRole: req => {
-      const { scopeId, roleId, body } = req || {};
-
-      if (!scopeId) throw new Error("scopeId is required for updateScopeRole");
-      if (!roleId) throw new Error("roleId is required for updateScopeRole");
-      if (!body) throw new Error("requetBody is required for updateScopeRole");
-
-      return fetch(`${this.base}/scopes/${scopeId}/roles/${roleId}`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
      * Get scope&#x27;s security config
      *
      * @param {GetScopeSecurityRequest} req getScopeSecurity request
@@ -439,11 +350,450 @@ export default class SDK {
         headers: { Authorization: this.auth },
       });
     },
+    /**
+     * list scope&#x27;s register form items
+     *
+     * @param {ListScopeRegisterItemsRequest} req listScopeRegisterItems request
+     * @returns {Promise<ListScopeRegisterItemsResponse>} A paged array of register form items
+     */
+    listScopeRegisterItems: req => {
+      const { scopeId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeRegisterItems");
+
+      return fetch(`${this.base}/scopes/${scopeId}/registerForm`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * create or update scope&#x27;s register form item
+     *
+     * @param {UpsertScopeRegisterItemRequest} req upsertScopeRegisterItem request
+     * @returns {Promise<UpsertScopeRegisterItemResponse>} The scope&#x27;s register config with given id
+     */
+    upsertScopeRegisterItem: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for upsertScopeRegisterItem");
+      if (!body)
+        throw new Error("requetBody is required for upsertScopeRegisterItem");
+
+      return fetch(`${this.base}/scopes/${scopeId}/registerForm`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete scope&#x27;s register form item
+     *
+     * @param {DeleteScopeRegisterItemRequest} req deleteScopeRegisterItem request
+     */
+    deleteScopeRegisterItem: req => {
+      const { scopeId, name } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeRegisterItem");
+      if (!name)
+        throw new Error("name is required for deleteScopeRegisterItem");
+
+      return fetch(`${this.base}/scopes/${scopeId}/registerForm/${name}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * list scope&#x27;s profile form items
+     *
+     * @param {ListScopeProfileItemsRequest} req listScopeProfileItems request
+     * @returns {Promise<ListScopeProfileItemsResponse>} A paged array of register form items
+     */
+    listScopeProfileItems: req => {
+      const { scopeId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeProfileItems");
+
+      return fetch(`${this.base}/scopes/${scopeId}/profileForm`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * create or update scope&#x27;s profile form item
+     *
+     * @param {UpsertScopeProfileItemRequest} req upsertScopeProfileItem request
+     * @returns {Promise<UpsertScopeProfileItemResponse>} The scope&#x27;s profile config with given id
+     */
+    upsertScopeProfileItem: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for upsertScopeProfileItem");
+      if (!body)
+        throw new Error("requetBody is required for upsertScopeProfileItem");
+
+      return fetch(`${this.base}/scopes/${scopeId}/profileForm`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete scope&#x27;s profile form item
+     *
+     * @param {DeleteScopeProfileItemRequest} req deleteScopeProfileItem request
+     */
+    deleteScopeProfileItem: req => {
+      const { scopeId, name } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeProfileItem");
+      if (!name) throw new Error("name is required for deleteScopeProfileItem");
+
+      return fetch(`${this.base}/scopes/${scopeId}/profileForm/${name}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+  };
+  /**
+   * provider's methods
+   */
+  provider = {
+    /**
+     * Create scope provider
+     *
+     * @param {CreateScopeProviderRequest} req createScopeProvider request
+     * @returns {Promise<CreateScopeProviderResponse>} The provider created
+     */
+    createScopeProvider: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for createScopeProvider");
+      if (!body)
+        throw new Error("requetBody is required for createScopeProvider");
+
+      return fetch(`${this.base}/scopes/${scopeId}/providers`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List scope providers
+     *
+     * @param {ListScopeProvidersRequest} req listScopeProviders request
+     * @returns {Promise<ListScopeProvidersResponse>} A paged array of providers
+     */
+    listScopeProviders: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeProviders");
+
+      return fetch(`${this.base}/scopes/${scopeId}/providers`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get provider by id
+     *
+     * @param {GetScopeProviderRequest} req getScopeProvider request
+     * @returns {Promise<GetScopeProviderResponse>} The provider with given id
+     */
+    getScopeProvider: req => {
+      const { scopeId, providerId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopeProvider");
+      if (!providerId)
+        throw new Error("providerId is required for getScopeProvider");
+
+      return fetch(`${this.base}/scopes/${scopeId}/providers/${providerId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update provider
+     *
+     * @param {UpdateScopeProviderRequest} req updateScopeProvider request
+     * @returns {Promise<UpdateScopeProviderResponse>} The provider
+     */
+    updateScopeProvider: req => {
+      const { scopeId, providerId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for updateScopeProvider");
+      if (!providerId)
+        throw new Error("providerId is required for updateScopeProvider");
+      if (!body)
+        throw new Error("requetBody is required for updateScopeProvider");
+
+      return fetch(`${this.base}/scopes/${scopeId}/providers/${providerId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete provider
+     *
+     * @param {DeleteScopeProviderRequest} req deleteScopeProvider request
+     */
+    deleteScopeProvider: req => {
+      const { scopeId, providerId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeProvider");
+      if (!providerId)
+        throw new Error("providerId is required for deleteScopeProvider");
+
+      return fetch(`${this.base}/scopes/${scopeId}/providers/${providerId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List providers without token
+     *
+     * @param {ListProvidersRequest} req listProviders request
+     * @returns {Promise<ListProvidersResponse>} A paged array of providers
+     */
+    listProviders: req => {
+      const { query } = req || {};
+
+      if (!query) throw new Error("query is required for provider");
+
+      return fetch(`${this.base}/providers`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * list profiles by provider id
+     *
+     * @param {ListProfilesRequest} req listProfiles request
+     * @returns {Promise<ListProfilesResponse>} The profiles with given provider id
+     */
+    listProfiles: req => {
+      const { scopeId, providerId, query } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for listProfiles");
+      if (!providerId)
+        throw new Error("providerId is required for listProfiles");
+
+      return fetch(
+        `${this.base}/scopes/${scopeId}/providers/${providerId}/profiles`,
+        {
+          method: "GET",
+          query,
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+  };
+  /**
+   * app's methods
+   */
+  app = {
+    /**
+     * Create scope app
+     *
+     * @param {CreateScopeAppRequest} req createScopeApp request
+     * @returns {Promise<CreateScopeAppResponse>} The app created
+     */
+    createScopeApp: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for createScopeApp");
+      if (!body) throw new Error("requetBody is required for createScopeApp");
+
+      return fetch(`${this.base}/scopes/${scopeId}/apps`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List scope apps
+     *
+     * @param {ListScopeAppsRequest} req listScopeApps request
+     * @returns {Promise<ListScopeAppsResponse>} A paged array of apps
+     */
+    listScopeApps: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for listScopeApps");
+
+      return fetch(`${this.base}/scopes/${scopeId}/apps`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get scope app by id
+     *
+     * @param {GetScopeAppRequest} req getScopeApp request
+     * @returns {Promise<GetScopeAppResponse>} The app with given id
+     */
+    getScopeApp: req => {
+      const { scopeId, appId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopeApp");
+      if (!appId) throw new Error("appId is required for getScopeApp");
+
+      return fetch(`${this.base}/scopes/${scopeId}/apps/${appId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update scope app
+     *
+     * @param {UpdateScopeAppRequest} req updateScopeApp request
+     * @returns {Promise<UpdateScopeAppResponse>} The provider
+     */
+    updateScopeApp: req => {
+      const { scopeId, appId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for updateScopeApp");
+      if (!appId) throw new Error("appId is required for updateScopeApp");
+      if (!body) throw new Error("requetBody is required for updateScopeApp");
+
+      return fetch(`${this.base}/scopes/${scopeId}/apps/${appId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete scope app
+     *
+     * @param {DeleteScopeAppRequest} req deleteScopeApp request
+     */
+    deleteScopeApp: req => {
+      const { scopeId, appId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for deleteScopeApp");
+      if (!appId) throw new Error("appId is required for deleteScopeApp");
+
+      return fetch(`${this.base}/scopes/${scopeId}/apps/${appId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
   };
   /**
    * namespace's methods
    */
   namespace = {
+    /**
+     * Create scope namespace
+     *
+     * @param {CreateScopeNamespaceRequest} req createScopeNamespace request
+     * @returns {Promise<CreateScopeNamespaceResponse>} The namespace created
+     */
+    createScopeNamespace: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for createScopeNamespace");
+      if (!body)
+        throw new Error("requetBody is required for createScopeNamespace");
+
+      return fetch(`${this.base}/scopes/${scopeId}/namespaces`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List scope namespaces
+     *
+     * @param {ListScopeNamespacesRequest} req listScopeNamespaces request
+     * @returns {Promise<ListScopeNamespacesResponse>} A paged array of namespaces
+     */
+    listScopeNamespaces: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeNamespaces");
+      if (!query) throw new Error("query is required for namespace");
+
+      return fetch(`${this.base}/scopes/${scopeId}/namespaces`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get Scope namespace by id
+     *
+     * @param {GetScopeNamespaceRequest} req getScopeNamespace request
+     * @returns {Promise<GetScopeNamespaceResponse>} The namespace with given id
+     */
+    getScopeNamespace: req => {
+      const { scopeId, namespaceId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for getScopeNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for getScopeNamespace");
+
+      return fetch(`${this.base}/scopes/${scopeId}/namespaces/${namespaceId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update scope namespace
+     *
+     * @param {UpdateScopeNamespaceRequest} req updateScopeNamespace request
+     * @returns {Promise<UpdateScopeNamespaceResponse>} The namespace
+     */
+    updateScopeNamespace: req => {
+      const { scopeId, namespaceId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for updateScopeNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for updateScopeNamespace");
+      if (!body)
+        throw new Error("requetBody is required for updateScopeNamespace");
+
+      return fetch(`${this.base}/scopes/${scopeId}/namespaces/${namespaceId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete Scope namespace
+     *
+     * @param {DeleteScopeNamespaceRequest} req deleteScopeNamespace request
+     */
+    deleteScopeNamespace: req => {
+      const { scopeId, namespaceId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeNamespace");
+      if (!namespaceId)
+        throw new Error("namespaceId is required for deleteScopeNamespace");
+
+      return fetch(`${this.base}/scopes/${scopeId}/namespaces/${namespaceId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
     /**
      * Create namespace
      *
@@ -536,6 +886,93 @@ export default class SDK {
    */
   user = {
     /**
+     * Create scope user
+     *
+     * @param {CreateScopeUserRequest} req createScopeUser request
+     * @returns {Promise<CreateScopeUserResponse>} The user created
+     */
+    createScopeUser: req => {
+      const { scopeId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for createScopeUser");
+      if (!body) throw new Error("requetBody is required for createScopeUser");
+
+      return fetch(`${this.base}/scopes/${scopeId}/users`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * List scope users
+     *
+     * @param {ListScopeUsersRequest} req listScopeUsers request
+     * @returns {Promise<ListScopeUsersResponse>} A paged array of users
+     */
+    listScopeUsers: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for listScopeUsers");
+
+      return fetch(`${this.base}/scopes/${scopeId}/users`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get Scope user by id
+     *
+     * @param {GetScopeUserRequest} req getScopeUser request
+     * @returns {Promise<GetScopeUserResponse>} The user with given id
+     */
+    getScopeUser: req => {
+      const { scopeId, userId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopeUser");
+      if (!userId) throw new Error("userId is required for getScopeUser");
+
+      return fetch(`${this.base}/scopes/${scopeId}/users/${userId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update Scope user
+     *
+     * @param {UpdateScopeUserRequest} req updateScopeUser request
+     * @returns {Promise<UpdateScopeUserResponse>} The user
+     */
+    updateScopeUser: req => {
+      const { scopeId, userId, body } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for updateScopeUser");
+      if (!userId) throw new Error("userId is required for updateScopeUser");
+      if (!body) throw new Error("requetBody is required for updateScopeUser");
+
+      return fetch(`${this.base}/scopes/${scopeId}/users/${userId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * delete Scope user
+     *
+     * @param {DeleteScopeUserRequest} req deleteScopeUser request
+     */
+    deleteScopeUser: req => {
+      const { scopeId, userId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for deleteScopeUser");
+      if (!userId) throw new Error("userId is required for deleteScopeUser");
+
+      return fetch(`${this.base}/scopes/${scopeId}/users/${userId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
      * Create user
      *
      * @param {CreateUserRequest} req createUser request
@@ -627,206 +1064,61 @@ export default class SDK {
 
       if (!body) throw new Error("requetBody is required for registerUser");
 
-      return fetch(`${this.base}/register`, {
+      return fetch(`${this.base}/users/!register`, {
         method: "POST",
         body,
         headers: { Authorization: this.auth },
       });
     },
-  };
-  /**
-   * provider's methods
-   */
-  provider = {
     /**
-     * Create provider
+     * third register user
      *
-     * @param {CreateProviderRequest} req createProvider request
-     * @returns {Promise<CreateProviderResponse>} The provider created
+     * @param {ThirdRegisterUserRequest} req thirdRegisterUser request
+     * @returns {Promise<ThirdRegisterUserResponse>} The user register
      */
-    createProvider: req => {
+    thirdRegisterUser: req => {
       const { body } = req || {};
 
-      if (!body) throw new Error("requetBody is required for createProvider");
+      if (!body)
+        throw new Error("requetBody is required for thirdRegisterUser");
 
-      return fetch(`${this.base}/providers`, {
+      return fetch(`${this.base}/users/!thirdRegister`, {
         method: "POST",
         body,
         headers: { Authorization: this.auth },
       });
     },
     /**
-     * List providers
+     * bind user
      *
-     * @param {ListProvidersRequest} req listProviders request
-     * @returns {Promise<ListProvidersResponse>} A paged array of providers
+     * @param {BindUserRequest} req bindUser request
+     * @returns {Promise<BindUserResponse>} The bind user
      */
-    listProviders: req => {
-      const { query } = req || {};
-
-      if (!query) throw new Error("query is required for provider");
-
-      return fetch(`${this.base}/providers`, {
-        method: "GET",
-        query,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get provider by id
-     *
-     * @param {GetProviderRequest} req getProvider request
-     * @returns {Promise<GetProviderResponse>} The provider with given id
-     */
-    getProvider: req => {
-      const { providerId } = req || {};
-
-      if (!providerId)
-        throw new Error("providerId is required for getProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update provider
-     *
-     * @param {UpdateProviderRequest} req updateProvider request
-     * @returns {Promise<UpdateProviderResponse>} The provider
-     */
-    updateProvider: req => {
-      const { providerId, body } = req || {};
-
-      if (!providerId)
-        throw new Error("providerId is required for updateProvider");
-      if (!body) throw new Error("requetBody is required for updateProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
-        method: "PUT",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * delete provider
-     *
-     * @param {DeleteProviderRequest} req deleteProvider request
-     */
-    deleteProvider: req => {
-      const { providerId } = req || {};
-
-      if (!providerId)
-        throw new Error("providerId is required for deleteProvider");
-
-      return fetch(`${this.base}/providers/${providerId}`, {
-        method: "DELETE",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * list persons by provider id
-     *
-     * @param {ListPersonsRequest} req listPersons request
-     * @returns {Promise<ListPersonsResponse>} The provider with given id
-     */
-    listPersons: req => {
-      const { providerId, query } = req || {};
-
-      if (!providerId)
-        throw new Error("providerId is required for listPersons");
-
-      return fetch(`${this.base}/providers/${providerId}/persons`, {
-        method: "GET",
-        query,
-        headers: { Authorization: this.auth },
-      });
-    },
-  };
-  /**
-   * app's methods
-   */
-  app = {
-    /**
-     * Create app
-     *
-     * @param {CreateAppRequest} req createApp request
-     * @returns {Promise<CreateAppResponse>} The app created
-     */
-    createApp: req => {
+    bindUser: req => {
       const { body } = req || {};
 
-      if (!body) throw new Error("requetBody is required for createApp");
+      if (!body) throw new Error("requetBody is required for bindUser");
 
-      return fetch(`${this.base}/apps`, {
+      return fetch(`${this.base}/users/!bind`, {
         method: "POST",
         body,
         headers: { Authorization: this.auth },
       });
     },
     /**
-     * List apps
+     * reset password
      *
-     * @param {ListAppsRequest} req listApps request
-     * @returns {Promise<ListAppsResponse>} A paged array of apps
+     * @param {ResetPasswordRequest} req resetPassword request
+     * @returns {Promise<ResetPasswordResponse>} The forget pwd user
      */
-    listApps: req => {
-      const { query } = req || {};
+    resetPassword: req => {
+      const { body } = req || {};
 
-      if (!query) throw new Error("query is required for app");
+      if (!body) throw new Error("requetBody is required for resetPassword");
 
-      return fetch(`${this.base}/apps`, {
-        method: "GET",
-        query,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Get app by id
-     *
-     * @param {GetAppRequest} req getApp request
-     * @returns {Promise<GetAppResponse>} The app with given id
-     */
-    getApp: req => {
-      const { appId } = req || {};
-
-      if (!appId) throw new Error("appId is required for getApp");
-
-      return fetch(`${this.base}/apps/${appId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Update app
-     *
-     * @param {UpdateAppRequest} req updateApp request
-     * @returns {Promise<UpdateAppResponse>} The provider
-     */
-    updateApp: req => {
-      const { appId, body } = req || {};
-
-      if (!appId) throw new Error("appId is required for updateApp");
-      if (!body) throw new Error("requetBody is required for updateApp");
-
-      return fetch(`${this.base}/apps/${appId}`, {
-        method: "PUT",
+      return fetch(`${this.base}/users/password/!reset`, {
+        method: "POST",
         body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * delete app
-     *
-     * @param {DeleteAppRequest} req deleteApp request
-     */
-    deleteApp: req => {
-      const { appId } = req || {};
-
-      if (!appId) throw new Error("appId is required for deleteApp");
-
-      return fetch(`${this.base}/apps/${appId}`, {
-        method: "DELETE",
         headers: { Authorization: this.auth },
       });
     },
@@ -835,6 +1127,82 @@ export default class SDK {
    * session's methods
    */
   session = {
+    /**
+     * List scope sessions
+     *
+     * @param {ListScopeSessionsRequest} req listScopeSessions request
+     * @returns {Promise<ListScopeSessionsResponse>} A paged array of session
+     */
+    listScopeSessions: req => {
+      const { scopeId, query } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeSessions");
+
+      return fetch(`${this.base}/scopes/${scopeId}/sessions`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get Scope session
+     *
+     * @param {GetScopeSessionRequest} req getScopeSession request
+     * @returns {Promise<GetScopeSessionResponse>} The session with given id
+     */
+    getScopeSession: req => {
+      const { scopeId, sessionId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for getScopeSession");
+      if (!sessionId)
+        throw new Error("sessionId is required for getScopeSession");
+
+      return fetch(`${this.base}/scopes/${scopeId}/sessions/${sessionId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Update Scope session
+     *
+     * @param {UpdateScopeSessionRequest} req updateScopeSession request
+     * @returns {Promise<UpdateScopeSessionResponse>} The scope session
+     */
+    updateScopeSession: req => {
+      const { scopeId, sessionId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for updateScopeSession");
+      if (!sessionId)
+        throw new Error("sessionId is required for updateScopeSession");
+      if (!body)
+        throw new Error("requetBody is required for updateScopeSession");
+
+      return fetch(`${this.base}/scopes/${scopeId}/sessions/${sessionId}`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Delete Scope session
+     *
+     * @param {DeleteScopeSessionRequest} req deleteScopeSession request
+     */
+    deleteScopeSession: req => {
+      const { scopeId, sessionId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeSession");
+      if (!sessionId)
+        throw new Error("sessionId is required for deleteScopeSession");
+
+      return fetch(`${this.base}/scopes/${scopeId}/sessions/${sessionId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
     /**
      * Create session
      *
@@ -849,21 +1217,6 @@ export default class SDK {
       return fetch(`${this.base}/sessions`, {
         method: "POST",
         body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * List sessions
-     *
-     * @param {ListSessionsRequest} req listSessions request
-     * @returns {Promise<ListSessionsResponse>} A paged array of session
-     */
-    listSessions: req => {
-      const { query } = req || {};
-
-      return fetch(`${this.base}/sessions`, {
-        method: "GET",
-        query,
         headers: { Authorization: this.auth },
       });
     },
@@ -917,41 +1270,6 @@ export default class SDK {
         headers: { Authorization: this.auth },
       });
     },
-    /**
-     * bind user
-     *
-     * @param {BindUserRequest} req bindUser request
-     * @returns {Promise<BindUserResponse>} The session created
-     */
-    bindUser: req => {
-      const { body } = req || {};
-
-      if (!body) throw new Error("requetBody is required for bindUser");
-
-      return fetch(`${this.base}/bind`, {
-        method: "POST",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * Create test session
-     *
-     * @param {CreateTestSessionRequest} req createTestSession request
-     * @returns {Promise<CreateTestSessionResponse>} The code created
-     */
-    createTestSession: req => {
-      const { body } = req || {};
-
-      if (!body)
-        throw new Error("requetBody is required for createTestSession");
-
-      return fetch(`${this.base}/test`, {
-        method: "POST",
-        body,
-        headers: { Authorization: this.auth },
-      });
-    },
   };
   /**
    * validation's methods
@@ -980,38 +1298,110 @@ export default class SDK {
    */
   invitation = {
     /**
-     * Create invitation 生成邀请码
+     * Create Scope invitation 生成邀请码
      *
-     * @param {CreateInvitationRequest} req createInvitation request
-     * @returns {Promise<CreateInvitationResponse>} The invitation created
+     * @param {CreateScopeInvitationRequest} req createScopeInvitation request
+     * @returns {Promise<CreateScopeInvitationResponse>} The invitation created
      */
-    createInvitation: req => {
-      const { body } = req || {};
+    createScopeInvitation: req => {
+      const { scopeId, body } = req || {};
 
-      if (!body) throw new Error("requetBody is required for createInvitation");
+      if (!scopeId)
+        throw new Error("scopeId is required for createScopeInvitation");
+      if (!body)
+        throw new Error("requetBody is required for createScopeInvitation");
 
-      return fetch(`${this.base}/invitations`, {
+      return fetch(`${this.base}/scopes/${scopeId}/invitations`, {
         method: "POST",
         body,
         headers: { Authorization: this.auth },
       });
     },
     /**
-     * List invitations
+     * List Scope invitations
      *
-     * @param {ListInvitationsRequest} req listInvitations request
-     * @returns {Promise<ListInvitationsResponse>} A paged array of invitations
+     * @param {ListScopeInvitationsRequest} req listScopeInvitations request
+     * @returns {Promise<ListScopeInvitationsResponse>} A paged array of invitations
      */
-    listInvitations: req => {
-      const { query } = req || {};
+    listScopeInvitations: req => {
+      const { scopeId, query } = req || {};
 
-      if (!query) throw new Error("query is required for invitation");
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeInvitations");
 
-      return fetch(`${this.base}/invitations`, {
+      return fetch(`${this.base}/scopes/${scopeId}/invitations`, {
         method: "GET",
         query,
         headers: { Authorization: this.auth },
       });
+    },
+    /**
+     * Get Scope invitation
+     *
+     * @param {GetScopeInvitationRequest} req getScopeInvitation request
+     * @returns {Promise<GetScopeInvitationResponse>} The invitation with given id
+     */
+    getScopeInvitation: req => {
+      const { scopeId, invitationId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for getScopeInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for getScopeInvitation");
+
+      return fetch(
+        `${this.base}/scopes/${scopeId}/invitations/${invitationId}`,
+        {
+          method: "GET",
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+    /**
+     * Update Scope invitation
+     *
+     * @param {UpdateScopeInvitationRequest} req updateScopeInvitation request
+     * @returns {Promise<UpdateScopeInvitationResponse>} The scope invitation
+     */
+    updateScopeInvitation: req => {
+      const { scopeId, invitationId, body } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for updateScopeInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for updateScopeInvitation");
+      if (!body)
+        throw new Error("requetBody is required for updateScopeInvitation");
+
+      return fetch(
+        `${this.base}/scopes/${scopeId}/invitations/${invitationId}`,
+        {
+          method: "PUT",
+          body,
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+    /**
+     * Delete Scope invitation
+     *
+     * @param {DeleteScopeInvitationRequest} req deleteScopeInvitation request
+     */
+    deleteScopeInvitation: req => {
+      const { scopeId, invitationId } = req || {};
+
+      if (!scopeId)
+        throw new Error("scopeId is required for deleteScopeInvitation");
+      if (!invitationId)
+        throw new Error("invitationId is required for deleteScopeInvitation");
+
+      return fetch(
+        `${this.base}/scopes/${scopeId}/invitations/${invitationId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: this.auth },
+        }
+      );
     },
     /**
      * Get invitation 验证邀请码是否可用
@@ -1025,7 +1415,7 @@ export default class SDK {
       if (!code) throw new Error("code is required for getInvitation");
       if (!query) throw new Error("query is required for invitation");
 
-      return fetch(`${this.base}/invitation/${code}`, {
+      return fetch(`${this.base}/invitations/${code}/!validate`, {
         method: "GET",
         query,
         headers: { Authorization: this.auth },
