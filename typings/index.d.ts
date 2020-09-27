@@ -59,6 +59,10 @@ declare global {
      */
     updateScopeRole(req: UpdateScopeRoleRequest): Promise<UpdateScopeRoleResponse>;
     /**
+     * delete role
+     */
+    deleteScopeRole(req: DeleteScopeRoleRequest): Promise<DeleteScopeRoleResponse>;
+    /**
      * Get scope&#x27;s sms config
      */
     getScopeSms(req: GetScopeSmsRequest): Promise<GetScopeSmsResponse>;
@@ -157,9 +161,9 @@ declare global {
      */
     listProviders(req: ListProvidersRequest): Promise<ListProvidersResponse>;
     /**
-     * list profiles by provider id
+     * list scope profiles by provider id
      */
-    listProfiles(req: ListProfilesRequest): Promise<ListProfilesResponse>;
+    listScopeProfiles(req: ListScopeProfilesRequest): Promise<ListScopeProfilesResponse>;
   }
   export interface AppAPI {
     /**
@@ -182,6 +186,10 @@ declare global {
      * delete scope app
      */
     deleteScopeApp(req: DeleteScopeAppRequest): Promise<DeleteScopeAppResponse>;
+    /**
+     * Get app by id
+     */
+    getApp(req: GetAppRequest): Promise<GetAppResponse>;
   }
   export interface NamespaceAPI {
     /**
@@ -832,7 +840,7 @@ declare global {
   export interface ListScopesRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       _populate?: string[] | string;
@@ -1984,7 +1992,7 @@ declare global {
   export interface ListScopeRolesRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
     };
     scopeId: string;
   }
@@ -2084,6 +2092,10 @@ declare global {
       createBy?: string;
     };
   }
+  export interface DeleteScopeRoleRequest {
+    scopeId: string;
+    roleId: string;
+  }
   export interface GetScopeSmsRequest {
     scopeId: string;
   }
@@ -2157,11 +2169,7 @@ declare global {
        */
       sign?: string;
     } & {
-      provider: "ALI" | "TENCENT";
-      keyId: string;
-      keySecret: string;
-      tplId: string;
-      sign: string;
+      custom: boolean;
     };
   }
   export interface UpdateScopeSmsResponse {
@@ -2291,10 +2299,7 @@ declare global {
        */
       from?: string;
     } & {
-      host: string;
-      port: number;
-      username: string;
-      password: string;
+      custom: boolean;
     };
   }
   export interface UpdateScopeEmailResponse {
@@ -2429,8 +2434,7 @@ declare global {
        */
       content?: string;
     } & {
-      subject: string;
-      content: string;
+      custom: boolean;
     };
   }
   export interface UpdateScopeEmailtplResponse {
@@ -2676,13 +2680,7 @@ declare global {
     scopeId: string;
   }
   export interface ListScopeProfileItemsResponse {
-    content?: ({
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    } & {
+    content?: {
       /**
        * item name
        */
@@ -2691,7 +2689,7 @@ declare global {
        * 必填 or 选填
        */
       must: boolean;
-    })[];
+    }[];
     headers?: {
       "X-Total-Count"?: number;
     };
@@ -2702,12 +2700,6 @@ declare global {
      * scope profile form item 个人中心配置项
      */
     body: {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    } & {
       /**
        * item name
        */
@@ -2723,12 +2715,6 @@ declare global {
      * scope profile form item 个人中心配置项
      */
     content?: {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    } & {
       /**
        * item name
        */
@@ -2771,7 +2757,7 @@ declare global {
        */
       bind?: boolean;
     } & {
-      type: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
     };
   }
   export interface CreateScopeProviderResponse {
@@ -2783,7 +2769,7 @@ declare global {
       /**
        * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
        */
-      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
       /**
        * app id
        */
@@ -2815,7 +2801,7 @@ declare global {
   export interface ListScopeProvidersRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
     };
@@ -2830,7 +2816,7 @@ declare global {
       /**
        * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
        */
-      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
       /**
        * app id
        */
@@ -2875,7 +2861,7 @@ declare global {
       /**
        * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
        */
-      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
       /**
        * app id
        */
@@ -2946,7 +2932,7 @@ declare global {
       /**
        * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
        */
-      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
       /**
        * app id
        */
@@ -2982,7 +2968,7 @@ declare global {
   export interface ListProvidersRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       scope: string;
@@ -2997,7 +2983,7 @@ declare global {
       /**
        * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
        */
-      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+      type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
       /**
        * app id
        */
@@ -3029,10 +3015,10 @@ declare global {
       "X-Total-Count"?: number;
     };
   }
-  export interface ListProfilesRequest {
+  export interface ListScopeProfilesRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       _populate?: string;
@@ -3040,11 +3026,8 @@ declare global {
     scopeId: string;
     providerId: string;
   }
-  export interface ListProfilesResponse {
-    /**
-     * 三方登录记录
-     */
-    content?:
+  export interface ListScopeProfilesResponse {
+    content?: (
       | ({
           /**
            * github 用户名
@@ -3132,7 +3115,8 @@ declare global {
           updateBy?: string;
           createAt?: Date;
           createBy?: string;
-        });
+        })
+    )[];
   }
   export interface CreateScopeAppRequest {
     scopeId: string;
@@ -3179,7 +3163,7 @@ declare global {
   export interface ListScopeAppsRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       /**
@@ -3287,6 +3271,31 @@ declare global {
     scopeId: string;
     appId: string;
   }
+  export interface GetAppRequest {
+    appId: string;
+  }
+  export interface GetAppResponse {
+    content?: {
+      /**
+       * 名称
+       */
+      name?: string;
+      /**
+       * app 类型
+       */
+      type?: "WEB" | "ANDROID" | "IOS" | "WXAPP";
+      /**
+       * 回调地址
+       */
+      redirectUri?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
+  }
   export interface CreateScopeNamespaceRequest {
     scopeId: string;
     body: {
@@ -3341,7 +3350,7 @@ declare global {
   export interface ListScopeNamespacesRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       id_like: string;
@@ -3520,7 +3529,7 @@ declare global {
   export interface ListNamespacesRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       id_like: string;
@@ -3931,11 +3940,12 @@ declare global {
   export interface ListScopeUsersRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       ns?: string[] | string;
       ns_like?: string;
+      roles?: string[] | string;
     };
     scopeId: string;
   }
@@ -4239,40 +4249,6 @@ declare global {
     userId: string;
     body: {
       /**
-       * 所在的ns
-       */
-      ns?: string;
-      /**
-       * 电话
-       */
-      phone?: string;
-      /**
-       * 邮箱
-       */
-      email?: string;
-      /**
-       * 角色
-       */
-      roles?: string[];
-      /**
-       * 过期时间
-       */
-      expireAt?: Date;
-      /**
-       * 用户来源
-       */
-      source?:
-        | "DEFAULT"
-        | "PHONE"
-        | "EMAIL"
-        | "PASSWORD"
-        | "GITHUB"
-        | "WX"
-        | "WXAPP"
-        | "WXCORP_INSEDE"
-        | "WXCORP_OUTSIDE";
-    } & {
-      /**
        * 头像
        */
       avatar?: string;
@@ -4369,11 +4345,52 @@ declare global {
        */
       data?: string;
     } & {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
+      /**
+       * 所在的ns
+       */
+      ns?: string;
+      /**
+       * 电话
+       */
+      phone?: string;
+      /**
+       * 邮箱
+       */
+      email?: string;
+      /**
+       * 角色
+       */
+      roles?: string[];
+      /**
+       * 过期时间
+       */
+      expireAt?: Date;
+      /**
+       * 用户来源
+       */
+      source?:
+        | "DEFAULT"
+        | "PHONE"
+        | "EMAIL"
+        | "PASSWORD"
+        | "GITHUB"
+        | "WX"
+        | "WXAPP"
+        | "WXCORP_INSEDE"
+        | "WXCORP_OUTSIDE";
+    } & {
+      /**
+       * 密码
+       */
+      password?: string;
+      /**
+       * 手机验证码
+       */
+      phoneCode?: string;
+      /**
+       * 邮箱验证码
+       */
+      emailCode?: string;
     };
   }
   export interface UpdateScopeUserResponse {
@@ -4812,11 +4829,12 @@ declare global {
   export interface ListUsersRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       ns?: string[] | string;
       ns_like?: string;
+      roles?: string[] | string;
     };
   }
   export interface ListUsersResponse {
@@ -6296,7 +6314,7 @@ declare global {
   export interface ListScopeSessionsRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       _populate?: string;
@@ -6466,6 +6484,10 @@ declare global {
        * 会话过期时间
        */
       expireAt?: Date;
+      /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
       /**
        * 是否可用
        */
@@ -6646,6 +6668,10 @@ declare global {
        * 会话过期时间
        */
       expireAt?: Date;
+      /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
       /**
        * 是否可用
        */
@@ -6833,6 +6859,10 @@ declare global {
        */
       expireAt?: Date;
       /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
+      /**
        * 是否可用
        */
       active?: boolean;
@@ -6901,6 +6931,10 @@ declare global {
        */
       expireAt?: Date;
       /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
+      /**
        * session belongs to ns
        */
       ns?: string;
@@ -6913,7 +6947,7 @@ declare global {
             /**
              * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
              */
-            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
             /**
              * app id
              */
@@ -7203,6 +7237,10 @@ declare global {
        */
       expireAt?: Date;
       /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
+      /**
        * session belongs to ns
        */
       ns?: string;
@@ -7215,7 +7253,7 @@ declare global {
             /**
              * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
              */
-            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
             /**
              * app id
              */
@@ -7634,6 +7672,10 @@ declare global {
        */
       expireAt?: Date;
       /**
+       * token过期时间
+       */
+      tokenExpireAt?: Date;
+      /**
        * session belongs to ns
        */
       ns?: string;
@@ -7646,7 +7688,7 @@ declare global {
             /**
              * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
              */
-            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WX" | "WXAPP" | "WXQY" | "GITHUB";
+            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
             /**
              * app id
              */
@@ -8032,7 +8074,7 @@ declare global {
   export interface ListScopeInvitationsRequest {
     query?: {
       _limit?: number;
-      _offset?: string;
+      _offset?: number;
       _select?: string;
       _sort?: string;
       code?: string;

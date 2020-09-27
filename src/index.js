@@ -190,6 +190,22 @@ export default class SDK {
       });
     },
     /**
+     * delete role
+     *
+     * @param {DeleteScopeRoleRequest} req deleteScopeRole request
+     */
+    deleteScopeRole: req => {
+      const { scopeId, roleId } = req || {};
+
+      if (!scopeId) throw new Error("scopeId is required for deleteScopeRole");
+      if (!roleId) throw new Error("roleId is required for deleteScopeRole");
+
+      return fetch(`${this.base}/scopes/${scopeId}/roles/${roleId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
      * Get scope&#x27;s sms config
      *
      * @param {GetScopeSmsRequest} req getScopeSms request
@@ -578,17 +594,18 @@ export default class SDK {
       });
     },
     /**
-     * list profiles by provider id
+     * list scope profiles by provider id
      *
-     * @param {ListProfilesRequest} req listProfiles request
-     * @returns {Promise<ListProfilesResponse>} The profiles with given provider id
+     * @param {ListScopeProfilesRequest} req listScopeProfiles request
+     * @returns {Promise<ListScopeProfilesResponse>} The profiles with given provider id
      */
-    listProfiles: req => {
+    listScopeProfiles: req => {
       const { scopeId, providerId, query } = req || {};
 
-      if (!scopeId) throw new Error("scopeId is required for listProfiles");
+      if (!scopeId)
+        throw new Error("scopeId is required for listScopeProfiles");
       if (!providerId)
-        throw new Error("providerId is required for listProfiles");
+        throw new Error("providerId is required for listScopeProfiles");
 
       return fetch(
         `${this.base}/scopes/${scopeId}/providers/${providerId}/profiles`,
@@ -688,6 +705,22 @@ export default class SDK {
 
       return fetch(`${this.base}/scopes/${scopeId}/apps/${appId}`, {
         method: "DELETE",
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Get app by id
+     *
+     * @param {GetAppRequest} req getApp request
+     * @returns {Promise<GetAppResponse>} The app with given id
+     */
+    getApp: req => {
+      const { appId } = req || {};
+
+      if (!appId) throw new Error("appId is required for getApp");
+
+      return fetch(`${this.base}/apps/${appId}`, {
+        method: "GET",
         headers: { Authorization: this.auth },
       });
     },
