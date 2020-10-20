@@ -475,6 +475,20 @@ export default class SDK {
         headers: { Authorization: this.auth },
       });
     },
+    /**
+     * list profile form items
+     *
+     * @param {ListProfileItemsRequest} req listProfileItems request
+     * @returns {Promise<ListProfileItemsResponse>} A paged array of register form items
+     */
+    listProfileItems: req => {
+      const {} = req || {};
+
+      return fetch(`${this.base}/profileForm`, {
+        method: "GET",
+        headers: { Authorization: this.auth },
+      });
+    },
   };
   /**
    * provider's methods
@@ -1087,6 +1101,25 @@ export default class SDK {
       });
     },
     /**
+     * Update user password
+     *
+     * @param {UpdateUserPasswordRequest} req updateUserPassword request
+     * @returns {Promise<UpdateUserPasswordResponse>} The user
+     */
+    updateUserPassword: req => {
+      const { userId, body } = req || {};
+
+      if (!userId) throw new Error("userId is required for updateUserPassword");
+      if (!body)
+        throw new Error("requetBody is required for updateUserPassword");
+
+      return fetch(`${this.base}/users/${userId}/password`, {
+        method: "PUT",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
      * register user
      *
      * @param {RegisterUserRequest} req registerUser request
@@ -1282,24 +1315,6 @@ export default class SDK {
 
       return fetch(`${this.base}/sessions/${sessionId}`, {
         method: "DELETE",
-        headers: { Authorization: this.auth },
-      });
-    },
-    /**
-     * third register user
-     *
-     * @param {ThirdRegisterUserRequest} req thirdRegisterUser request
-     * @returns {Promise<ThirdRegisterUserResponse>} The session created
-     */
-    thirdRegisterUser: req => {
-      const { body } = req || {};
-
-      if (!body)
-        throw new Error("requetBody is required for thirdRegisterUser");
-
-      return fetch(`${this.base}/thirdRegister`, {
-        method: "POST",
-        body,
         headers: { Authorization: this.auth },
       });
     },

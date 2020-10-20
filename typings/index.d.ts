@@ -134,6 +134,10 @@ declare global {
     deleteScopeProfileItem(
       req: DeleteScopeProfileItemRequest
     ): Promise<DeleteScopeProfileItemResponse>;
+    /**
+     * list profile form items
+     */
+    listProfileItems(req: ListProfileItemsRequest): Promise<ListProfileItemsResponse>;
   }
   export interface ProviderAPI {
     /**
@@ -275,6 +279,10 @@ declare global {
      */
     deleteUser(req: DeleteUserRequest): Promise<DeleteUserResponse>;
     /**
+     * Update user password
+     */
+    updateUserPassword(req: UpdateUserPasswordRequest): Promise<UpdateUserPasswordResponse>;
+    /**
      * register user
      */
     registerUser(req: RegisterUserRequest): Promise<RegisterUserResponse>;
@@ -320,10 +328,6 @@ declare global {
      * Deletes a session
      */
     deleteSession(req: DeleteSessionRequest): Promise<DeleteSessionResponse>;
-    /**
-     * third register user
-     */
-    thirdRegisterUser(req: ThirdRegisterUserRequest): Promise<ThirdRegisterUserResponse>;
   }
   export interface ValidationAPI {
     /**
@@ -2729,6 +2733,21 @@ declare global {
     scopeId: string;
     name: string;
   }
+  export interface ListProfileItemsResponse {
+    content?: {
+      /**
+       * item name
+       */
+      name: string;
+      /**
+       * 必填 or 选填
+       */
+      must: boolean;
+    }[];
+    headers?: {
+      "X-Total-Count"?: number;
+    };
+  }
   export interface CreateScopeProviderRequest {
     scopeId: string;
     body: {
@@ -3069,6 +3088,10 @@ declare global {
            * 绑定 user id
            */
           user?: string;
+          /**
+           * github access token
+           */
+          token?: string;
         } & {
           id: string;
           updateAt?: Date;
@@ -4835,6 +4858,9 @@ declare global {
       ns?: string[] | string;
       ns_like?: string;
       roles?: string[] | string;
+      id_like?: string;
+      username_like?: string;
+      name_like?: string;
     };
   }
   export interface ListUsersResponse {
@@ -5425,6 +5451,166 @@ declare global {
   }
   export interface DeleteUserRequest {
     userId: string;
+  }
+  export interface UpdateUserPasswordRequest {
+    userId: string;
+    /**
+     * 用户修改个人密码
+     */
+    body: {
+      /**
+       * 原密码
+       */
+      oldPassword: string;
+      /**
+       * 新密码
+       */
+      password: string;
+    };
+  }
+  export interface UpdateUserPasswordResponse {
+    content?: {
+      /**
+       * 所在的ns
+       */
+      ns?: string;
+      /**
+       * 用户名
+       */
+      username?: string;
+      /**
+       * 电话
+       */
+      phone?: string;
+      /**
+       * 邮箱
+       */
+      email?: string;
+      /**
+       * 角色
+       */
+      roles?: string[];
+      /**
+       * 过期时间
+       */
+      expireAt?: Date;
+      /**
+       * 用户来源
+       */
+      source?:
+        | "DEFAULT"
+        | "PHONE"
+        | "EMAIL"
+        | "PASSWORD"
+        | "GITHUB"
+        | "WX"
+        | "WXAPP"
+        | "WXCORP_INSEDE"
+        | "WXCORP_OUTSIDE";
+    } & {
+      /**
+       * 头像
+       */
+      avatar?: string;
+      /**
+       * 昵称
+       */
+      nickname?: string;
+      /**
+       * 身份证号
+       */
+      idnumber?: string;
+      /**
+       * QQ号
+       */
+      qq?: string;
+      /**
+       * 微信号
+       */
+      wechat?: string;
+      /**
+       * 个人简介
+       */
+      personalinfo?: string;
+      /**
+       * 出生日期
+       */
+      birthday?: Date;
+      /**
+       * 兴趣爱好
+       */
+      hobby?: string;
+      /**
+       * 地址
+       */
+      address?: string;
+      /**
+       * 国家
+       */
+      country?: string;
+      /**
+       * 性别
+       */
+      gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
+      /**
+       * 公司名
+       */
+      company?: string;
+      /**
+       * 工号
+       */
+      worknumber?: string;
+      /**
+       * 工龄
+       */
+      wordyear?: string;
+      /**
+       * 资质
+       */
+      credential?: string;
+      /**
+       * 职位
+       */
+      position?: string;
+      /**
+       * 毕业院校
+       */
+      school?: string;
+      /**
+       * 专业
+       */
+      major?: string;
+      /**
+       * 学历
+       */
+      education?: string;
+      /**
+       * 班级
+       */
+      class?: string;
+      /**
+       * 导师
+       */
+      teacher?: string;
+      /**
+       * 开户行
+       */
+      bank?: string;
+      /**
+       * 银行卡号
+       */
+      bankcardnumber?: string;
+      /**
+       * 自定义信息
+       */
+      data?: string;
+    } & {
+      id: string;
+      updateAt?: Date;
+      updateBy?: string;
+      createAt?: Date;
+      createBy?: string;
+    };
   }
   export interface RegisterUserRequest {
     body: {
@@ -7163,6 +7349,10 @@ declare global {
          * 绑定 user id
          */
         user?: string;
+        /**
+         * github access token
+         */
+        token?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -7469,6 +7659,10 @@ declare global {
          * 绑定 user id
          */
         user?: string;
+        /**
+         * github access token
+         */
+        token?: string;
       } & {
         id: string;
         updateAt?: Date;
@@ -7536,438 +7730,6 @@ declare global {
   export interface DeleteSessionRequest {
     sessionId: string;
   }
-  export interface ThirdRegisterUserRequest {
-    body: {
-      /**
-       * 头像
-       */
-      avatar?: string;
-      /**
-       * 昵称
-       */
-      nickname?: string;
-      /**
-       * 身份证号
-       */
-      idnumber?: string;
-      /**
-       * QQ号
-       */
-      qq?: string;
-      /**
-       * 微信号
-       */
-      wechat?: string;
-      /**
-       * 个人简介
-       */
-      personalinfo?: string;
-      /**
-       * 出生日期
-       */
-      birthday?: Date;
-      /**
-       * 兴趣爱好
-       */
-      hobby?: string;
-      /**
-       * 地址
-       */
-      address?: string;
-      /**
-       * 国家
-       */
-      country?: string;
-      /**
-       * 性别
-       */
-      gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
-      /**
-       * 公司名
-       */
-      company?: string;
-      /**
-       * 工号
-       */
-      worknumber?: string;
-      /**
-       * 工龄
-       */
-      wordyear?: string;
-      /**
-       * 资质
-       */
-      credential?: string;
-      /**
-       * 职位
-       */
-      position?: string;
-      /**
-       * 毕业院校
-       */
-      school?: string;
-      /**
-       * 专业
-       */
-      major?: string;
-      /**
-       * 学历
-       */
-      education?: string;
-      /**
-       * 班级
-       */
-      class?: string;
-      /**
-       * 导师
-       */
-      teacher?: string;
-      /**
-       * 开户行
-       */
-      bank?: string;
-      /**
-       * 银行卡号
-       */
-      bankcardnumber?: string;
-      /**
-       * 自定义信息
-       */
-      data?: string;
-    } & {
-      /**
-       * 用户名
-       */
-      username?: string;
-      /**
-       * 电话
-       */
-      phone?: string;
-      /**
-       * 邮箱
-       */
-      email?: string;
-      /**
-       * 密码
-       */
-      password: string;
-      /**
-       * 手机验证码
-       */
-      phoneCode?: string;
-      /**
-       * 邮箱验证码
-       */
-      emailCode?: string;
-      /**
-       * 邀请码
-       */
-      inviteCode?: string;
-    };
-  }
-  export interface ThirdRegisterUserResponse {
-    content?: {
-      /**
-       * 会话过期时间
-       */
-      expireAt?: Date;
-      /**
-       * token过期时间
-       */
-      tokenExpireAt?: Date;
-      /**
-       * session belongs to ns
-       */
-      ns?: string;
-      provider?:
-        | ({
-            /**
-             * 描述
-             */
-            name?: string;
-            /**
-             * 密码验证，邮箱验证，手机验证，微信公众号，微信小程序，微信企业号，GITHUB
-             */
-            type?: "PASSWORD" | "EMAIL" | "PHONE" | "WECHAT" | "WXAPP" | "WXQY" | "GITHUB";
-            /**
-             * app id
-             */
-            appId?: string;
-            /**
-             * app secret
-             */
-            appSecret?: string;
-            /**
-             * client id
-             */
-            clientId?: string;
-            /**
-             * 是否自动更新用户数据
-             */
-            update?: boolean;
-            /**
-             * 是否绑定用户
-             */
-            bind?: boolean;
-          } & {
-            id: string;
-            updateAt?: Date;
-            updateBy?: string;
-            createAt?: Date;
-            createBy?: string;
-          })
-        | string;
-      /**
-       * 角色
-       */
-      roles?: string[];
-      user?: {
-        /**
-         * 所在的ns
-         */
-        ns?: string;
-        /**
-         * 用户名
-         */
-        username?: string;
-        /**
-         * 电话
-         */
-        phone?: string;
-        /**
-         * 邮箱
-         */
-        email?: string;
-        /**
-         * 角色
-         */
-        roles?: string[];
-        /**
-         * 过期时间
-         */
-        expireAt?: Date;
-        /**
-         * 用户来源
-         */
-        source?:
-          | "DEFAULT"
-          | "PHONE"
-          | "EMAIL"
-          | "PASSWORD"
-          | "GITHUB"
-          | "WX"
-          | "WXAPP"
-          | "WXCORP_INSEDE"
-          | "WXCORP_OUTSIDE";
-      } & {
-        /**
-         * 头像
-         */
-        avatar?: string;
-        /**
-         * 昵称
-         */
-        nickname?: string;
-        /**
-         * 身份证号
-         */
-        idnumber?: string;
-        /**
-         * QQ号
-         */
-        qq?: string;
-        /**
-         * 微信号
-         */
-        wechat?: string;
-        /**
-         * 个人简介
-         */
-        personalinfo?: string;
-        /**
-         * 出生日期
-         */
-        birthday?: Date;
-        /**
-         * 兴趣爱好
-         */
-        hobby?: string;
-        /**
-         * 地址
-         */
-        address?: string;
-        /**
-         * 国家
-         */
-        country?: string;
-        /**
-         * 性别
-         */
-        gender?: "UNKOWN" | "MALE" | "FEMALE" | "OTHER";
-        /**
-         * 公司名
-         */
-        company?: string;
-        /**
-         * 工号
-         */
-        worknumber?: string;
-        /**
-         * 工龄
-         */
-        wordyear?: string;
-        /**
-         * 资质
-         */
-        credential?: string;
-        /**
-         * 职位
-         */
-        position?: string;
-        /**
-         * 毕业院校
-         */
-        school?: string;
-        /**
-         * 专业
-         */
-        major?: string;
-        /**
-         * 学历
-         */
-        education?: string;
-        /**
-         * 班级
-         */
-        class?: string;
-        /**
-         * 导师
-         */
-        teacher?: string;
-        /**
-         * 开户行
-         */
-        bank?: string;
-        /**
-         * 银行卡号
-         */
-        bankcardnumber?: string;
-        /**
-         * 自定义信息
-         */
-        data?: string;
-      } & {
-        id: string;
-        updateAt?: Date;
-        updateBy?: string;
-        createAt?: Date;
-        createBy?: string;
-      };
-      github?: {
-        /**
-         * github 用户名
-         */
-        username?: string;
-        /**
-         * github id
-         */
-        githubId?: string;
-        /**
-         * github 头像
-         */
-        avatar?: string;
-        /**
-         * github 姓名
-         */
-        name?: string;
-        /**
-         * 公司
-         */
-        company?: string;
-        /**
-         * 博客
-         */
-        blog?: string;
-        /**
-         * 所在地
-         */
-        location?: string;
-        /**
-         * 邮箱
-         */
-        email?: string;
-        /**
-         * provider id
-         */
-        provider?: string;
-        /**
-         * 绑定 user id
-         */
-        user?: string;
-      } & {
-        id: string;
-        updateAt?: Date;
-        updateBy?: string;
-        createAt?: Date;
-        createBy?: string;
-      };
-      wechat?: {
-        /**
-         * wechat 昵称
-         */
-        nickname?: string;
-        /**
-         * union id
-         */
-        unionid?: string;
-        /**
-         * open id
-         */
-        openid?: string;
-        /**
-         * appId
-         */
-        appId?: string;
-        /**
-         * client id
-         */
-        clientId?: string;
-        /**
-         * 微信 头像
-         */
-        headimgurl?: string;
-        /**
-         * provider id
-         */
-        provider?: string;
-        /**
-         * 绑定 user id
-         */
-        user?: string;
-      } & {
-        id: string;
-        updateAt?: Date;
-        updateBy?: string;
-        createAt?: Date;
-        createBy?: string;
-      };
-      /**
-       * 是否可用
-       */
-      active?: boolean;
-    } & {
-      id: string;
-      updateAt?: Date;
-      updateBy?: string;
-      createAt?: Date;
-      createBy?: string;
-    } & {
-      /**
-       * token
-       */
-      token: string;
-    };
-  }
   export interface CreateValidationRequest {
     /**
      * 创建验证码需要的参数
@@ -8021,6 +7783,10 @@ declare global {
        * 来源
        */
       source?: string;
+      /**
+       * 过期时间
+       */
+      expireAt?: Date;
       /**
        * 是否激活
        */
@@ -8178,6 +7944,10 @@ declare global {
        * 来源
        */
       source?: string;
+      /**
+       * 过期时间
+       */
+      expireAt?: Date;
       /**
        * 是否激活
        */
