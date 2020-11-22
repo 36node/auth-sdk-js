@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/36node-stargate/auth-sdk-js/compare/release-v1.1.0...1.2.0) (2020-11-22)
+
+
+### Features
+
+* update gitignore ([58957fe](https://github.com/36node-stargate/auth-sdk-js/commit/58957fe))
+
+
+
 ## 1.1.0 (2020-11-22)
 
 
