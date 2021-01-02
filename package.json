@@ -1,6 +1,6 @@
 {
   "name": "@36node/auth-sdk",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A SDK boilerplate.",
   "repository": {
     "url": "36node/auth-sdk",
