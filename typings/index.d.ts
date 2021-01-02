@@ -518,7 +518,7 @@ export interface CreateScopeRequest {
   };
 }
 export interface CreateScopeResponse {
-  content: {
+  body: {
     /**
      * 用户池的名称，例如`百世诺`
      */
@@ -840,7 +840,7 @@ export interface ListScopesRequest {
   };
 }
 export interface ListScopesResponse {
-  content: ({
+  body: ({
     /**
      * 用户池的名称，例如`百世诺`
      */
@@ -1150,14 +1150,14 @@ export interface ListScopesResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeRequest {
   scopeId: string;
 }
 export interface GetScopeResponse {
-  content: {
+  body: {
     /**
      * 用户池的名称，例如`百世诺`
      */
@@ -1626,7 +1626,7 @@ export interface UpdateScopeRequest {
   };
 }
 export interface UpdateScopeResponse {
-  content: {
+  body: {
     /**
      * 用户池的名称，例如`百世诺`
      */
@@ -1959,7 +1959,7 @@ export interface CreateScopeRoleResponse {
   /**
    * 角色配置
    */
-  content: {
+  body: {
     /**
      * 角色名称
      */
@@ -1988,7 +1988,7 @@ export interface ListScopeRolesRequest {
   scopeId: string;
 }
 export interface ListScopeRolesResponse {
-  content: ({
+  body: ({
     /**
      * 角色名称
      */
@@ -2009,7 +2009,7 @@ export interface ListScopeRolesResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeRoleRequest {
@@ -2020,7 +2020,7 @@ export interface GetScopeRoleResponse {
   /**
    * 角色配置
    */
-  content: {
+  body: {
     /**
      * 角色名称
      */
@@ -2062,7 +2062,7 @@ export interface UpdateScopeRoleResponse {
   /**
    * 角色配置
    */
-  content: {
+  body: {
     /**
      * 角色名称
      */
@@ -2091,7 +2091,7 @@ export interface GetScopeSmsRequest {
   scopeId: string;
 }
 export interface GetScopeSmsResponse {
-  content: {
+  body: {
     /**
      * 验证码过期时间 分钟
      */
@@ -2164,7 +2164,7 @@ export interface UpdateScopeSmsRequest {
   };
 }
 export interface UpdateScopeSmsResponse {
-  content: {
+  body: {
     /**
      * 验证码过期时间 分钟
      */
@@ -2205,7 +2205,7 @@ export interface GetScopeEmailRequest {
   scopeId: string;
 }
 export interface GetScopeEmailResponse {
-  content: {
+  body: {
     /**
      * 验证码过期时间 分钟
      */
@@ -2294,7 +2294,7 @@ export interface UpdateScopeEmailRequest {
   };
 }
 export interface UpdateScopeEmailResponse {
-  content: {
+  body: {
     /**
      * 验证码过期时间 分钟
      */
@@ -2343,7 +2343,7 @@ export interface ListScopeEmailtplsRequest {
   scopeId: string;
 }
 export interface ListScopeEmailtplsResponse {
-  content: ({
+  body: ({
     /**
      * 模板类型
      */
@@ -2368,7 +2368,7 @@ export interface ListScopeEmailtplsResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeEmailtplRequest {
@@ -2379,7 +2379,7 @@ export interface GetScopeEmailtplResponse {
   /**
    * 邮件模板配置
    */
-  content: {
+  body: {
     /**
      * 模板类型
      */
@@ -2432,7 +2432,7 @@ export interface UpdateScopeEmailtplResponse {
   /**
    * 邮件模板配置
    */
-  content: {
+  body: {
     /**
      * 模板类型
      */
@@ -2464,7 +2464,7 @@ export interface GetScopeSecurityResponse {
   /**
    * scope 安全配置
    */
-  content: {
+  body: {
     /**
      * jwt过期时间/秒
      */
@@ -2565,7 +2565,7 @@ export interface UpdateScopeSecurityResponse {
   /**
    * scope 安全配置
    */
-  content: {
+  body: {
     /**
      * jwt过期时间/秒
      */
@@ -2618,7 +2618,7 @@ export interface ListScopeRegisterItemsRequest {
   scopeId: string;
 }
 export interface ListScopeRegisterItemsResponse {
-  content: {
+  body: {
     /**
      * item name
      */
@@ -2629,7 +2629,7 @@ export interface ListScopeRegisterItemsResponse {
     must: boolean;
   }[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface UpsertScopeRegisterItemRequest {
@@ -2652,7 +2652,7 @@ export interface UpsertScopeRegisterItemResponse {
   /**
    * scope register form item 注册配置项
    */
-  content: {
+  body: {
     /**
      * item name
      */
@@ -2671,7 +2671,7 @@ export interface ListScopeProfileItemsRequest {
   scopeId: string;
 }
 export interface ListScopeProfileItemsResponse {
-  content: {
+  body: {
     /**
      * item name
      */
@@ -2682,7 +2682,7 @@ export interface ListScopeProfileItemsResponse {
     must: boolean;
   }[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface UpsertScopeProfileItemRequest {
@@ -2705,7 +2705,7 @@ export interface UpsertScopeProfileItemResponse {
   /**
    * scope profile form item 个人中心配置项
    */
-  content: {
+  body: {
     /**
      * item name
      */
@@ -2721,7 +2721,7 @@ export interface DeleteScopeProfileItemRequest {
   name: string;
 }
 export interface ListProfileItemsResponse {
-  content: {
+  body: {
     /**
      * item name
      */
@@ -2732,7 +2732,7 @@ export interface ListProfileItemsResponse {
     must: boolean;
   }[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface CreateScopeProviderRequest {
@@ -2767,7 +2767,7 @@ export interface CreateScopeProviderRequest {
   };
 }
 export interface CreateScopeProviderResponse {
-  content: {
+  body: {
     /**
      * 描述
      */
@@ -2814,7 +2814,7 @@ export interface ListScopeProvidersRequest {
   scopeId: string;
 }
 export interface ListScopeProvidersResponse {
-  content: ({
+  body: ({
     /**
      * 描述
      */
@@ -2851,7 +2851,7 @@ export interface ListScopeProvidersResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeProviderRequest {
@@ -2859,7 +2859,7 @@ export interface GetScopeProviderRequest {
   providerId: string;
 }
 export interface GetScopeProviderResponse {
-  content: {
+  body: {
     /**
      * 描述
      */
@@ -2930,7 +2930,7 @@ export interface UpdateScopeProviderRequest {
   };
 }
 export interface UpdateScopeProviderResponse {
-  content: {
+  body: {
     /**
      * 描述
      */
@@ -2981,7 +2981,7 @@ export interface ListProvidersRequest {
   };
 }
 export interface ListProvidersResponse {
-  content: ({
+  body: ({
     /**
      * 描述
      */
@@ -3018,7 +3018,7 @@ export interface ListProvidersResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface ListScopeProfilesRequest {
@@ -3033,7 +3033,7 @@ export interface ListScopeProfilesRequest {
   providerId: string;
 }
 export interface ListScopeProfilesResponse {
-  content: (
+  body: (
     | ({
         /**
          * github 用户名
@@ -3149,7 +3149,7 @@ export interface CreateScopeAppRequest {
   };
 }
 export interface CreateScopeAppResponse {
-  content: {
+  body: {
     /**
      * 名称
      */
@@ -3184,7 +3184,7 @@ export interface ListScopeAppsRequest {
   scopeId: string;
 }
 export interface ListScopeAppsResponse {
-  content: ({
+  body: ({
     /**
      * 名称
      */
@@ -3205,7 +3205,7 @@ export interface ListScopeAppsResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeAppRequest {
@@ -3213,7 +3213,7 @@ export interface GetScopeAppRequest {
   appId: string;
 }
 export interface GetScopeAppResponse {
-  content: {
+  body: {
     /**
      * 名称
      */
@@ -3256,7 +3256,7 @@ export interface UpdateScopeAppRequest {
   };
 }
 export interface UpdateScopeAppResponse {
-  content: {
+  body: {
     /**
      * 名称
      */
@@ -3285,7 +3285,7 @@ export interface GetAppRequest {
   appId: string;
 }
 export interface GetAppResponse {
-  content: {
+  body: {
     /**
      * 名称
      */
@@ -3329,7 +3329,7 @@ export interface CreateScopeNamespaceRequest {
   };
 }
 export interface CreateScopeNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3371,7 +3371,7 @@ export interface ListScopeNamespacesRequest {
   scopeId: string;
 }
 export interface ListScopeNamespacesResponse {
-  content: ({
+  body: ({
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3401,7 +3401,7 @@ export interface ListScopeNamespacesResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeNamespaceRequest {
@@ -3409,7 +3409,7 @@ export interface GetScopeNamespaceRequest {
   namespaceId: string;
 }
 export interface GetScopeNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3459,7 +3459,7 @@ export interface UpdateScopeNamespaceRequest {
   };
 }
 export interface UpdateScopeNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3515,7 +3515,7 @@ export interface CreateNamespaceRequest {
   };
 }
 export interface CreateNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3556,7 +3556,7 @@ export interface ListNamespacesRequest {
   };
 }
 export interface ListNamespacesResponse {
-  content: ({
+  body: ({
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3586,14 +3586,14 @@ export interface ListNamespacesResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetNamespaceRequest {
   namespaceId: string;
 }
 export interface GetNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3642,7 +3642,7 @@ export interface UpdateNamespaceRequest {
   };
 }
 export interface UpdateNamespaceResponse {
-  content: {
+  body: {
     /**
      * 唯一的英文名，不能重复，用 / 开头
      */
@@ -3818,7 +3818,7 @@ export interface CreateScopeUserRequest {
   };
 }
 export interface CreateScopeUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -3974,7 +3974,7 @@ export interface ListScopeUsersRequest {
   scopeId: string;
 }
 export interface ListScopeUsersResponse {
-  content: ({
+  body: ({
     /**
      * 所在的ns
      */
@@ -4117,7 +4117,7 @@ export interface ListScopeUsersResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeUserRequest {
@@ -4125,7 +4125,7 @@ export interface GetScopeUserRequest {
   userId: string;
 }
 export interface GetScopeUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -4418,7 +4418,7 @@ export interface UpdateScopeUserRequest {
   };
 }
 export interface UpdateScopeUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -4707,7 +4707,7 @@ export interface CreateUserRequest {
   };
 }
 export interface CreateUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -4865,7 +4865,7 @@ export interface ListUsersRequest {
   };
 }
 export interface ListUsersResponse {
-  content: ({
+  body: ({
     /**
      * 所在的ns
      */
@@ -5008,14 +5008,14 @@ export interface ListUsersResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetUserRequest {
   userId: string;
 }
 export interface GetUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -5307,7 +5307,7 @@ export interface UpdateUserRequest {
   };
 }
 export interface UpdateUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -5470,7 +5470,7 @@ export interface UpdateUserPasswordRequest {
   };
 }
 export interface UpdateUserPasswordResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -5747,7 +5747,7 @@ export interface RegisterUserRequest {
   };
 }
 export interface RegisterUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -6020,7 +6020,7 @@ export interface ThirdRegisterUserRequest {
   };
 }
 export interface ThirdRegisterUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -6183,7 +6183,7 @@ export interface BindUserRequest {
   };
 }
 export interface BindUserResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -6355,7 +6355,7 @@ export interface ResetPasswordRequest {
   };
 }
 export interface ResetPasswordResponse {
-  content: {
+  body: {
     /**
      * 所在的ns
      */
@@ -6513,7 +6513,7 @@ export interface ListScopeSessionsRequest {
   scopeId: string;
 }
 export interface ListScopeSessionsResponse {
-  content: ({
+  body: ({
     id: string;
     updateAt?: Date;
     updateBy?: string;
@@ -6689,7 +6689,7 @@ export interface ListScopeSessionsResponse {
     provider?: string;
   })[];
   headers: {
-    "X-Total-Count"?: string;
+    "x-total-count"?: string;
   };
 }
 export interface GetScopeSessionRequest {
@@ -6697,7 +6697,7 @@ export interface GetScopeSessionRequest {
   sessionId: string;
 }
 export interface GetScopeSessionResponse {
-  content: {
+  body: {
     id: string;
     updateAt?: Date;
     updateBy?: string;
@@ -6887,7 +6887,7 @@ export interface UpdateScopeSessionRequest {
   };
 }
 export interface UpdateScopeSessionResponse {
-  content: {
+  body: {
     id: string;
     updateAt?: Date;
     updateBy?: string;
@@ -7112,7 +7112,7 @@ export interface CreateSessionRequest {
   };
 }
 export interface CreateSessionResponse {
-  content: {
+  body: {
     /**
      * 会话过期时间
      */
@@ -7422,7 +7422,7 @@ export interface GetSessionRequest {
   sessionId: string;
 }
 export interface GetSessionResponse {
-  content: {
+  body: {
     /**
      * 会话过期时间
      */
@@ -7743,7 +7743,7 @@ export interface CreateValidationRequest {
   };
 }
 export interface CreateValidationResponse {
-  content: {
+  body: {
     /**
      * 所属的 scope
      */
@@ -7801,7 +7801,7 @@ export interface CreateScopeInvitationRequest {
   };
 }
 export interface CreateScopeInvitationResponse {
-  content: {
+  body: {
     /**
      * 邀请码
      */
@@ -7852,7 +7852,7 @@ export interface ListScopeInvitationsRequest {
   scopeId: string;
 }
 export interface ListScopeInvitationsResponse {
-  content: ({
+  body: ({
     /**
      * 邀请码
      */
@@ -7889,7 +7889,7 @@ export interface ListScopeInvitationsResponse {
     createBy?: string;
   })[];
   headers: {
-    "X-Total-Count"?: number;
+    "x-total-count"?: number;
   };
 }
 export interface GetScopeInvitationRequest {
@@ -7897,7 +7897,7 @@ export interface GetScopeInvitationRequest {
   invitationId: string;
 }
 export interface GetScopeInvitationResponse {
-  content: {
+  body: {
     /**
      * 邀请码
      */
@@ -7960,7 +7960,7 @@ export interface UpdateScopeInvitationRequest {
   };
 }
 export interface UpdateScopeInvitationResponse {
-  content: {
+  body: {
     /**
      * 邀请码
      */
@@ -8008,7 +8008,7 @@ export interface GetInvitationRequest {
   };
 }
 export interface GetInvitationResponse {
-  content: {
+  body: {
     /**
      * 邀请码
      */
