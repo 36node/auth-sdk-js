@@ -10,6 +10,7 @@ declare class SDK {
   app: AppAPI;
   namespace: NamespaceAPI;
   user: UserAPI;
+  github: GithubAPI;
   session: SessionAPI;
   validation: ValidationAPI;
   invitation: InvitationAPI;
@@ -291,6 +292,12 @@ export interface UserAPI {
    * reset password
    */
   resetPassword(req: ResetPasswordRequest): Promise<ResetPasswordResponse>;
+}
+export interface GithubAPI {
+  /**
+   * List githubs
+   */
+  listGithubs(req: ListGithubsRequest): Promise<ListGithubsResponse>;
 }
 export interface SessionAPI {
   /**
@@ -3331,10 +3338,6 @@ export interface CreateScopeNamespaceRequest {
 export interface CreateScopeNamespaceResponse {
   body: {
     /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
-    /**
      * 父空间
      */
     parent?: string;
@@ -3373,10 +3376,6 @@ export interface ListScopeNamespacesRequest {
 export interface ListScopeNamespacesResponse {
   body: ({
     /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
-    /**
      * 父空间
      */
     parent?: string;
@@ -3410,10 +3409,6 @@ export interface GetScopeNamespaceRequest {
 }
 export interface GetScopeNamespaceResponse {
   body: {
-    /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
     /**
      * 父空间
      */
@@ -3460,10 +3455,6 @@ export interface UpdateScopeNamespaceRequest {
 }
 export interface UpdateScopeNamespaceResponse {
   body: {
-    /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
     /**
      * 父空间
      */
@@ -3517,10 +3508,6 @@ export interface CreateNamespaceRequest {
 export interface CreateNamespaceResponse {
   body: {
     /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
-    /**
      * 父空间
      */
     parent?: string;
@@ -3558,10 +3545,6 @@ export interface ListNamespacesRequest {
 export interface ListNamespacesResponse {
   body: ({
     /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
-    /**
      * 父空间
      */
     parent?: string;
@@ -3594,10 +3577,6 @@ export interface GetNamespaceRequest {
 }
 export interface GetNamespaceResponse {
   body: {
-    /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
     /**
      * 父空间
      */
@@ -3643,10 +3622,6 @@ export interface UpdateNamespaceRequest {
 }
 export interface UpdateNamespaceResponse {
   body: {
-    /**
-     * 唯一的英文名，不能重复，用 / 开头
-     */
-    id?: string;
     /**
      * 父空间
      */
@@ -4862,6 +4837,7 @@ export interface ListUsersRequest {
     id_like?: string;
     username_like?: string;
     name_like?: string;
+    nickname_like?: string;
   };
 }
 export interface ListUsersResponse {
@@ -6496,6 +6472,73 @@ export interface ResetPasswordResponse {
     updateBy?: string;
     createAt?: Date;
     createBy?: string;
+  };
+}
+export interface ListGithubsRequest {
+  query?: {
+    _limit?: number;
+    _offset?: number;
+    _select?: string;
+    _sort?: string;
+    ns_like: string;
+    user_like?: string;
+  };
+}
+export interface ListGithubsResponse {
+  body: ({
+    /**
+     * github 用户名
+     */
+    username?: string;
+    /**
+     * github id
+     */
+    githubId?: string;
+    /**
+     * github 头像
+     */
+    avatar?: string;
+    /**
+     * github 姓名
+     */
+    name?: string;
+    /**
+     * 公司
+     */
+    company?: string;
+    /**
+     * 博客
+     */
+    blog?: string;
+    /**
+     * 所在地
+     */
+    location?: string;
+    /**
+     * 邮箱
+     */
+    email?: string;
+    /**
+     * provider id
+     */
+    provider?: string;
+    /**
+     * 绑定 user id
+     */
+    user?: string;
+    /**
+     * github access token
+     */
+    token?: string;
+  } & {
+    id: string;
+    updateAt?: Date;
+    updateBy?: string;
+    createAt?: Date;
+    createBy?: string;
+  })[];
+  headers: {
+    "x-total-count"?: number;
   };
 }
 export interface ListScopeSessionsRequest {
@@ -9881,10 +9924,6 @@ export type App = {
 
 export interface NamespaceDoc {
   /**
-   * 唯一的英文名，不能重复，用 / 开头
-   */
-  id?: string;
-  /**
    * 父空间
    */
   parent?: string;
@@ -9904,10 +9943,6 @@ export interface NamespaceDoc {
 }
 
 export type Namespace = {
-  /**
-   * 唯一的英文名，不能重复，用 / 开头
-   */
-  id?: string;
   /**
    * 父空间
    */

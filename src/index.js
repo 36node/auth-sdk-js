@@ -1190,6 +1190,28 @@ export default class SDK {
     },
   };
   /**
+   * github's methods
+   */
+  github = {
+    /**
+     * List githubs
+     *
+     * @param {ListGithubsRequest} req listGithubs request
+     * @returns {Promise<ListGithubsResponse>} A paged array of users
+     */
+    listGithubs: req => {
+      const { query } = req || {};
+
+      if (!query) throw new Error("query is required for github");
+
+      return fetch(`${this.base}/githubs`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+  };
+  /**
    * session's methods
    */
   session = {
