@@ -1,6 +1,6 @@
 {
   "name": "@36node-stargate/auth-sdk",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "stargate auth sdk",
   "repository": {
     "url": "36node-stargate/auth-sdk-js",
